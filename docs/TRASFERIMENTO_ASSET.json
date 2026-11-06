@@ -2,7 +2,7 @@
   "date": "2026-11-06",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 21,
+  "verified_files": 26,
   "complete": false,
   "files": [
     {
@@ -88,6 +88,26 @@
     {
       "path": "assets/events/painting.jpg",
       "sha": "9204ced6574f05cfa95e6332c35d7254ba821aa1"
+    },
+    {
+      "path": "assets/events/pets.jpg",
+      "sha": "66465792982f62811738c3af311616e104b1a575"
+    },
+    {
+      "path": "assets/events/photography.jpg",
+      "sha": "a934756bed0ae9966cd074df1b386efa2a0de651"
+    },
+    {
+      "path": "assets/events/pottery.jpg",
+      "sha": "5ff46c2abc015f8ffcdbd9299de2a05b8482d118"
+    },
+    {
+      "path": "assets/events/reading.jpg",
+      "sha": "d946deb2372fdd7fd0b59ed13aad3a61fe1db506"
+    },
+    {
+      "path": "assets/events/running.jpg",
+      "sha": "3168ee47e86c7efc5f92543401fd8ddef57a9fa0"
     }
   ],
   "pending": [
@@ -113,15 +133,10 @@
     "assets/events/optimization-report.json",
     "assets/events/padel.png",
     "assets/events/painting.png",
-    "assets/events/pets.jpg",
     "assets/events/pets.png",
-    "assets/events/photography.jpg",
     "assets/events/photography.png",
-    "assets/events/pottery.jpg",
     "assets/events/pottery.png",
-    "assets/events/reading.jpg",
     "assets/events/reading.png",
-    "assets/events/running.jpg",
     "assets/events/running.png",
     "assets/events/skating.jpg",
     "assets/events/skating.png",
