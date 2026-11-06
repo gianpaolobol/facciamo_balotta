@@ -2,7 +2,7 @@
   "date": "2026-11-06",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 38,
+  "verified_files": 43,
   "complete": false,
   "files": [
     {
@@ -156,6 +156,26 @@
     {
       "path": "assets/fonts/README.md",
       "sha": "05e06729ba24601c5787f8f1b717d4c5f4e262e5"
+    },
+    {
+      "path": "assets/fonts/glyph-manifest.json",
+      "sha": "d4693d3d0180c569965e84058a79f143b1667fac"
+    },
+    {
+      "path": "assets/fotografia-fumetti.jpg",
+      "sha": "498d7413a7b57a31c52e9c0654ba5e88575af173"
+    },
+    {
+      "path": "assets/musica-colli.jpg",
+      "sha": "22845a61ab008cd5c43fa312b630243357ce44fa"
+    },
+    {
+      "path": "assets/spiaggia-complicita.jpg",
+      "sha": "ad2f35901c2f4f165075375d3db3efda11b060ca"
+    },
+    {
+      "path": "assets/tavolate-giochi.jpg",
+      "sha": "76883a33342417a5a4cbf1e82cfeee7139c45f40"
     }
   ],
   "pending": [
@@ -194,15 +214,10 @@
     "assets/events/wine.png",
     "assets/events/yoga.png",
     "assets/fonts/alphabet-source.png",
-    "assets/fonts/glyph-manifest.json",
     "assets/fonts/lettering-specimen.png",
-    "assets/fotografia-fumetti.jpg",
     "assets/fotografia-fumetti.png",
-    "assets/musica-colli.jpg",
     "assets/musica-colli.png",
-    "assets/spiaggia-complicita.jpg",
     "assets/spiaggia-complicita.png",
-    "assets/tavolate-giochi.jpg",
     "assets/tavolate-giochi.png"
   ]
 }
