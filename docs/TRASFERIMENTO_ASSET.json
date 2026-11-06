@@ -2,7 +2,7 @@
   "date": "2026-11-06",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 6,
+  "verified_files": 11,
   "complete": false,
   "files": [
     {
@@ -28,6 +28,26 @@
     {
       "path": "assets/events/cinema.jpg",
       "sha": "11c3bdcbebd9a6368932b7417dcf4fa8343eb018"
+    },
+    {
+      "path": "assets/events/climbing.jpg",
+      "sha": "8e77314c7463848520c0123d61cacd118a1c584b"
+    },
+    {
+      "path": "assets/events/community.jpg",
+      "sha": "b9206f0a6910f047eb8034def161765bd4454871"
+    },
+    {
+      "path": "assets/events/concert.jpg",
+      "sha": "ae1bae7d5db58059e5205e36bdcebd8477ce9827"
+    },
+    {
+      "path": "assets/events/cooking.jpg",
+      "sha": "4c2534b0ff642b3f12a8954ab05e2b6bf797fe07"
+    },
+    {
+      "path": "assets/events/crafts.jpg",
+      "sha": "183fb08063012ad8a87114422e2b0a2294997ec8"
     }
   ],
   "pending": [
@@ -36,15 +56,10 @@
     "assets/events/basketball.png",
     "assets/events/chess.png",
     "assets/events/cinema.png",
-    "assets/events/climbing.jpg",
     "assets/events/climbing.png",
-    "assets/events/community.jpg",
     "assets/events/community.png",
-    "assets/events/concert.jpg",
     "assets/events/concert.png",
-    "assets/events/cooking.jpg",
     "assets/events/cooking.png",
-    "assets/events/crafts.jpg",
     "assets/events/crafts.png",
     "assets/events/dance.jpg",
     "assets/events/dance.png",
