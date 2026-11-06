@@ -30,3 +30,6 @@ Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
 
 ## Ripresa in una nuova chat
 Apri la repository privata gianpaolobol/facciamo_balotta. Leggi AGENTS.md, CONTINUITA.md e docs/RECUPERO_2026-11-06.md. Verifica lo stato remoto effettivo e riprendi dal primo punto aperto della coda. Non ricominciare da zero, non dichiarare il trasferimento completo finché immagini e font non sono verificati e conserva le modifiche locali già presenti.
+
+## Caricamento per lotti — sessione corrente
+Lotto 1: font assets/fonts/BalottaInchiostro.ttf caricato; hash Git verificato contro il file locale. Trasferimento immagini ancora in corso. Consultare docs/TRASFERIMENTO_ASSET.json per i lotti successivi.
