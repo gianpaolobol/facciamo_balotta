@@ -2,7 +2,7 @@
   "date": "2026-11-06",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 26,
+  "verified_files": 31,
   "complete": false,
   "files": [
     {
@@ -108,6 +108,26 @@
     {
       "path": "assets/events/running.jpg",
       "sha": "3168ee47e86c7efc5f92543401fd8ddef57a9fa0"
+    },
+    {
+      "path": "assets/events/skating.jpg",
+      "sha": "f0c07f074a0390d61409ee4dff0b12bea61c2fb3"
+    },
+    {
+      "path": "assets/events/tennis.jpg",
+      "sha": "191199a4f03649dab16a63a27acd9d594ee40c44"
+    },
+    {
+      "path": "assets/events/theatre.jpg",
+      "sha": "0ae8b15e72052f4a4e49c9f2ed96504b490df74f"
+    },
+    {
+      "path": "assets/events/videogames.jpg",
+      "sha": "a9300fb2ddfe7645e21992ab558bfc46423ca7dd"
+    },
+    {
+      "path": "assets/events/volleyball.jpg",
+      "sha": "89da328fc842c5807b934139670f963dd3bcf875"
     }
   ],
   "pending": [
@@ -138,15 +158,10 @@
     "assets/events/pottery.png",
     "assets/events/reading.png",
     "assets/events/running.png",
-    "assets/events/skating.jpg",
     "assets/events/skating.png",
-    "assets/events/tennis.jpg",
     "assets/events/tennis.png",
-    "assets/events/theatre.jpg",
     "assets/events/theatre.png",
-    "assets/events/videogames.jpg",
     "assets/events/videogames.png",
-    "assets/events/volleyball.jpg",
     "assets/events/volleyball.png",
     "assets/events/volunteering.jpg",
     "assets/events/volunteering.png",
