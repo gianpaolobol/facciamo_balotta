@@ -1,0 +1,423 @@
+{
+  "source": "/workspace/sites/facciamo-balotta",
+  "source_commit": "21d9f2d",
+  "verified_date": "2026-11-06",
+  "remote_binary_transfer": "pending; local inventory does not certify remote presence",
+  "files": [
+    {
+      "path": "assets/bici-riviera.jpg",
+      "bytes": 783984,
+      "sha256": "d165cad17d77383d42fa847efa7e8ad82d85c58571e3ef29c5c4a84f47948a4d"
+    },
+    {
+      "path": "assets/bici-riviera.png",
+      "bytes": 3443518,
+      "sha256": "fba83655ed16b3a0eab9233102eaa8eb68b4a0ccb60652e9590ca3824c497680"
+    },
+    {
+      "path": "assets/events/astronomy.jpg",
+      "bytes": 757978,
+      "sha256": "e81dc13386feb37ebda63947e6b7d2c5c9a68cf206b36ec3cc215bbdfd51619a"
+    },
+    {
+      "path": "assets/events/astronomy.png",
+      "bytes": 3576695,
+      "sha256": "511be02227b0d7a25a776f7564b6dc9066a912dcf48409f8e7b0cc740423b767"
+    },
+    {
+      "path": "assets/events/basketball.jpg",
+      "bytes": 790267,
+      "sha256": "381f51d71b0bee9b3460a931ef128fd0e632ab1c0317a46b1a878b9e302dd668"
+    },
+    {
+      "path": "assets/events/basketball.png",
+      "bytes": 3599484,
+      "sha256": "48784b08ab10f8a30b21866748956c92038b56c3547a21e061521272c30b1e88"
+    },
+    {
+      "path": "assets/events/chess.jpg",
+      "bytes": 895830,
+      "sha256": "63d7dd40278db5f4268f5bf8b1ad890b05a62f4575cac67941621e933b92cd54"
+    },
+    {
+      "path": "assets/events/chess.png",
+      "bytes": 3549624,
+      "sha256": "7744ef59528f9cb5babfe4fc27e719fc9f5a1f165b4ce6c7000d02d263dcd548"
+    },
+    {
+      "path": "assets/events/cinema.jpg",
+      "bytes": 765156,
+      "sha256": "edb9c3f6f95b6b6fb1b1419940515cc631dab6af012457931d9255b716a75585"
+    },
+    {
+      "path": "assets/events/cinema.png",
+      "bytes": 3478879,
+      "sha256": "195c76caaf39581c740a462e847364b9b84ddd7918a8238fea795b71062d300f"
+    },
+    {
+      "path": "assets/events/climbing.jpg",
+      "bytes": 677838,
+      "sha256": "f0aa5fa3a579f7148cdab7daa6df5e92a4871e430e426a07ae3b5adfa559fd63"
+    },
+    {
+      "path": "assets/events/climbing.png",
+      "bytes": 3307475,
+      "sha256": "69a8b6408c8bfdfbad8921279548f8d1da4ac8532f1bb560a5597bd7f2ef5273"
+    },
+    {
+      "path": "assets/events/community.jpg",
+      "bytes": 837648,
+      "sha256": "ef84ae224ebb80a77f1257301bc883b63d6ccbc96a674878c93955e87404cd93"
+    },
+    {
+      "path": "assets/events/community.png",
+      "bytes": 3313447,
+      "sha256": "b6dbf42711f5d2cf7f944fc3933772c6eb06f30ce5265ba27ab11a323fb7ea35"
+    },
+    {
+      "path": "assets/events/concert.jpg",
+      "bytes": 765661,
+      "sha256": "3850f00702bdb8d646e84787b9b4c8d5e3ae5a9c31f6f8ca7073d3641410418d"
+    },
+    {
+      "path": "assets/events/concert.png",
+      "bytes": 3423770,
+      "sha256": "b5742e33673b7cd721886e0836d5fd0b9c9c875185a080e2f00e2ceceba23874"
+    },
+    {
+      "path": "assets/events/cooking.jpg",
+      "bytes": 765755,
+      "sha256": "9a9a43c8198b29d5e0cc5043c3f1bbc8fd4b7e5f41ab6addde13873a7b86ab93"
+    },
+    {
+      "path": "assets/events/cooking.png",
+      "bytes": 3461790,
+      "sha256": "3c7c14bb3042fa5342ffd1fb1030e3b67722b5dacb9966c5cf5513538df17a9c"
+    },
+    {
+      "path": "assets/events/crafts.jpg",
+      "bytes": 885608,
+      "sha256": "c759d516a375d055079d69e6e8d4df3d0e291248603743fc8838be57b1454655"
+    },
+    {
+      "path": "assets/events/crafts.png",
+      "bytes": 3463790,
+      "sha256": "c63e5b3a30b7dca7d52f069e82c042492a30c445b6c655318dc5debad0a4befd"
+    },
+    {
+      "path": "assets/events/dance.jpg",
+      "bytes": 797578,
+      "sha256": "f1a2ec2785f5e3d0ee91cc84487037fa8107ab388eb5916b72314b41e1472440"
+    },
+    {
+      "path": "assets/events/dance.png",
+      "bytes": 3636102,
+      "sha256": "7a10237d9b0cfb904e32659a1e0d5e35b0cecd115db99af2cdb2bf39d166c777"
+    },
+    {
+      "path": "assets/events/football.jpg",
+      "bytes": 837201,
+      "sha256": "0ad266fe445c523db82cf601649b17157e43afabd9efab19b38ea42381348b6d"
+    },
+    {
+      "path": "assets/events/football.png",
+      "bytes": 3481510,
+      "sha256": "f2e28cc2520608371688ad884cf5f02e3a242ed48df0189de7ceb300240df79d"
+    },
+    {
+      "path": "assets/events/gardening.jpg",
+      "bytes": 943448,
+      "sha256": "4e6ac124d307862b87239ed4eb55d547e790818a8ebc5a7c3fb126a9e89aab8d"
+    },
+    {
+      "path": "assets/events/gardening.png",
+      "bytes": 3705489,
+      "sha256": "ec9cbe6d0d007be7bde6d94d5898dfbae6cb71f03dc5c1a55f984929c8a3bb9e"
+    },
+    {
+      "path": "assets/events/generation-prompts.json",
+      "bytes": 6582,
+      "sha256": "45705112dd966575e11536cd59b51df5ead13e16e203d42049361d486868f88f"
+    },
+    {
+      "path": "assets/events/hiking.jpg",
+      "bytes": 784563,
+      "sha256": "96d5df06e0e5d04639d8a1ed015d5591f5945a56bff8e2b66b93aa5de2d359eb"
+    },
+    {
+      "path": "assets/events/hiking.png",
+      "bytes": 3611214,
+      "sha256": "4c92a6e79f01f96c762c9cb7e6710573f5c10670e103ad08eabbea37b5fa5c9d"
+    },
+    {
+      "path": "assets/events/kayaking.jpg",
+      "bytes": 780502,
+      "sha256": "64f1c1cb8436c2208f8f32ae34ecc6558a7927f9c1c94207c5681677fb36d82c"
+    },
+    {
+      "path": "assets/events/kayaking.png",
+      "bytes": 3567054,
+      "sha256": "78c10ab4817fdd1be46e07726d1cb9134e9d8459ed174a5c1389f3431960d64c"
+    },
+    {
+      "path": "assets/events/languages.jpg",
+      "bytes": 855104,
+      "sha256": "1761f9311aab8d02ee350ad49ab19d033303d2af32dd3eae944e40d5c065cb0a"
+    },
+    {
+      "path": "assets/events/languages.png",
+      "bytes": 3471699,
+      "sha256": "1dec0c6965aa0831f69ba5315a4c4e9ac8a4edd43e5aedf1d34dc1f4461d308b"
+    },
+    {
+      "path": "assets/events/makers.jpg",
+      "bytes": 868348,
+      "sha256": "00708970652c9d0e497bec80b783f69b02cdbc9ffa509c461ad04cc1e9982b64"
+    },
+    {
+      "path": "assets/events/makers.png",
+      "bytes": 3386423,
+      "sha256": "adc9fc601680288d0b653d973fe0561680e07de4c5457291e012eb31f5b1895d"
+    },
+    {
+      "path": "assets/events/motorcycling.jpg",
+      "bytes": 912564,
+      "sha256": "0fd78adb8bbe08d643667115b598f77e4df6f2afbacc784f6e1cb28bcc3ceb97"
+    },
+    {
+      "path": "assets/events/motorcycling.png",
+      "bytes": 3591934,
+      "sha256": "8cd7e31755152c31a1be3f7232c9f72c0da4c79fcf46b14bba722c1006372b39"
+    },
+    {
+      "path": "assets/events/optimization-report.json",
+      "bytes": 4626,
+      "sha256": "c537cae1f5e291d38079cfacfc0850c6bef6ec7117db2a095296162e2d5ebcf0"
+    },
+    {
+      "path": "assets/events/padel.jpg",
+      "bytes": 853052,
+      "sha256": "6044b26a26fd0781296e944ec15e4bd0aba2d25d822ea8707405ca6033e801ee"
+    },
+    {
+      "path": "assets/events/padel.png",
+      "bytes": 3407830,
+      "sha256": "660f26f75ab77f7d5d50a710b4e9432d1d77cce2c770d2c5647ccabc742faf56"
+    },
+    {
+      "path": "assets/events/painting.jpg",
+      "bytes": 766311,
+      "sha256": "b9684e2405db8cb123ba4cb3c432b32e1873b132936798f5a6baa2e0f64c0666"
+    },
+    {
+      "path": "assets/events/painting.png",
+      "bytes": 3464860,
+      "sha256": "6508adbe8c6516317602c5521033a7442d8f0d8bd76f8e4d62badba2ad7956d2"
+    },
+    {
+      "path": "assets/events/pets.jpg",
+      "bytes": 931811,
+      "sha256": "306ea29adc170f2a0fa9ea6631f659ec0b4685d98836ebf1fc2d69d7633ed61e"
+    },
+    {
+      "path": "assets/events/pets.png",
+      "bytes": 3644885,
+      "sha256": "98f18042d279f981aa1b55dda1418783c3cfd62c01fbe3888ed92b902424242e"
+    },
+    {
+      "path": "assets/events/photography.jpg",
+      "bytes": 744180,
+      "sha256": "d44da3cbebeb8587913b653dc351c769fbbce79b90a09c53d12c2467b74a62b1"
+    },
+    {
+      "path": "assets/events/photography.png",
+      "bytes": 3457646,
+      "sha256": "cbb58545dcfac84fc40524f8fa6191cdb62f1f0420a59876bca49b8685b2feef"
+    },
+    {
+      "path": "assets/events/pottery.jpg",
+      "bytes": 900851,
+      "sha256": "4c5f7ac15eee25ec6d96da90b509d556bf800f1cf7116cf1b51b8f83236dcd2e"
+    },
+    {
+      "path": "assets/events/pottery.png",
+      "bytes": 3515865,
+      "sha256": "53dec61322e0301999725e398d662e293ae46239d03b1d46a7751ba470a629d4"
+    },
+    {
+      "path": "assets/events/reading.jpg",
+      "bytes": 780486,
+      "sha256": "eaba5dc49ba8e8c046019ba863fe69f995f7da214cd40c4a69d2c62205762593"
+    },
+    {
+      "path": "assets/events/reading.png",
+      "bytes": 3523240,
+      "sha256": "29c940a40c4df1decd27b03b05c3d06aa38c18a237b1541927d27709a6a2c12f"
+    },
+    {
+      "path": "assets/events/running.jpg",
+      "bytes": 757075,
+      "sha256": "fda303f1c0297f3ee3c6856d26c45fb33b10f39181caa39e0b04b5f60535705e"
+    },
+    {
+      "path": "assets/events/running.png",
+      "bytes": 3448101,
+      "sha256": "122b1e0e9f889c9bff52e9246087b43f254e0896c9d64ae96f300cc446bb741c"
+    },
+    {
+      "path": "assets/events/skating.jpg",
+      "bytes": 746561,
+      "sha256": "f0e9e33ca48fbd3a5a4e3683b339c79034494bf21b8f4dcc1f6fecffb84cc749"
+    },
+    {
+      "path": "assets/events/skating.png",
+      "bytes": 3441724,
+      "sha256": "3307c82c17ef5c2a8c9da6113ab7eabe66869c7e3ba2e50e5b60bfd6b7bdc8a4"
+    },
+    {
+      "path": "assets/events/tennis.jpg",
+      "bytes": 909126,
+      "sha256": "c732cf48463e08b601d26c48e729ea33fccbf88255e45c5dd7e7bf1620ae7fc2"
+    },
+    {
+      "path": "assets/events/tennis.png",
+      "bytes": 3531493,
+      "sha256": "90c439aa1b007d9722e22ffbf47b286dc5f63531d45d5273adfa781bbf787e94"
+    },
+    {
+      "path": "assets/events/theatre.jpg",
+      "bytes": 745929,
+      "sha256": "1343ef260cb03aa99b842cca04b63c0a5dbd03d55bccb1ab53905289875bfc3f"
+    },
+    {
+      "path": "assets/events/theatre.png",
+      "bytes": 3497650,
+      "sha256": "766f035f78c4f20d0343305739fa265bbf1c2a6b98887baf561011e85f8695e0"
+    },
+    {
+      "path": "assets/events/videogames.jpg",
+      "bytes": 750449,
+      "sha256": "a5ff2c4e4719bf7897b987aae1fd665608da9cb97abf85c337c8e3fabda2a5e8"
+    },
+    {
+      "path": "assets/events/videogames.png",
+      "bytes": 3464087,
+      "sha256": "ad6982205a0d7b5f495a38069a05377e718ba498d94336f143c896b648ca88c2"
+    },
+    {
+      "path": "assets/events/volleyball.jpg",
+      "bytes": 713263,
+      "sha256": "96b5f682588a939c7b59bea1b318200cccb3b0c8144af6c7be72de33dca51cc9"
+    },
+    {
+      "path": "assets/events/volleyball.png",
+      "bytes": 3228690,
+      "sha256": "2245a8e45a8499ded12e3c4f51f04cda3b151f3dd0a278b908cd0db741cf5b95"
+    },
+    {
+      "path": "assets/events/volunteering.jpg",
+      "bytes": 745601,
+      "sha256": "2e56b9fd825821c05b4a8a1bc30d9c2525cc04aef896581e3ae9c6aec0fafbad"
+    },
+    {
+      "path": "assets/events/volunteering.png",
+      "bytes": 3487721,
+      "sha256": "60d0f1c4da0553a8db5915833f78fa9612f5cac06f2553890356f44f144016fb"
+    },
+    {
+      "path": "assets/events/water.jpg",
+      "bytes": 810768,
+      "sha256": "a302cca9b15aa853605601bb44e88f937ff3a0340d8afe6a4579200e40448434"
+    },
+    {
+      "path": "assets/events/water.png",
+      "bytes": 3296975,
+      "sha256": "273469dc4db9d4179f79487b0ba4799b5d5ac48f453021d7bfedaa8c8ef3f7b3"
+    },
+    {
+      "path": "assets/events/wine.jpg",
+      "bytes": 890720,
+      "sha256": "57ee914ee7d89f9dddb1d72fa32fa1ce460219bb4f02581b6cc7d340fee38de2"
+    },
+    {
+      "path": "assets/events/wine.png",
+      "bytes": 3434063,
+      "sha256": "093041066f76151b3fe630e52be71b7ec94f3f6f0604d30d6372d8d25d1a3b09"
+    },
+    {
+      "path": "assets/events/yoga.jpg",
+      "bytes": 796172,
+      "sha256": "f72efbcf377951d05580762282734eabd961686738aab1d4004ff618d1f0001f"
+    },
+    {
+      "path": "assets/events/yoga.png",
+      "bytes": 3310401,
+      "sha256": "b5eb0282abee0553ec718fef15ae99fe25de1db287d840c58f4754b05b02c148"
+    },
+    {
+      "path": "assets/fonts/BalottaInchiostro.ttf",
+      "bytes": 51508,
+      "sha256": "8aa39d9719bf7ce29f4cd75d79fb6310d604030c1687a873f23e5f251780ba60"
+    },
+    {
+      "path": "assets/fonts/README.md",
+      "bytes": 894,
+      "sha256": "41d8c827069bcf71751029e9d39bdb94d62470f05dec00cc249c6e32d5008d9a"
+    },
+    {
+      "path": "assets/fonts/alphabet-source.png",
+      "bytes": 1270034,
+      "sha256": "8ccd46bbaa50f099c489ecc945b6f0def47bf842944c7180872fcf327b663451"
+    },
+    {
+      "path": "assets/fonts/glyph-manifest.json",
+      "bytes": 6344,
+      "sha256": "8ba50c791c96a12481efd186461a3729d2eca1957e56070bd435bf2257b4b552"
+    },
+    {
+      "path": "assets/fonts/lettering-specimen.png",
+      "bytes": 102264,
+      "sha256": "3ee666e929194e561467b7c2bcc18e4ad7c669cdb8b91e300ce9a8e6d9cdff3c"
+    },
+    {
+      "path": "assets/fotografia-fumetti.jpg",
+      "bytes": 781721,
+      "sha256": "c422194015a08e306ab8e0d81f4089c10c000fc9e723582a486523eb812feaae"
+    },
+    {
+      "path": "assets/fotografia-fumetti.png",
+      "bytes": 3271594,
+      "sha256": "58dca6b00450afa8c5aa6db1e2f7a127c4af6a4caa95009ffff72649e0c21973"
+    },
+    {
+      "path": "assets/musica-colli.jpg",
+      "bytes": 790517,
+      "sha256": "3656adb332f6e7a79b62f1d3085f57f188bb4007b3138b67beb25e1af647ca8b"
+    },
+    {
+      "path": "assets/musica-colli.png",
+      "bytes": 3390354,
+      "sha256": "c3c131ea89d1e51c98c12958f970d3422d01b01ec7265d9bb94aa44dcbcdfbc8"
+    },
+    {
+      "path": "assets/spiaggia-complicita.jpg",
+      "bytes": 691049,
+      "sha256": "1fb58f4ae55a5c518857d8bc6964b673ae69ba4a0a7776352a4fb501188e7401"
+    },
+    {
+      "path": "assets/spiaggia-complicita.png",
+      "bytes": 3059927,
+      "sha256": "83d14992f7e3848252c03ce2b1f59b56f544b0527ab40ffd2d771fd8ca69202a"
+    },
+    {
+      "path": "assets/tavolate-giochi.jpg",
+      "bytes": 765925,
+      "sha256": "1533f1ae8de9611dac11ed62961028ac91b0bdf1a7fadf6dc397b663ce61d7e6"
+    },
+    {
+      "path": "assets/tavolate-giochi.png",
+      "bytes": 3246665,
+      "sha256": "73f3806d6a9bb7827e7de7b09c66cb002a35b2d230a16bc0362774aaa591efd5"
+    }
+  ]
+}
