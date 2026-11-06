@@ -1,0 +1,44 @@
+{
+  "alphabet": "Use case: logo-brand. Asset type: source alphabet sheet for a real custom display font, not a poster or app mockup. Draw ORIGINAL uppercase lettering with the unmistakable restless hand-lettered feeling of Andrea Pazienza's Pentothal narration and early Frigidaire headings: tall slightly narrow handwritten block capitals, angular but human, subtly irregular proportions, lively tiny slab terminals, fine-to-medium variable black pen strokes. NOT a brush-script font, NOT Permanent Marker, not rounded modern comic lettering, not graffiti, not italic superhero letters. Every letter must be easy to identify. Solid black ink on pure white, sharp edges, no paper grain, no shadows, no decoration, no title, no frame, no labels. Strict specimen layout: exactly 9 equal columns and 4 equal rows on a landscape 1536 by 1024 white canvas. Each cell contains EXACTLY ONE isolated glyph centered with wide empty margins, no cells or lines drawn. All glyphs are similar height and sit on matching row baselines. Row 1 left to right: A B C D E F G H I. Row 2: J K L M N O P Q R. Row 3: S T U V W X Y Z 0. Row 4: 1 2 3 4 5 6 7 8 9. Those 36 glyphs only, no duplicates or omissions. Keep ample separation so each character can be extracted into a font. Original alphabet rather than copying a published masthead. Visible human ink personality, condensed but not compressed into illegibility.",
+  "illustrations": {
+    "common": "Use case: illustration-story. Create an original landscape event-cover illustration for Facciamo Balotta in precisely the same visual world as the provided reference: Andrea Pazienza Pentothal-era and early Frigidaire inspired Italian underground art comics. Original adult characters aged 25-40 with witty angular faces, long expressive noses, distinctive eyes and varied hairstyles and builds; spontaneous black ink outlines and broad flat vermilion, olive, mustard, lavender and Adriatic teal on warm cream. Vivid character and warmth, not generic vector icons, corporate clip art or American superhero style. Medium-wide scene with 3 or 4 adult friends, well-proportioned arms, legs and normal-sized hands; no exaggerated foreground hands, no broken or disconnected limbs. A mix of concentration, gentle smiles and shared enjoyment. Clothes appropriate to the activity. Background hints of Emilia-Romagna, red portico walls or green hills, subordinate to the activity. No text, letters, logos, watermark, flags or offshore platform. Clear focal subject, useful as a cover cropped to a wide card. ",
+    "jobs": [
+      {
+        "key": "climbing",
+        "subject": "Indoor bouldering gym: one adult woman climbing a low colorful bouldering wall over thick crash mats, with four clearly connected limbs and hands on holds; two adult friends wait on the floor away from her landing area, smiling and talking, one carries a small chalk bag. No hanging rope or inexplicable gear. The activity must unmistakably be climbing."
+      },
+      {
+        "key": "football",
+        "subject": "A casual five-a-side football moment on a small outdoor pitch: two adult friends in simple sports shirts and shorts pass a normal soccer ball along the ground, a third near a small goal smiles, a fourth rests at the sideline. Natural running leg positions, grass, small goal net, a red portico wall and green hill hinted beyond. The sport is football, not tennis or generic ball sports."
+      },
+      {
+        "key": "tennis",
+        "subject": "A social doubles tennis session on a clay tennis court: two adults near the net hold normal oval stringed tennis rackets with long handles while chatting; one adult at the back prepares to receive a small yellow tennis ball. Natural racket grips, visible connected forearms, proportionate hands, clear tennis net and court. A warm relaxed club atmosphere without logos."
+      },
+      {
+        "key": "padel",
+        "subject": "A friendly padel break on a glass-walled padel court: three adult friends holding short-handled solid perforated padel rackets, not stringed tennis rackets, talk by the net; a fourth leans casually nearby. Clear glass court panels, small yellow ball, normal anatomy and body proportions. Expressive Italian underground comic faces."
+      },
+      {
+        "key": "volleyball",
+        "subject": "A beach volleyball gathering on the Romagna coast: two adult friends prepare to receive a volleyball on sand, one adult sends the ball over a volleyball net, a fourth on the side watches with a warm smile. Natural arm lengths and sensible non-extreme poses, volleyball net, turquoise sea and striped parasol in the distance. Fully appropriate sports or beach clothes, no oversized foreground ball."
+      },
+      {
+        "key": "running",
+        "subject": "Four adult friends jogging easily together on a green urban park path, with normal coordinated walking/jogging limbs and no extreme perspective. One short-haired woman talks with a slim man, two others listen and smile, simple running clothes and shoes, red arcades and rounded hills in the distance. This is an inclusive social run, not a race."
+      },
+      {
+        "key": "yoga",
+        "subject": "Three adult friends in a gentle outdoor yoga session on separate mats in a park. One seated cross-legged adult woman demonstrates relaxed breathing, one standing adult stretches with arms comfortably raised, another sits and smiles. Clear anatomically coherent limbs and comfortable realistic poses, no acrobatics or twisted joints. Green hills, warm light, small water bottles."
+      },
+      {
+        "key": "water",
+        "subject": "Four adult friends at the Romagna beach preparing a calm sea swim: two stand chatting near the shore with goggles and swimming caps in their hands, one sits on a beach towel, another has feet in shallow water. All figures at similar scale, natural proportionate hands near torso, cheerful but varied faces, turquoise water, golden sand and a simple parasol. No sailing platform, no implausible gear."
+      },
+      {
+        "key": "community",
+        "subject": "A welcoming small community gathering of four original adults under red portico arches, sharing conversation and listening. One holds a small plain notebook, another has a tote bag, two exchange gentle amused looks. No specific sport equipment, no restaurant meal, no bookseller or concert stage: a neutral social cover for unusual new activities, workshops, volunteering and language exchange. Warm, inclusive and unmistakably the same hand-ink comic world as the reference."
+      }
+    ]
+  }
+}

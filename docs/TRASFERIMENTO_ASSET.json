@@ -2,7 +2,7 @@
   "date": "2026-11-06",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 31,
+  "verified_files": 34,
   "complete": false,
   "files": [
     {
@@ -128,6 +128,18 @@
     {
       "path": "assets/events/volleyball.jpg",
       "sha": "89da328fc842c5807b934139670f963dd3bcf875"
+    },
+    {
+      "path": "assets/events/volunteering.jpg",
+      "sha": "762ab3f91032d63a37d87feda3a43f8b19fb3056"
+    },
+    {
+      "path": "assets/events/generation-prompts.json",
+      "sha": "12fc0f62079171a7cd19874f661683e1a0d0cdc7"
+    },
+    {
+      "path": "assets/events/optimization-report.json",
+      "sha": "1fe3b0f4ed88a96883ef5e0965179e793cce1586"
     }
   ],
   "pending": [
@@ -144,13 +156,11 @@
     "assets/events/dance.png",
     "assets/events/football.png",
     "assets/events/gardening.png",
-    "assets/events/generation-prompts.json",
     "assets/events/hiking.png",
     "assets/events/kayaking.png",
     "assets/events/languages.png",
     "assets/events/makers.png",
     "assets/events/motorcycling.png",
-    "assets/events/optimization-report.json",
     "assets/events/padel.png",
     "assets/events/painting.png",
     "assets/events/pets.png",
@@ -163,7 +173,6 @@
     "assets/events/theatre.png",
     "assets/events/videogames.png",
     "assets/events/volleyball.png",
-    "assets/events/volunteering.jpg",
     "assets/events/volunteering.png",
     "assets/events/water.jpg",
     "assets/events/water.png",

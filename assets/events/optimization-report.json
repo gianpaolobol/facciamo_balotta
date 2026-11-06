@@ -1,0 +1,198 @@
+{
+  "themes": 39,
+  "uniqueIllustrations": 38,
+  "sourceBytes": 131193668,
+  "productionBytes": 30576600,
+  "files": [
+    {
+      "file": "assets/bici-riviera.jpg",
+      "sourceBytes": 3443518,
+      "productionBytes": 783984
+    },
+    {
+      "file": "assets/events/astronomy.jpg",
+      "sourceBytes": 3576695,
+      "productionBytes": 757978
+    },
+    {
+      "file": "assets/events/basketball.jpg",
+      "sourceBytes": 3599484,
+      "productionBytes": 790267
+    },
+    {
+      "file": "assets/events/chess.jpg",
+      "sourceBytes": 3549624,
+      "productionBytes": 895830
+    },
+    {
+      "file": "assets/events/cinema.jpg",
+      "sourceBytes": 3478879,
+      "productionBytes": 765156
+    },
+    {
+      "file": "assets/events/climbing.jpg",
+      "sourceBytes": 3307475,
+      "productionBytes": 677838
+    },
+    {
+      "file": "assets/events/community.jpg",
+      "sourceBytes": 3313447,
+      "productionBytes": 837648
+    },
+    {
+      "file": "assets/events/concert.jpg",
+      "sourceBytes": 3423770,
+      "productionBytes": 765661
+    },
+    {
+      "file": "assets/events/cooking.jpg",
+      "sourceBytes": 3461790,
+      "productionBytes": 765755
+    },
+    {
+      "file": "assets/events/crafts.jpg",
+      "sourceBytes": 3463790,
+      "productionBytes": 885608
+    },
+    {
+      "file": "assets/events/dance.jpg",
+      "sourceBytes": 3636102,
+      "productionBytes": 797578
+    },
+    {
+      "file": "assets/events/football.jpg",
+      "sourceBytes": 3481510,
+      "productionBytes": 837201
+    },
+    {
+      "file": "assets/events/gardening.jpg",
+      "sourceBytes": 3705489,
+      "productionBytes": 943448
+    },
+    {
+      "file": "assets/events/hiking.jpg",
+      "sourceBytes": 3611214,
+      "productionBytes": 784563
+    },
+    {
+      "file": "assets/events/kayaking.jpg",
+      "sourceBytes": 3567054,
+      "productionBytes": 780502
+    },
+    {
+      "file": "assets/events/languages.jpg",
+      "sourceBytes": 3471699,
+      "productionBytes": 855104
+    },
+    {
+      "file": "assets/events/makers.jpg",
+      "sourceBytes": 3386423,
+      "productionBytes": 868348
+    },
+    {
+      "file": "assets/events/motorcycling.jpg",
+      "sourceBytes": 3591934,
+      "productionBytes": 912564
+    },
+    {
+      "file": "assets/events/padel.jpg",
+      "sourceBytes": 3407830,
+      "productionBytes": 853052
+    },
+    {
+      "file": "assets/events/painting.jpg",
+      "sourceBytes": 3464860,
+      "productionBytes": 766311
+    },
+    {
+      "file": "assets/events/pets.jpg",
+      "sourceBytes": 3644885,
+      "productionBytes": 931811
+    },
+    {
+      "file": "assets/events/photography.jpg",
+      "sourceBytes": 3457646,
+      "productionBytes": 744180
+    },
+    {
+      "file": "assets/events/pottery.jpg",
+      "sourceBytes": 3515865,
+      "productionBytes": 900851
+    },
+    {
+      "file": "assets/events/reading.jpg",
+      "sourceBytes": 3523240,
+      "productionBytes": 780486
+    },
+    {
+      "file": "assets/events/running.jpg",
+      "sourceBytes": 3448101,
+      "productionBytes": 757075
+    },
+    {
+      "file": "assets/events/skating.jpg",
+      "sourceBytes": 3441724,
+      "productionBytes": 746561
+    },
+    {
+      "file": "assets/events/tennis.jpg",
+      "sourceBytes": 3531493,
+      "productionBytes": 909126
+    },
+    {
+      "file": "assets/events/theatre.jpg",
+      "sourceBytes": 3497650,
+      "productionBytes": 745929
+    },
+    {
+      "file": "assets/events/videogames.jpg",
+      "sourceBytes": 3464087,
+      "productionBytes": 750449
+    },
+    {
+      "file": "assets/events/volleyball.jpg",
+      "sourceBytes": 3228690,
+      "productionBytes": 713263
+    },
+    {
+      "file": "assets/events/volunteering.jpg",
+      "sourceBytes": 3487721,
+      "productionBytes": 745601
+    },
+    {
+      "file": "assets/events/water.jpg",
+      "sourceBytes": 3296975,
+      "productionBytes": 810768
+    },
+    {
+      "file": "assets/events/wine.jpg",
+      "sourceBytes": 3434063,
+      "productionBytes": 890720
+    },
+    {
+      "file": "assets/events/yoga.jpg",
+      "sourceBytes": 3310401,
+      "productionBytes": 796172
+    },
+    {
+      "file": "assets/fotografia-fumetti.jpg",
+      "sourceBytes": 3271594,
+      "productionBytes": 781721
+    },
+    {
+      "file": "assets/musica-colli.jpg",
+      "sourceBytes": 3390354,
+      "productionBytes": 790517
+    },
+    {
+      "file": "assets/spiaggia-complicita.jpg",
+      "sourceBytes": 3059927,
+      "productionBytes": 691049
+    },
+    {
+      "file": "assets/tavolate-giochi.jpg",
+      "sourceBytes": 3246665,
+      "productionBytes": 765925
+    }
+  ]
+}
