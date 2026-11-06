@@ -2,7 +2,7 @@
   "date": "2026-11-06",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 43,
+  "verified_files": 46,
   "complete": false,
   "files": [
     {
@@ -176,12 +176,21 @@
     {
       "path": "assets/tavolate-giochi.jpg",
       "sha": "76883a33342417a5a4cbf1e82cfeee7139c45f40"
+    },
+    {
+      "path": "assets/bici-riviera.png",
+      "sha": "4caef59f17911a0aa944049e7b60432a47db3edf"
+    },
+    {
+      "path": "assets/events/astronomy.png",
+      "sha": "c4bb7f69853fc1ecd476b45d992ac18290df343f"
+    },
+    {
+      "path": "assets/events/basketball.png",
+      "sha": "f32363a8faf5288a4b4b48f3eb2b97e122057a66"
     }
   ],
   "pending": [
-    "assets/bici-riviera.png",
-    "assets/events/astronomy.png",
-    "assets/events/basketball.png",
     "assets/events/chess.png",
     "assets/events/cinema.png",
     "assets/events/climbing.png",

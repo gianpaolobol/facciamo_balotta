@@ -32,5 +32,5 @@ Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
 Apri la repository privata gianpaolobol/facciamo_balotta. Leggi AGENTS.md, CONTINUITA.md e docs/RECUPERO_2026-11-06.md. Verifica lo stato remoto effettivo e riprendi dal primo punto aperto della coda. Non ricominciare da zero, non dichiarare il trasferimento completo finché immagini e font non sono verificati e conserva le modifiche locali già presenti.
 
 ## Avanzamento caricamento per lotti
-43/83 file asset salvati su main. Hash Git confrontati con gli originali locali e albero remoto riletto dopo ogni lotto. Elenco verificabile e file pendenti: docs/TRASFERIMENTO_ASSET.json.
-Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 40 file pending senza ricaricare quelli verificati. Nessun originale modificato.
+46/83 file asset salvati su main. Hash Git confrontati con gli originali locali e albero remoto riletto dopo ogni lotto. Elenco verificabile e file pendenti: docs/TRASFERIMENTO_ASSET.json.
+Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 37 file pending senza ricaricare quelli verificati. Nessun originale modificato.
