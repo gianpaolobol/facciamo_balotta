@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.expo/
+.env
+.env.*
+!.env.example
+*.sqlite*
+*.log
+.superpowers/
+ios/
+android/
+artifacts/
+
+

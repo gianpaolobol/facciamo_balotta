@@ -1,0 +1,101 @@
+FACCIAMO BALOTTA — PROGETTO E REGISTRAZIONE
+Versione 0.1 — 6 novembre 2026 — Documento da approvare
+
+1. SCOPO
+Applicazione per conoscere persone e condividere attività dal vivo in Emilia-Romagna. Due percorsi: appuntamenti sentimentali a due e attività di amicizia in gruppo. L'intelligenza artificiale suggerisce affinità e attività; gli utenti decidono se incontrarsi.
+Nome scelto dall'utente: Facciamo Balotta. Marchio, domini e nomi negli store non ancora verificati in modo conclusivo.
+
+2. DECISIONI CONFERMATE
+- Territorio iniziale: tutta l'Emilia-Romagna; distanza e tempi di spostamento scelti dagli utenti.
+- Nessuno scorrimento infinito di profili: proposte personali motivate.
+- Appuntamenti: prima proposta della persona, poi accettazione reciproca, poi proposta di attività, luogo, data, ora ed eventuale costo.
+- L'appuntamento diventa confermato solo con due conferme sulla medesima proposta.
+- Se l'orario non va bene, l'app cerca una nuova data. Se non esiste una fascia comune, chiede nuove disponibilità.
+- Per i gruppi un utente propone l'attività; gli altri chiedono di partecipare. L'organizzatore approva le richieste valutando gli interessi pertinenti.
+- Registrazione solo tramite servizi esterni: nessun modulo email e password, nessuna password dell'app.
+- Richiesta dell'utente: Google, Instagram e Facebook. Il vincolo Instagram richiede la decisione descritta al punto 3.
+
+3. FATTIBILITÀ DEGLI ACCESSI E DECISIONE RICHIESTA
+Google: predisponibile con l'integrazione ufficiale.
+Facebook: predisponibile con l'integrazione ufficiale, subordinata alle configurazioni, verifiche e approvazioni richieste da Meta per il caso d'uso.
+Instagram: le API con Instagram Login si rivolgono ad account professionali Business e Creator; non sono una soluzione generale per registrare utenti con account personali. Non presentare un accesso Instagram universale come disponibile e non chiedere di convertire il profilo personale in professionale.
+Apple: per una futura distribuzione App Store con login social, la linea guida 4.8 richiede, salvo eccezioni applicabili, un accesso equivalente con determinate caratteristiche di privacy. Si propone Accedi con Apple.
+
+PROPOSTA DA APPROVARE: Google e Facebook per la prima versione web; predisposizione dell'architettura per Apple e sua attivazione nella versione iOS. Instagram resta eventualmente un collegamento pubblico facoltativo del profilo, senza funzione di autenticazione. Non attivare Apple o sostituire definitivamente i fornitori senza conferma dell'utente.
+
+4. APPROCCI VALUTATI E STATO DELLA SCELTA
+A. Web app adattata al telefono: consente di verificare registrazione e percorsi prima degli store. È la raccomandazione dell'assistente; non ancora una scelta esplicita dell'utente.
+B. iOS e Android da subito: richiede configurazioni native, credenziali e verifiche aggiuntive; consigliata dopo la validazione dei percorsi.
+C. Sito con gestione manuale degli incontri: più rapido da sperimentare, ma non verifica l'automazione richiesta.
+Per le attività di gruppo l'utente ha scelto proposte create dagli utenti con partecipanti approvati dall'organizzatore. La bacheca esclusivamente manuale e i gruppi interamente imposti dall'IA non rappresentano il percorso scelto.
+
+5. FLUSSO DI REGISTRAZIONE PROPOSTO
+Benvenuto > scelta del servizio > autorizzazione presso il servizio > verifica server della risposta > creazione o recupero dell'account > completamento del profilo > accesso all'app.
+Primo accesso: raccolta dei soli dati autorizzati e disponibili. L'email eventualmente fornita dal servizio è un contatto privato, non una credenziale da digitare per accedere. La sua assenza non deve portare a inventare un indirizzo o a collegare automaticamente account diversi.
+Completamento profilo: nome visualizzato modificabile; conferma maggiore età e data di nascita privata; foto caricate o confermate dall'utente; comune o zona; interessi; modalità attive; distanza o tempo di viaggio; budget; disponibilità settimanali ed eccezioni.
+Nel percorso sentimentale: preferenze e intenzioni esplicite, con impostazioni e informative separate dai gruppi.
+Non importare automaticamente contatti, post, messaggi, interessi o liste amici dei social. L'autenticazione social non certifica identità reale o maggiore età.
+Accesso successivo: usare lo stesso servizio; conservare i progressi del profilo senza ripetere l'iscrizione.
+Impostazioni account: logout, collegamento esplicito di un altro accesso dopo nuova autenticazione, revoca e cancellazione account.
+
+6. STATO DEGLI APPUNTAMENTI
+Proposta persona > in attesa di interesse reciproco > proposta appuntamento > conferma parziale > confermato.
+Rami alternativi: persona rifiutata, proposta scaduta, cambia data, cambia attività, abbinamento chiuso, appuntamento annullato.
+Ogni proposta di appuntamento ha un identificatore e una versione. Le conferme valgono solo per quella versione: se cambia data, luogo, costo o attività, sono richieste nuovamente a entrambi.
+Nessuna prenotazione o spesa automatica prima di due conferme e dell'eventuale consenso al pagamento.
+Scelte proposte dall'assistente: possibilità di chiudere l'abbinamento; limite configurabile ai tentativi automatici; richieste di nuove disponibilità anziché riproposte indefinite.
+
+7. STATO DELLE ATTIVITÀ DI GRUPPO
+Creazione > pubblicazione > richieste > approvazioni > attività confermata > conclusione o annullamento.
+Campi: titolo, descrizione, categoria, interessi, livello, luogo accessibile al pubblico, data e ora, eventuale durata, numero minimo e massimo di partecipanti, costo e cosa comprende, regole e organizzatore.
+Richiesta: breve messaggio facoltativo, interessi e livello dichiarati. L'IA può spiegare le affinità pertinenti ma non approva al posto dell'organizzatore.
+In attesa, accettata, rifiutata, ritirata e lista d'attesa sono stati distinti. Richieste in attesa non occupano un posto. Un'approvazione occupa il posto con controllo atomico della capienza.
+Chat accessibile solo a organizzatore e partecipanti accettati; le autorizzazioni vengono ricontrollate dal server. Nessuna esposizione delle preferenze sentimentali nel contesto dei gruppi.
+Prima versione proposta: gruppi piccoli, massimo ordinario di dieci persone configurabile; estensioni oltre dieci con organizzazione dedicata in una fase successiva.
+
+8. LUOGHI E MODELLO COMMERCIALE
+Attività gratuite e luoghi pubblici possono essere suggeriti senza pagamento del luogo. Le attività di operatori privati possono avere un costo, una prenotazione o una proposta sponsorizzata.
+Il modello di ricavo è ancora da validare: commissioni su prenotazioni o visibilità sponsorizzata. Il pagamento non cambia l'abbinamento fra persone.
+Le sponsorizzazioni sono riconoscibili e possono aumentare visibilità solo tra opzioni pertinenti e compatibili con distanza, disponibilità e budget. Non usare orientamento sessuale o altri dati particolari per profilazione pubblicitaria.
+Pagamenti, prenotazioni effettive e dashboard commerciale non fanno parte del primo incremento dedicato a registrazione e profilo.
+
+9. ARCHITETTURA PROPOSTA E DATI
+Prima fase proposta: interfaccia web responsive, backend con autenticazione verificata sul server e database persistente. Stack e servizio di autenticazione da scegliere durante il piano esecutivo in base all'ambiente disponibile; non adottare un servizio a pagamento senza decisione esplicita.
+Entità principali: utente, identità esterna (provider più subject univoco), profilo, interessi, preferenze private, disponibilità, proposta persona, abbinamento, proposta appuntamento e relative conferme, attività, richiesta partecipazione, conversazione, messaggio, luogo e segnalazione.
+Unicità: coppia provider/subject. Non unire account automaticamente sulla sola email. Unione esplicita dopo prova del controllo degli accessi coinvolti.
+Separazione dei campi pubblici e privati. Ogni operazione di lettura e scrittura deve essere autorizzata dal backend; non affidarsi a pulsanti nascosti.
+L'eventuale IA richiede una successiva scelta di fornitore e budget. Prima fase senza invii di dati a modelli esterni. Nessuna simulazione deve essere presentata come abbinamento reale o analisi IA già attiva.
+
+10. CONFIGURAZIONI NECESSARIE PER LOGIN REALE
+- URL definitivo dell'ambiente e URL di callback HTTPS.
+- Progetto sviluppatore Google: schermata consenso, client OAuth per piattaforma e origini/redirect autorizzati; eventuale verifica richiesta dal servizio.
+- Applicazione Meta: Facebook Login e prodotto/caso d'uso ammesso, App ID, segreto lato server, redirect e domini, modalità test/live, informative e procedura di cancellazione dati; eventuali review e verifiche richieste.
+- Per Apple/iOS: account sviluppatore e identificativi, capability e parametri di autenticazione appropriati alla piattaforma.
+- Segreti esclusivamente nel gestore sicuro dell'ambiente; mai nel frontend, repository, documento o messaggi.
+- Nessuna richiesta di password Google, Facebook, Instagram o Apple all'interno dell'app.
+- Nessuna configurazione già attiva o credenziale verificata in questa sessione.
+
+11. SICUREZZA E CONTROLLO PROPOSTI
+Per il web: sessione server con cookie Secure, HttpOnly e SameSite appropriato; scadenza e invalidazione; difesa CSRF per operazioni sensibili. Per OAuth/OIDC usare le protezioni previste dal provider e dalla piattaforma: state, nonce quando applicabile, PKCE quando supportato e necessario, redirect consentiti e verifica dei token tramite gli endpoint o le chiavi ufficiali. Non fidarsi di identificativi o email inviati dal client.
+Revoche, errori e autorizzazioni negate devono riportare a uno stato chiaro senza creare account incompleti duplicati. Rate limit sulle azioni esposte.
+Accesso limitato a maggiorenni, blocco e segnalazione utenti, regole comunità e moderazione prima di un'apertura pubblica. Per i primi incontri: luoghi aperti al pubblico, comprese attività commerciali; non abitazioni o luoghi isolati.
+Prima della raccolta reale dei dati: informative e termini appropriati, consensi necessari, tempi di conservazione e cancellazione documentati. La registrazione social non costituisce automaticamente consenso a profilazione o marketing.
+
+12. PRIMO INCREMENTO IMPLEMENTABILE DOPO APPROVAZIONE
+Benvenuto, accessi supportati, callback, sessione, completamento profilo, scelta delle intenzioni, interessi, zona, disponibilità, impostazioni e cancellazione. Le sezioni successive saranno costruite sui relativi stati del dominio.
+In mancanza di credenziali, mostrare lo stato di integrazione non attiva senza accettare account inventati o dare l'impressione di un'autenticazione riuscita. Un'eventuale anteprima dimostrativa deve essere distinta dalla registrazione reale e non raccogliere dati personali.
+
+13. CRITERI DI VERIFICA
+Accesso nuovo e successivo con gli stessi identificativi del provider; annullamento e errore del provider; callback alterato/scaduto o ripetuto; email mancante; mancata fusione automatica degli account; sessione scaduta, logout e cancellazione; autorizzazioni ai dati privati; profilo incompleto e ripresa del percorso.
+Per gli incrementi successivi: doppia conferma sulla stessa versione di appuntamento; modifica dopo una conferma; assenza di disponibilità comuni; due approvazioni simultanee sull'ultimo posto; utenti rifiutati o rimossi senza accesso alla chat.
+Collaudo reale OAuth obbligatorio prima di dichiarare la registrazione funzionante. Nessun collaudo di app, login o deployment ancora eseguito.
+
+14. LIMITI E SUCCESSO
+Obiettivo del primo incremento: registrarsi in modo semplice e sicuro, senza password proprie dell'app, completando il profilo necessario ai futuri incontri.
+L'intero prodotto richiederà ulteriori incrementi per suggerimenti, appuntamenti, gruppi, chat e gestione commerciale. Non è ancora stato creato un progetto eseguibile, una repository, un account sviluppatore o un servizio pubblico.
+Decisioni da confermare: alternativa al login Instagram e prima piattaforma. Proposta: avvio web con Google e Facebook e predisposizione Apple per iOS.
+
+15. FONTI DI FATTIBILITÀ CONSULTATE IL 6 NOVEMBRE 2026
+Meta, documentazione ufficiale su Postman, Instagram API: https://www.postman.com/meta/instagram/documentation/6yqw8pt/instagram-api
+Apple, App Review Guidelines, punto 4.8: https://developer.apple.com/app-store/review/guidelines/#login-services
+Queste fonti descrivono limiti dei servizi e regole di distribuzione; il documento non certifica l'avvenuta approvazione di applicazioni da parte dei fornitori.
