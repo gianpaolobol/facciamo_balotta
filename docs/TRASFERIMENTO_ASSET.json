@@ -2,7 +2,7 @@
   "date": "2026-11-06",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 11,
+  "verified_files": 16,
   "complete": false,
   "files": [
     {
@@ -48,6 +48,26 @@
     {
       "path": "assets/events/crafts.jpg",
       "sha": "183fb08063012ad8a87114422e2b0a2294997ec8"
+    },
+    {
+      "path": "assets/events/dance.jpg",
+      "sha": "e2160975af723fa722ca1c11af71210b88a9315e"
+    },
+    {
+      "path": "assets/events/football.jpg",
+      "sha": "a7b48a68955207137109e02bdc2d46c580333c41"
+    },
+    {
+      "path": "assets/events/gardening.jpg",
+      "sha": "2b6f69229ddb1d051c262f93c175d78340c1b267"
+    },
+    {
+      "path": "assets/events/hiking.jpg",
+      "sha": "b2f12402f883e480bd95c6e7164f4832d21e3507"
+    },
+    {
+      "path": "assets/events/kayaking.jpg",
+      "sha": "18f65348d47d43b2bb670006b0773f218bfddde6"
     }
   ],
   "pending": [
@@ -61,16 +81,11 @@
     "assets/events/concert.png",
     "assets/events/cooking.png",
     "assets/events/crafts.png",
-    "assets/events/dance.jpg",
     "assets/events/dance.png",
-    "assets/events/football.jpg",
     "assets/events/football.png",
-    "assets/events/gardening.jpg",
     "assets/events/gardening.png",
     "assets/events/generation-prompts.json",
-    "assets/events/hiking.jpg",
     "assets/events/hiking.png",
-    "assets/events/kayaking.jpg",
     "assets/events/kayaking.png",
     "assets/events/languages.jpg",
     "assets/events/languages.png",
