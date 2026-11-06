@@ -2,7 +2,7 @@
   "date": "2026-11-06",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 16,
+  "verified_files": 21,
   "complete": false,
   "files": [
     {
@@ -68,6 +68,26 @@
     {
       "path": "assets/events/kayaking.jpg",
       "sha": "18f65348d47d43b2bb670006b0773f218bfddde6"
+    },
+    {
+      "path": "assets/events/languages.jpg",
+      "sha": "c5a34116344c0a5ed7e085cd0fbc5365c6ff88ac"
+    },
+    {
+      "path": "assets/events/makers.jpg",
+      "sha": "f8574be626a0a483706c912ea7a414715f53db6d"
+    },
+    {
+      "path": "assets/events/motorcycling.jpg",
+      "sha": "40115023fed78ca94e07f11c29019aad9d85365d"
+    },
+    {
+      "path": "assets/events/padel.jpg",
+      "sha": "19742d258c99ee7676c9c4ce8dae10de8adfd2e3"
+    },
+    {
+      "path": "assets/events/painting.jpg",
+      "sha": "9204ced6574f05cfa95e6332c35d7254ba821aa1"
     }
   ],
   "pending": [
@@ -87,16 +107,11 @@
     "assets/events/generation-prompts.json",
     "assets/events/hiking.png",
     "assets/events/kayaking.png",
-    "assets/events/languages.jpg",
     "assets/events/languages.png",
-    "assets/events/makers.jpg",
     "assets/events/makers.png",
-    "assets/events/motorcycling.jpg",
     "assets/events/motorcycling.png",
     "assets/events/optimization-report.json",
-    "assets/events/padel.jpg",
     "assets/events/padel.png",
-    "assets/events/painting.jpg",
     "assets/events/painting.png",
     "assets/events/pets.jpg",
     "assets/events/pets.png",
