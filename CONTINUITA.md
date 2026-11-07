@@ -86,3 +86,9 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Trasferiti i byte originali di pottery.png: SHA Git restituito da GitHub 7b1a8beb73e1d3db4c82b34f270de0f5a070d14f, identico al calcolo locale. SHA-256 già verificato contro il manifest iniziale.
 - Risolto l'impedimento del blocco precedente; nessuna ricodifica. Inventario 63/83, 20 originali pendenti.
 - Nessuna modifica al codice o nuova esecuzione dei test. Proseguire con i restanti originali a coppie.
+
+## Recupero originali — 65/83
+- Aggiunti kayaking.png e motorcycling.png: dimensioni e SHA-256 identici al manifest iniziale, SHA Git calcolati sui byte originali e verificati con gli oggetti GitHub.
+- Il titolo salvato «Sosta tra amici sull’Appennino.png» corrisponde per hash a motorcycling.png, non a hiking.png: mantenuta la mappatura del manifest senza dedurla dal titolo.
+- Inventario: 65/83; 18 originali pendenti. Codice applicativo invariato; test ed export non ripetuti per questo lotto archivistico.
+- Prossima azione: proseguire con massimo due originali per blocco e verifica remota. Il crash ChatGPT resta senza causa accertata.
