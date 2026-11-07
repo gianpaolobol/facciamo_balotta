@@ -68,4 +68,6 @@ La schermata Profilo permette di descrivere un ritratto facoltativo e fino a cin
 
 Gli utenti autenticati possono salvare la bozza illustrata con un pulsante dedicato e ritrovarla al successivo accesso. Il server usa una tabella separata dal profilo base e verifica la versione per impedire sovrascritture da altre sessioni; cancellare l’account elimina anche le descrizioni. Le modifiche non salvate si perdono uscendo dalla schermata.
 
-In demo usare descrizioni inventate: i testi restano locali e si cancellano uscendo dalla schermata. Generazione, approvazione delle immagini e rigenerazione sono ancora da collegare. Il ramo non è pubblicato nell’anteprima.
+In demo usare descrizioni inventate: i testi restano locali e si cancellano uscendo dalla schermata. Il ramo include ora generazione, approvazione e rigenerazione singola tramite Cloudflare Workers AI (FLUX.2 Klein4B), disattivate finché account e token del piano Workers Free non sono configurati e verificati. Nessuna generazione reale o confronto di resa artistica è stato eseguito finora. Il ramo non è pubblicato nell’anteprima.
+
+La generazione usa due immagini del progetto come riferimento e mantiene il font Balotta Inchiostro esistente. Il server limita a 50 tentativi al giorno complessivi e 12 per utente, senza retry automatico o fallback a pagamento. L'account deve restare Workers Free: il flag locale non verifica automaticamente un eventuale cambio di piano. Dettagli e fonti in docs/superpowers/specs/2026-11-07-free-profile-ai.md.

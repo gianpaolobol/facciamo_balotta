@@ -1,3 +1,4 @@
+import {createProfileImageRoutes} from './profile-images.mjs';
 import {validateIllustratedDraft} from '../src/illustrated-draft.mjs';
 import { randomBytes, createHash, timingSafeEqual } from 'node:crypto';
 
@@ -7,8 +8,9 @@ const equal=(a,b)=>typeof a==='string'&&typeof b==='string'&&a.length===b.length
 const cookies=request=>Object.fromEntries((request.headers.get('cookie')||'').split(';').map(s=>s.trim().split('=')).filter(p=>p.length===2));
 const cities=new Set(['Bologna','Ferrara','Forlì-Cesena','Modena','Parma','Piacenza','Ravenna','Reggio Emilia','Rimini']);
 
-export function createApp({config,store,providerFetch=fetch}) {
+export function createApp({config,store,providerFetch=fetch,imageProvider=null}) {
  const origin=new URL(config.origin).origin;
+ const profileImages=createProfileImageRoutes({store,provider:imageProvider});
  const secure=origin.startsWith('https:');
  const cookie=(name,value,maxAge)=>`${name}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${secure?'; Secure':''}`;
  const ready=provider=>config.enabled===true && (provider==='google'?Boolean(config.googleId&&config.googleSecret):provider==='facebook'?Boolean(config.facebookId&&config.facebookSecret&&/^v\d+\.\d+$/.test(config.facebookVersion||'')):false);
@@ -78,6 +80,7 @@ export function createApp({config,store,providerFetch=fetch}) {
    const user=raw?store.getSession(hash(raw)):null;
    if(!user) return Response.json({error:'Accedi per continuare.'},{status:401});
    if(!['GET','HEAD'].includes(request.method)&&!bearer&&request.headers.get('origin')!==origin) return new Response('Origine non consentita',{status:403});
+   const imageResponse=await profileImages({path,request,user,jsonBody});if(imageResponse)return imageResponse;
    if(path==='/api/session'&&request.method==='GET') return Response.json({user});
    if(path==='/api/illustrated-profile'&&request.method==='GET') return Response.json(store.getIllustratedProfile(user.id));
    if(path==='/api/illustrated-profile'&&request.method==='PUT') {

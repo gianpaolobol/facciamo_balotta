@@ -7,11 +7,47 @@ export function createStore(path) {
  CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, provider TEXT NOT NULL, subject TEXT NOT NULL, email TEXT NOT NULL, name TEXT NOT NULL, UNIQUE(provider,subject));
  CREATE TABLE IF NOT EXISTS profiles(user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, data TEXT NOT NULL);
  CREATE TABLE IF NOT EXISTS illustrated_profiles(user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, data TEXT NOT NULL, version INTEGER NOT NULL);
+ CREATE TABLE IF NOT EXISTS image_attempts(id TEXT PRIMARY KEY, account_id TEXT NOT NULL, user_id TEXT REFERENCES users(id) ON DELETE SET NULL, slot TEXT NOT NULL, day TEXT NOT NULL, created INTEGER NOT NULL, state TEXT NOT NULL);
+ CREATE INDEX IF NOT EXISTS image_attempts_day ON image_attempts(account_id,day);
+ CREATE TABLE IF NOT EXISTS profile_images(id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, slot TEXT NOT NULL, description_hash TEXT NOT NULL, data BLOB NOT NULL, mime TEXT NOT NULL, model TEXT NOT NULL, style_version TEXT NOT NULL, approved INTEGER NOT NULL, created INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS attempts(hash TEXT PRIMARY KEY, data TEXT NOT NULL, expires INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS sessions(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, expires INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS handoffs(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, challenge TEXT NOT NULL, expires INTEGER NOT NULL);`);
  function prune() { const now=Date.now(); for(const table of ['attempts','sessions','handoffs']) db.prepare(`DELETE FROM ${table} WHERE expires < ?`).run(now); }
+ function imageUsage(accountId,userId=null,now=Date.now()){
+  const day=new Date(now).toISOString().slice(0,10);
+  return {global:db.prepare('SELECT count(*) AS n FROM image_attempts WHERE account_id=? AND day=?').get(accountId,day).n,
+   user:userId?db.prepare('SELECT count(*) AS n FROM image_attempts WHERE account_id=? AND day=? AND user_id=?').get(accountId,day,userId).n:0};
+ }
  return {
+  imageUsage,
+  reserveImageAttempt(accountId,userId,slot){
+   const now=Date.now(),day=new Date(now).toISOString().slice(0,10);db.exec('BEGIN IMMEDIATE');
+   try{
+    const usage=imageUsage(accountId,userId,now);
+    const busy=db.prepare("SELECT id FROM image_attempts WHERE user_id=? AND state='pending' AND created>?").get(userId,now-120000);
+    if(usage.global>=50||usage.user>=12){db.exec('COMMIT');return {error:'quota'};}
+    if(busy){db.exec('COMMIT');return {error:'busy'};}
+    const id=randomUUID();db.prepare('INSERT INTO image_attempts VALUES(?,?,?,?,?,?,?)').run(id,accountId,userId,slot,day,now,'pending');db.exec('COMMIT');return {id};
+   }catch(error){db.exec('ROLLBACK');throw error;}
+  },
+  finishImageAttempt(id,success){db.prepare('UPDATE image_attempts SET state=? WHERE id=?').run(success?'done':'failed',id);},
+  saveProfileImage(userId,slot,descriptionHash,image,id){
+   db.exec('BEGIN IMMEDIATE');try{
+    db.prepare('DELETE FROM profile_images WHERE user_id=? AND slot=? AND approved=0').run(userId,slot);
+    db.prepare('INSERT INTO profile_images VALUES(?,?,?,?,?,?,?,?,?,?)').run(id,userId,slot,descriptionHash,image.bytes,image.mime,image.model,image.styleVersion,0,Date.now());
+    db.exec('COMMIT');
+   }catch(error){db.exec('ROLLBACK');throw error;}
+  },
+  getProfileImages(userId,slot){return db.prepare('SELECT * FROM profile_images WHERE user_id=? AND slot=? ORDER BY approved ASC,created DESC').all(userId,slot);},
+  approveProfileImage(userId,slot,id){
+   db.exec('BEGIN IMMEDIATE');try{
+    const result=db.prepare('UPDATE profile_images SET approved=1 WHERE user_id=? AND slot=? AND id=?').run(userId,slot,id);
+    if(result.changes)db.prepare('DELETE FROM profile_images WHERE user_id=? AND slot=? AND id<>?').run(userId,slot,id);
+    db.exec('COMMIT');return Boolean(result.changes);
+   }catch(error){db.exec('ROLLBACK');throw error;}
+  },
+  discardProfileImage(userId,slot,id){return Boolean(db.prepare('DELETE FROM profile_images WHERE user_id=? AND slot=? AND id=? AND approved=0').run(userId,slot,id).changes);},
   close:()=>db.close(),
   upsertIdentity(provider,subject,email,name) {
    const existing=db.prepare('SELECT * FROM users WHERE provider=? AND subject=?').get(provider,subject);

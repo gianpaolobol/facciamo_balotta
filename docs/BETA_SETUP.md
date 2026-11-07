@@ -39,3 +39,15 @@ Il ramo feat/illustrated-profile-draft-20261107 introduce GET/PUT /api/illustrat
 La tabella illustrated_profiles viene creata all'avvio dal normale createStore: user_id è una FK con cancellazione a cascata, data contiene testi/conferme e version aumenta a ogni scrittura. Conservare il database persistente nell'ambiente del server. La demo non usa questo endpoint.
 
 Il reverse proxy deve ammettere almeno 80000 byte per PUT /api/illustrated-profile. L'adapter mantiene tale limite e il limite ordinario di 16384 byte sugli altri endpoint. Testi, conferme e bozza salvata non rappresentano immagini AI generate; il provider non è ancora collegato.
+
+## Generazione immagini: solo quota gratuita Cloudflare
+
+Il server usa FLUX.2 Klein4B tramite Workers AI. Verificare che l'account sia Workers Free (non Paid e senza AI Gateway credits), poi configurare CLOUDFLARE_ACCOUNT_ID e CLOUDFLARE_API_TOKEN come segreti del solo server. Il token deve avere Workers AI Read/Edit, limitato all'account del progetto. Non copiarlo in chat, Git, variabili EXPO_PUBLIC_ o URL. Il modello e l'host non sono modificabili dal client.
+
+Lasciare CLOUDFLARE_FREE_PLAN_CONFIRMED=false finché il piano non è stato controllato; tale flag non interroga il piano del provider e non deve essere impostato per un account Paid. In questo stato il codice e la UI restano disponibili ma le generazioni non partono. Il runtime usa le variabili del processo; per un file locale ignorato si può avviare con node --env-file=.env.local server/index.mjs.
+
+Quote applicative: 50 tentativi al giorno complessivi e 12 per utente, prenotati prima della chiamata, inclusi i tentativi falliti. Giorno UTC, condiviso con la quota Cloudflare di 10000 Neurons. Nessun retry o fallback a pagamento. Il consumo è persistente in SQLite: non usare un database effimero o istanze con database separati per lo stesso account Cloudflare.
+
+Le immagini restano private nel database e vengono eliminate con l'account. Sono servite con la sessione applicativa; non occorre storage a pagamento. Approvazione, rigenerazione e scarto delle anteprime sono separati dalla conferma dei testi. I riferimenti in assets/ai-reference sono copie ridotte degli asset cooking/hiking e non nuovi originali recuperati. Il font Balotta Inchiostro resta invariato.
+
+Prima dell'attivazione pubblica: collegamento sicuro del token, conferma del piano Free e due generazioni reali per valutare la somiglianza. Le prove automatiche e browser con fixture non certificano la resa artistica del modello.
