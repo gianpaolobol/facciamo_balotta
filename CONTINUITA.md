@@ -1,5 +1,12 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Aggiornamento prevalente — iOS nativo su GitHub (8 novembre 2026)
+
+- L’utente propone compilazione diretta da GitHub. Preparati .github/workflows/ios-native.yml e scripts/github-ios-native.sh: Expo prebuild offline, CocoaPods/Xcode sul Mac GitHub, firma locale e upload altool diretto ad Apple. Nessun EAS CLI/token/API Expo; non e un inoltro del comando negato. Leggere docs/GITHUB_NATIVE_IOS.md.
+- Prebuild iOS offline riuscito; YAML/shell/Python e firma configurata sul vero progetto generato verificati localmente. Revisione indipendente completata con un difetto artifact corretto; nessun rilievo importante residuo. Compilazione Xcode/firma/upload non eseguiti su host Linux.
+- GitHub Settings di Balotta verificato: repository e ambienti senza segreti. Servono P12, password, profilo Balotta e P8 nei segreti GitHub; nessuna credenziale privata letta/trasferita o creata. Quota/budget GitHub da verificare prima del Mac; workflow ancora solo nel ramo di lavoro, da integrare nel default branch prima di workflow_dispatch. Nessun job nativo GitHub avviato, nessun IPA o TestFlight nuovo.
+- Vincolo: niente accesso generale alla rete e nessun aggiramento del diniego API Expo. Android demo gia completata; la nuova strada compila con Xcode, senza contattare Expo per credenziali o build.
+
 ## Stato corrente — beta funzionale completata nel codice (7 novembre 2026)
 Questa sezione prevale su tutte le priorità storiche successive. Leggere docs/APP_STATUS_2026-11-07.md. Non ricominciare recuperi o funzioni già implementate.
 - Ramo feat/illustrated-profile-draft-20261107, PR #1: UI live, preferenze/matching, profilo illustrato approvato, appuntamenti, gruppi, chat, blocchi/segnalazioni/moderazione e notifiche interne integrati. Demo/font/asset preservati.
@@ -14,7 +21,7 @@ Questa sezione prevale su tutte le priorità storiche successive. Leggere docs/A
 
 - Ultimo tentativo di autorizzazione ufficiale: richiesta di esecuzione elevata per build iOS + auto-submit rifiutata prima di eseguire il comando; policy Granular con sandbox_approval=false e request_permissions=false. Nessuna nuova build/versione/upload avviata. Non chiedere altre chiavi o ripetere consenso: occorre modifica autorizzata della policy di rete/esecuzione dell’ambiente.
 
-Aggiornato il 7 novembre 2026 (Europe/Rome).
+Aggiornato l’8 novembre 2026 (Europe/Rome).
 Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
 
 ## Priorità attuale — debug delle interruzioni (7 novembre 2026)

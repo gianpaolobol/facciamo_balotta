@@ -1,0 +1,79 @@
+name: Balotta iOS - Xcode and Apple
+on:
+  workflow_dispatch:
+    inputs:
+      upload_testflight:
+        description: Upload the signed demo directly to Apple
+        type: boolean
+        default: true
+permissions:
+  contents: read
+concurrency:
+  group: balotta-ios-native
+  cancel-in-progress: false
+jobs:
+  credentials:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check required signing secrets without printing their values
+        shell: bash
+        env:
+          IOS_DISTRIBUTION_P12_BASE64: ${{ secrets.IOS_DISTRIBUTION_P12_BASE64 }}
+          IOS_DISTRIBUTION_P12_PASSWORD: ${{ secrets.IOS_DISTRIBUTION_P12_PASSWORD }}
+          IOS_APP_STORE_PROFILE_BASE64: ${{ secrets.IOS_APP_STORE_PROFILE_BASE64 }}
+          ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
+          UPLOAD_TESTFLIGHT: ${{ inputs.upload_testflight }}
+        run: |
+          set -euo pipefail
+          missing=0
+          for name in IOS_DISTRIBUTION_P12_BASE64 IOS_DISTRIBUTION_P12_PASSWORD IOS_APP_STORE_PROFILE_BASE64; do
+            if [ -z "${!name:-}" ]; then echo "::error::Missing GitHub secret: $name"; missing=1; fi
+          done
+          if [ "$UPLOAD_TESTFLIGHT" = true ] && [ -z "$ASC_API_KEY_P8" ]; then
+            echo "::error::Missing GitHub secret: ASC_API_KEY_P8"; missing=1
+          fi
+          test "$missing" = 0
+  build:
+    needs: credentials
+    runs-on: macos-26
+    timeout-minutes: 50
+    env:
+      CI: "1"
+      EXPO_OFFLINE: "1"
+      EXPO_NO_TELEMETRY: "1"
+      EXPO_PUBLIC_API_URL: ""
+      EXPO_PUBLIC_INVITATION_URL: ""
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.3.0"
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      - name: Generate native iOS project locally
+        run: ./node_modules/.bin/expo prebuild --platform ios --no-install
+      - name: Install CocoaPods dependencies
+        working-directory: ios
+        run: pod install
+      - name: Archive, sign and optionally upload directly to Apple
+        id: archive
+        env:
+          IOS_DISTRIBUTION_P12_BASE64: ${{ secrets.IOS_DISTRIBUTION_P12_BASE64 }}
+          IOS_DISTRIBUTION_P12_PASSWORD: ${{ secrets.IOS_DISTRIBUTION_P12_PASSWORD }}
+          IOS_APP_STORE_PROFILE_BASE64: ${{ secrets.IOS_APP_STORE_PROFILE_BASE64 }}
+          ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
+          UPLOAD_TESTFLIGHT: ${{ inputs.upload_testflight }}
+        run: bash scripts/github-ios-native.sh
+      - name: Keep only signed app and checksum
+        if: ${{ !cancelled() && steps.archive.outputs.signed_artifact_ready == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: balotta-ios-${{ github.run_number }}-${{ github.run_attempt }}
+          path: |
+            artifacts/ios/*.ipa
+            artifacts/ios/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 7

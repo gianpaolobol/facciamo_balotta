@@ -28,6 +28,16 @@
       "result": "REJECTED_BEFORE_EXECUTION",
       "reason": "Granular policy disallows sandbox_approval and request_permissions",
       "newBuildStarted": false
+    },
+    "nativeGithubAlternative": {
+      "workflow": ".github/workflows/ios-native.yml",
+      "status": "PREPARED_NOT_RUN",
+      "usesExpoCloudApi": false,
+      "offlinePrebuildPassed": true,
+      "githubSigningSecretsPresent": false,
+      "macQuotaVerified": false,
+      "registeredOnDefaultBranch": false,
+      "xcodeArchiveTested": false
     }
   },
   "oauthLive": false
