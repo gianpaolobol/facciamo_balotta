@@ -57,4 +57,4 @@ Per il web reale servire bundle statico e API dallo stesso origin HTTPS, come ne
 
 ## Stato GitHub Actions
 
-Sul commit di codice5681326d2707eb3b3c684cc12b75c302bacbdd87 il run42404274263 (job128498490018) termina failure dopo due secondi, con elenco step vuoto: i comandi non vengono avviati. La causa non è disponibile dalle API esaminate; non è accertato un problema del codice o della fatturazione. I195+9 test riportati sono prove locali, non un CI GitHub superato. Non sono stati attivati minuti/piani a pagamento o runner alternativi.
+Sul commit di codice5681326d2707eb3b3c684cc12b75c302bacbdd87 il run42404274263 (job128498490018) termina failure dopo due secondi, con elenco step vuoto: i comandi non vengono avviati. Le annotazioni sono state lette direttamente nel browser GitHub: il servizio indica una restrizione di Billing & plans, relativa a pagamenti recenti o al limite di spesa. Il messaggio non distingue quale delle due condizioni sia attiva. Non sono state effettuate modifiche di fatturazione o budget. I195+9 test riportati sono prove locali, non un CI GitHub superato. Non sono stati attivati minuti/piani a pagamento o runner alternativi.
