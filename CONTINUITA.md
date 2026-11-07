@@ -70,3 +70,7 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 ## Recupero originali — 59/83
 - Lotto: community.png, crafts.png. SHA-256 locali identici al manifest originario; blob Git originali riutilizzati senza ricodifica.
 - Stato: 59/83; pendenti 24. Verificare l'albero remoto dopo il commit prima del lotto successivo.
+
+## Recupero originali — 61/83
+- Lotto: dance.png, football.png. Byte originali, SHA-256 locali identici al manifest originario e SHA blob restituiti da GitHub coincidenti.
+- Stato: 61/83, pendenti 22. Nessun JPEG o codice applicativo modificato.
