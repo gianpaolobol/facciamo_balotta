@@ -23,7 +23,12 @@
     "blocker": "api.expo.dev:443 access blocked by policy",
     "submissionKeyConfigured": true,
     "existingKeyReuseExplicitlyAuthorized": true,
-    "submissionKeyName": "fungoitalia"
+    "submissionKeyName": "fungoitalia",
+    "officialEscalationAttempt": {
+      "result": "REJECTED_BEFORE_EXECUTION",
+      "reason": "Granular policy disallows sandbox_approval and request_permissions",
+      "newBuildStarted": false
+    }
   },
   "oauthLive": false
 }

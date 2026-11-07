@@ -12,6 +12,8 @@ Questa sezione prevale su tutte le priorità storiche successive. Leggere docs/A
 - Prossimo passo: attivazione in un ambiente normalmente autorizzato, configurazione account/callback/secret/schede store (progetto Expo ora collegato), vere generazioni AI e firme/prove fisiche. Diniego di rete Cloudflare invariato: non aggirarlo.
 - Incremento push native predisposto: consenso esplicito, token cifrati, prova di installazione, revoca con sessione, quote SQL e ricevute Expo; PUSH_ENABLED=false, nessun cron/invio reale. Leggere docs/NATIVE_PUSH.md. APNs/FCM/EAS e prova telefoni non configurati. Informative/termini definitivi e monitoraggio quote restano prerequisiti di pubblicazione.
 
+- Ultimo tentativo di autorizzazione ufficiale: richiesta di esecuzione elevata per build iOS + auto-submit rifiutata prima di eseguire il comando; policy Granular con sandbox_approval=false e request_permissions=false. Nessuna nuova build/versione/upload avviata. Non chiedere altre chiavi o ripetere consenso: occorre modifica autorizzata della policy di rete/esecuzione dell’ambiente.
+
 Aggiornato il 7 novembre 2026 (Europe/Rome).
 Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
 
