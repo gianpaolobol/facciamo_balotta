@@ -107,3 +107,9 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Aggiunti yoga.png e wine.png: byte originali locali con SHA-256 identici al manifest iniziale; nessuna ricodifica.
 - Inventario: 71/83; 12 originali pendenti. Codice applicativo invariato; test ed export non ripetuti per questo lotto archivistico.
 - Prossima azione: proseguire con massimo due originali per blocco e verifica remota. Causa del crash ChatGPT non accertata.
+
+## Recupero originali — 73/83
+- Trasferiti hiking.png e padel.png: dimensioni e SHA-256 locali identici al manifest iniziale; SHA dei blob restituiti da GitHub identici al calcolo sui byte originali. Nessuna ricodifica.
+- Risolto il precedente errore 422 caricando i due blob originali prima della creazione dell'albero.
+- Inventario: 73/83; 10 originali pendenti. Codice applicativo invariato; test ed export non ripetuti per questo lotto archivistico.
+- Prossima azione: proseguire con massimo due originali per blocco e verifica remota. Causa del crash ChatGPT non accertata.
