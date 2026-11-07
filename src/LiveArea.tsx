@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react';import {View,Text} from 'react-na
 import {api,getFeatures,type Features} from './auth';import {Button,s} from './ui';
 import {LivePair} from './LivePair';import {LiveGroups} from './LiveGroups';import {PreferencesPanel} from './PreferencesPanel';import {SecurityPanel,ModerationPanel} from './SocialTools';
 import {AppointmentHistory} from './AppointmentHistory';
+import {NativePushPanel} from './NativePushPanel';
 import {NotificationInbox} from './NotificationInbox';
 function useLiveFeatures(userId:string){
  const [features,setFeatures]=useState<Features|null>(null),[moderation,setModeration]=useState(false),[error,setError]=useState(''),[attempt,setAttempt]=useState(0);
@@ -21,5 +22,5 @@ export function LiveProfileTools({userId}:{userId:string}){
  const {features,moderation,error,reload}=useLiveFeatures(userId);
  if(error)return <View style={{gap:12}}><Text style={s.body}>{error}</Text><Button label="Riprova le impostazioni" secondary onPress={reload}/></View>;
  if(!features)return <Text style={s.body}>Caricamento delle impostazioni…</Text>;
- return <View key={userId} style={{gap:24}}>{features.notifications?<NotificationInbox/>:null}{features.matching?<PreferencesPanel/>:null}{features.community?<SecurityPanel/>:null}{features.community&&moderation?<ModerationPanel/>:null}</View>;
+ return <View key={userId} style={{gap:24}}>{features.push?<NativePushPanel userId={userId}/>:null}{features.notifications?<NotificationInbox/>:null}{features.matching?<PreferencesPanel/>:null}{features.community?<SecurityPanel/>:null}{features.community&&moderation?<ModerationPanel/>:null}</View>;
 }

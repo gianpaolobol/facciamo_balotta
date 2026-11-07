@@ -3,6 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 import * as WebBrowser from 'expo-web-browser';
 import * as Crypto from 'expo-crypto';
 import * as AuthSession from 'expo-auth-session';
+import {disableNativePush} from './push-device';
 import {authenticateWithApple,reauthenticateAndDeleteAppleAccount} from './apple-native-flow.mjs';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -19,10 +20,10 @@ export async function api(path:string,method='GET',body?:unknown) {
  const data=await response.json().catch(()=>({error:'Il servizio non è disponibile.'}));
  if(!response.ok){const error=new Error(data.error||'Operazione non disponibile.') as Error&{status:number};error.status=response.status;throw error;}return data;
 }
-export type Features={meetings:boolean;matching:boolean;groups:boolean;community:boolean;notifications:boolean};
+export type Features={meetings:boolean;matching:boolean;groups:boolean;community:boolean;notifications:boolean;push:boolean};
 export async function getFeatures():Promise<Features>{
- if(!API)return {meetings:false,matching:false,groups:false,community:false,notifications:false};
- const {features:f}=await api('/api/config');return {meetings:f?.meetings===true,matching:f?.matching===true,groups:f?.groups===true,community:f?.community===true,notifications:f?.notifications===true};
+ if(!API)return {meetings:false,matching:false,groups:false,community:false,notifications:false,push:false};
+ const {features:f}=await api('/api/config');return {meetings:f?.meetings===true,matching:f?.matching===true,groups:f?.groups===true,community:f?.community===true,notifications:f?.notifications===true,push:f?.push===true};
 }
 export async function getProviders():Promise<Record<Provider,boolean>> {
  if(!API) return {google:false,facebook:false,apple:false};
@@ -56,7 +57,7 @@ async function nativeProof(){
  const digest=await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256,verifier,{encoding:Crypto.CryptoEncoding.BASE64});
  return {verifier,challenge:digest.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')};
 }
-export async function signOut() {try{await api('/api/logout','POST');}finally{if(Platform.OS!=='web') await SecureStore.deleteItemAsync(TOKEN_KEY);}}
+export async function signOut() {await disableNativePush(api).catch(()=>{});try{await api('/api/logout','POST');}finally{if(Platform.OS!=='web') await SecureStore.deleteItemAsync(TOKEN_KEY);}}
 export async function deleteAccount() {
  const {provider}=await api('/api/account/deletion-method');
  if(provider==='apple'){
@@ -66,5 +67,6 @@ export async function deleteAccount() {
   try{await reauthenticateAndDeleteAppleAccount({createProof:nativeProof,request:api,authorize:(options:{nonce:string;state:string})=>Apple.signInAsync({...options,requestedScopes:[Apple.AppleAuthenticationScope.EMAIL]})});}
   catch(error){if((error as {code?:string}).code==='ERR_REQUEST_CANCELED')throw new Error('Cancellazione annullata. Il tuo account è ancora presente.');throw error;}
  }else await api('/api/account','DELETE');
+ await disableNativePush(api).catch(()=>{});
  if(Platform.OS!=='web')await SecureStore.deleteItemAsync(TOKEN_KEY);
 }

@@ -3,6 +3,25 @@ import {appleFixture,appleIdentity,appleJWT} from '../support/apple-fixture.mjs'
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile,writeFile,readdir} from 'node:fs/promises';import {resolve} from 'node:path';
 import {Miniflare,convertV4MiniflareOptions} from 'miniflare';import {createD1Store} from '../../server/d1-store.mjs';import {createHash,generateKeyPairSync,sign} from 'node:crypto';
 const directory=resolve(process.env.WORKER_BUNDLE_DIR||'.worker-test-bundle');
+test('bundled Worker stores push consent encrypted in D1 and revokes on logout',async()=>{
+ const projectId='b12d747a-2ade-4894-a847-381026c7089a';
+ const {mf,store}=await harness({PUSH_ENABLED:'true',PUSH_PROJECT_ID:projectId,PUSH_ENCRYPTION_KEY:'ab'.repeat(32),EXPO_ACCESS_TOKEN:'runtime-test-access'});
+ try{
+  const user=await store.upsertIdentity('google','push-runtime','push@example.test','Test'),raw='p'.repeat(43),hash=createHash('sha256').update(raw).digest('base64url');await store.putSession(hash,user.id);await store.saveProfile(user.id,{adult:true,city:'Bologna',interests:[]});
+  const body={installationId:'768ce2e2-1038-4a07-a064-82fa4a8d1650',installationSecret:'de'.repeat(32),token:'ExpoPushToken[runtime_synthetic_token_123]',projectId},headers={authorization:'Bearer '+raw,'content-type':'application/json'};
+  const req=(path,init={})=>mf.dispatchFetch('https://balotta.example'+path,init);
+  assert.equal((await(await req('/api/config')).json()).features.push,true);
+  assert.equal((await req('/api/push/device',{method:'POST',headers,body:JSON.stringify(body)})).status,200);
+  assert.deepEqual(await(await req('/api/push/device',{headers})).json(),{enabled:true});
+  const db=await mf.getD1Database('DB'),stored=await db.prepare('SELECT * FROM push_devices').first();assert.doesNotMatch(JSON.stringify(stored),/runtime_synthetic|dededede/);
+  const peer=await store.upsertIdentity('google','push-peer','peer@example.test','Peer');await store.saveProfile(peer.id,{adult:true});const participants=[user.id,peer.id].sort();
+  await db.prepare('INSERT INTO pairings(id,first_user,second_user,created) VALUES(?,?,?,?)').bind('runtime-push-pair',...participants,Date.now()).run();
+  assert.equal((await store.push.candidates(Date.now())).some(d=>d.user_id===user.id),true);
+  await db.prepare('INSERT INTO user_blocks VALUES(?,?,?)').bind(peer.id,user.id,Date.now()).run();assert.equal((await store.push.candidates(Date.now())).length,0);
+  assert.equal((await req('/api/logout',{method:'POST',headers})).status,200);assert.equal((await db.prepare('SELECT count(*) AS n FROM push_devices').first()).n,0);
+  assert.equal((await req('/auth/push/disable',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({installationId:body.installationId,installationSecret:body.installationSecret})})).status,200);
+ }finally{await mf.dispose();}
+});
 async function harness(vars={}){
  const wrapper=resolve(directory,'test-wrapper.mjs');await writeFile(wrapper,`import worker from './index.js';export default {fetch(request,env){globalThis.fetch=async (url,init)=>{if(String(url)==='https://appleid.apple.com/auth/keys'&&env.TEST_APPLE_JWK)return Response.json({keys:[JSON.parse(env.TEST_APPLE_JWK)]});if(env.TEST_APPLE_REVOCATION==='true'){const p=new URLSearchParams(init.body);if(String(url)==='https://appleid.apple.com/auth/token')return Response.json({id_token:p.get('code'),refresh_token:'runtime-refresh'});if(String(url)==='https://appleid.apple.com/auth/revoke'&&p.get('token')==='runtime-refresh'&&p.get('token_type_hint')==='refresh_token')return new Response(null,{status:200});}throw Error('External requests prohibited in local runtime tests');};return worker.fetch(request,{...env,AI:{async run(model,input){if(!model.endsWith('flux-2-klein-4b')||!input.multipart?.contentType.includes('boundary='))throw Error('Invalid binding invocation');return {image:'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jw1sAAAAASUVORK5CYII='}}}})}};`);
  const modules=await Promise.all((await readdir(directory)).filter(name=>name==='index.js'||name==='test-wrapper.mjs'||name.endsWith('.jpg')).sort((a,b)=>a==='test-wrapper.mjs'?-1:b==='test-wrapper.mjs'?1:0).map(async name=>({type:name.endsWith('.jpg')?'Data':'ESModule',path:resolve(directory,name),contents:name.endsWith('.jpg')?new Uint8Array(await readFile(resolve(directory,name))):await readFile(resolve(directory,name),'utf8')})));

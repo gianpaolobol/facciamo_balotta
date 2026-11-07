@@ -6,6 +6,7 @@ import {createGroupsStore,GROUPS_SCHEMA} from './groups-store.mjs';
 import {createMatchingStore,MATCHING_SCHEMA} from './matching-store.mjs';
 import {SHARED_IMAGE_FROM,SHARED_IMAGE_WHERE} from './peer-images-store.mjs';
 import {createNotificationsStore,NOTIFICATIONS_SCHEMA} from './notifications-store.mjs';
+import {createPushStore,PUSH_SCHEMA} from './push-store.mjs';
 
 export function createStore(path) {
  const db=new DatabaseSync(path);
@@ -27,6 +28,7 @@ export function createStore(path) {
  db.exec(COMMUNITY_SCHEMA);db.exec(GROUPS_SCHEMA);db.exec(MATCHING_SCHEMA);
  if(!db.prepare('PRAGMA table_info(reports)').all().some(column=>column.name==='resolved'))db.exec('ALTER TABLE reports ADD COLUMN resolved INTEGER NOT NULL DEFAULT 0');
  db.exec(NOTIFICATIONS_SCHEMA);
+ db.exec(PUSH_SCHEMA);
  const queries={first:(sql,...args)=>db.prepare(sql).get(...args)??null,all:(sql,...args)=>db.prepare(sql).all(...args)};
  const meetings=createMeetingsStore(queries),community=createCommunityStore(queries),groups=createGroupsStore(queries),matching=createMatchingStore(queries),notifications=createNotificationsStore(queries);
  function prune() { const now=Date.now(); for(const table of ['attempts','sessions','handoffs']) db.prepare(`DELETE FROM ${table} WHERE expires < ?`).run(now); }
@@ -36,7 +38,7 @@ export function createStore(path) {
    user:userId?db.prepare('SELECT count(*) AS n FROM image_attempts WHERE account_id=? AND day=? AND user_id=?').get(accountId,day,userId).n:0};
  }
  return {
-  imageUsage,meetings,community,groups,matching,notifications,
+  imageUsage,meetings,community,groups,matching,notifications,push:createPushStore(queries),
   getSharedProfileImage(actor,pairId,slot){return db.prepare(`SELECT i.* ${SHARED_IMAGE_FROM} WHERE ${SHARED_IMAGE_WHERE} ORDER BY i.created DESC,i.id LIMIT 1`).get(pairId,actor,actor,actor,slot)??null;},
   reserveImageAttempt(accountId,userId,slot){
    const now=Date.now(),day=new Date(now).toISOString().slice(0,10);db.exec('BEGIN IMMEDIATE');

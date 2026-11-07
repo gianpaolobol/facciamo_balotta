@@ -7,6 +7,7 @@ import {createCommunityRoutes} from './community.mjs';
 import {createMatchingRoutes} from './matching.mjs';
 import {createPeerImageRoutes} from './peer-images.mjs';
 import {createNotificationRoutes} from './notifications.mjs';
+import {createPushRoutes,pushReady} from './push.mjs';
 import {validateIllustratedDraft} from '../src/illustrated-draft.mjs';
 import { randomBytes, createHash, timingSafeEqual } from 'node:crypto';
 
@@ -25,6 +26,7 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  const matchingRoutes=createMatchingRoutes({store,enabled:config.matchingEnabled===true&&config.meetingsEnabled===true});
  const peerImageRoutes=createPeerImageRoutes({store,enabled:config.matchingEnabled===true&&config.meetingsEnabled===true});
  const notificationRoutes=createNotificationRoutes({store,enabled:config.notificationsEnabled===true});
+ const pushRoutes=createPushRoutes({store,config});
  const secure=origin.startsWith('https:');
  const cookie=(name,value,maxAge)=>`${name}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${secure?'; Secure':''}`;
  const ready=provider=>config.enabled===true && (provider==='google'?Boolean(config.googleId&&config.googleSecret):provider==='facebook'?Boolean(config.facebookId&&config.facebookSecret&&/^v\d+\.\d+$/.test(config.facebookVersion||'')):false);
@@ -40,7 +42,11 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  }
  async function route(request) {
   const url=new URL(request.url); const path=url.pathname;
-  if(path==='/api/config') return Response.json({providers:{google:ready('google'),facebook:ready('facebook'),apple:appleReady()},features:{meetings:config.meetingsEnabled===true,matching:config.matchingEnabled===true&&config.meetingsEnabled===true,groups:config.groupsEnabled===true,community:config.communityEnabled===true,notifications:config.notificationsEnabled===true},restrictedBeta:true});
+  if(path==='/api/config') return Response.json({providers:{google:ready('google'),facebook:ready('facebook'),apple:appleReady()},features:{meetings:config.meetingsEnabled===true,matching:config.matchingEnabled===true&&config.meetingsEnabled===true,groups:config.groupsEnabled===true,community:config.communityEnabled===true,notifications:config.notificationsEnabled===true,push:pushReady(config)},restrictedBeta:true});
+  if(path==='/auth/push/disable'){
+   if(request.headers.has('origin')&&request.headers.get('origin')!==origin)return new Response('Origine non consentita',{status:403});
+   return await pushRoutes({path,request,user:null,sessionHash:null,jsonBody});
+  }
   if(path==='/auth/apple/notifications'){
    if(request.method!=='POST')return new Response('Metodo non consentito',{status:405});
    if(config.appleNotificationsEnabled!==true||config.appleBundleId!=='it.facciamobalotta.app')return Response.json({error:'Notifiche Apple non configurate.'},{status:503});
@@ -130,7 +136,8 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
    if(path==='/api/community-capabilities'&&request.method==='GET')return Response.json({moderation:config.communityEnabled===true&&(config.moderatorEmails||[]).map(s=>s.trim().toLowerCase()).includes(user.email.toLowerCase())});
    const safetyAllowed=path.startsWith('/api/account')||path==='/api/logout'||path==='/api/session'||path.startsWith('/api/blocks')||path.startsWith('/api/moderation')||(request.method==='GET'&&(path==='/api/profile'||path==='/api/illustrated-profile'));
    if(!safetyAllowed&&store.community&&await store.community.isSuspended(user.id))return Response.json({error:'Account sospeso. Puoi consultare il profilo, uscire o cancellare l’account.'},{status:403});
-   const social={path,request,user,jsonBody};
+   const social={path,request,user,jsonBody,sessionHash:hash(raw)};
+   const pushResponse=await pushRoutes(social);if(pushResponse)return pushResponse;
    const notificationResponse=await notificationRoutes(social);if(notificationResponse)return notificationResponse;
    const peerImageResponse=await peerImageRoutes(social);if(peerImageResponse)return peerImageResponse;
    const communityResponse=await communityRoutes(social);if(communityResponse)return communityResponse;

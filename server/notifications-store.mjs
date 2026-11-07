@@ -18,6 +18,8 @@ const actor='(SELECT uid FROM actor)';
 const pairVisible=`EXISTS(SELECT 1 FROM pairings p WHERE p.id=n.pair_id AND ${actor} IN(p.first_user,p.second_user) AND p.first_decision<>'no' AND p.second_decision<>'no' AND ${adult('p.first_user')} AND ${adult('p.second_user')} AND ${clear('p.first_user','p.second_user')} AND (n.kind='pair' OR (n.kind='message' AND p.first_decision='yes' AND p.second_decision='yes')))`;
 const groupVisible=`EXISTS(SELECT 1 FROM groups g WHERE g.id=n.group_id AND g.cancelled=0 AND ${adult('g.organizer_id')} AND ${clear(actor,'g.organizer_id')} AND NOT EXISTS(SELECT 1 FROM group_members m WHERE m.group_id=g.id AND (NOT (${clear(actor,'m.user_id')}) OR NOT (${adult('m.user_id')}))) AND ((n.kind IN('message','approval') AND EXISTS(SELECT 1 FROM group_members m WHERE m.group_id=g.id AND m.user_id=${actor}) AND (n.kind<>'approval' OR g.organizer_id<>${actor})) OR (n.kind='request' AND g.organizer_id=${actor} AND EXISTS(SELECT 1 FROM group_requests r WHERE r.group_id=g.id AND r.state='pending' AND ${adult('r.user_id')} AND ${clear(actor,'r.user_id')}))))`;
 const visible=`n.user_id=${actor} AND ${adult(actor)} AND (${pairVisible} OR ${groupVisible})`;
+// Shared predicate: transport must select the same currently visible rows as the inbox.
+export {visible as NOTIFICATION_VISIBLE_SQL};
 const cte='WITH actor AS(SELECT ? AS uid) ';
 export function createNotificationsStore({first,all}){
  return {

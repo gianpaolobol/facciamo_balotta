@@ -1,5 +1,7 @@
 # Aggiornamenti persistenti nell’app
 
+La casella descritta qui resta indipendente dal trasporto. È ora predisposta anche l'estensione push nativa facoltativa in [NATIVE_PUSH.md](NATIVE_PUSH.md), disabilitata per default e mai inviata a un provider reale in questa verifica.
+
 Casella personale di aggiornamenti generici, generati atomicamente dalle scritture SQLite/D1. Nessun testo del messaggio, nota di partecipazione, nome, email o token dispositivo viene salvato nella notifica. Non vengono inviati push, email o richieste a servizi esterni.
 
 ## Integrazione
@@ -44,4 +46,4 @@ I contenuti della notifica sono generici: una richiesta non identifica quale per
 
 `node --test tests/notifications.test.mjs` verifica trigger, destinatari, revoche, privacy, contrassegno letto e limiti con SQLite in memoria. Non costituisce una prova su telefoni o infrastruttura pubblicata.
 
-APNs e FCM non sono configurati. Restano esterni a questo modulo credenziali e ambienti push, registrazione/revoca token, consenso del dispositivo, build firmate, associazione delle credenziali ai bundle e prove reali iOS/Android. Il nome “aggiornamenti nell’app” non implica consegna in background o a app chiusa.
+APNs e FCM non sono configurati. La registrazione/revoca token e il consenso sono implementati separatamente nel modulo NATIVE_PUSH; restano esterni credenziali e ambienti push, build firmate, associazione delle credenziali ai bundle e prove reali iOS/Android. Il nome “aggiornamenti nell’app” non implica consegna in background o a app chiusa.

@@ -3,11 +3,11 @@
 ## Stato corrente — beta funzionale completata nel codice (7 novembre 2026)
 Questa sezione prevale su tutte le priorità storiche successive. Leggere docs/APP_STATUS_2026-11-07.md. Non ricominciare recuperi o funzioni già implementate.
 - Ramo feat/illustrated-profile-draft-20261107, PR #1: UI live, preferenze/matching, profilo illustrato approvato, appuntamenti, gruppi, chat, blocchi/segnalazioni/moderazione e notifiche interne integrati. Demo/font/asset preservati.
-- Verifiche finali locali:195/195 test generali;9/9 Worker compilato/Miniflare-D1; TypeScript ed export web/iOS/Android exit0. Browser mobile con due account sintetici superato, inclusi approvazioni, chat, revisioni e inbox. Nessun provider reale o telefono collaudato.
+- Verifiche finali locali dopo le push:230/230 test generali;10/10 Worker compilato/Miniflare-D1; TypeScript ed export web/iOS/Android exit0. Revisione indipendente con due regressioni corrette RED→GREEN (scadenza sessione durante invii, coda con notifiche invisibili). Browser mobile con due account sintetici superato, inclusi approvazioni, chat, revisioni e inbox. Nessun provider reale o telefono collaudato.
 - GitHub Actions sul codice5681326: run42404274263/job128498490018 termina failure in2secondi con steps vuoto, prima dei comandi. Annotazioni lette nel browser GitHub: restrizione amministrativa di Billing & plans (pagamenti recenti non riusciti oppure limite di spesa). Non è stato modificato alcun piano/budget; non dichiarare CI verde.
 - Tutti i flag sociali/OAuth/Apple/AI restano disabilitati per default; check:release ready=false. Nessun deploy, nuova chiave/spesa, build firmata o merge in main. Anteprima precedente invariata.
 - Prossimo passo: attivazione in un ambiente normalmente autorizzato, configurazione account/callback/secret/progetto Expo/store, vere generazioni AI e firme/prove fisiche. Diniego di rete Cloudflare invariato: non aggirarlo.
-- Push APNs/FCM non implementati; notifiche attuali solo interne all'app. Informative/termini definitivi e monitoraggio quote restano prerequisiti di pubblicazione.
+- Incremento push native predisposto: consenso esplicito, token cifrati, prova di installazione, revoca con sessione, quote SQL e ricevute Expo; PUSH_ENABLED=false, nessun cron/invio reale. Leggere docs/NATIVE_PUSH.md. APNs/FCM/EAS e prova telefoni non configurati. Informative/termini definitivi e monitoraggio quote restano prerequisiti di pubblicazione.
 
 Aggiornato il 7 novembre 2026 (Europe/Rome).
 Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
@@ -256,3 +256,4 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Guide aggiornate: APP_STATUS_2026-11-07.md, WORKERS_SETUP.md, MEETINGS_API.md, GROUPS_API.md, COMMUNITY_API.md, NOTIFICATIONS.md; piano/spec complete-beta. Codice e test salvati nel ramo dedicato con verifica dei blob remoti prima di dichiarare il salvataggio.
 - Restano esterni/non verificati: accesso di rete autorizzato a Cloudflare, piano Free/quote reali, database/origin/callback/secret e account provider dedicati, progetto Expo/store, build firmate e telefoni, due immagini reali, informative/termini definitivi. Il Worker esempio è API-only; web reale richiede bundle statico sullo stesso origin o configurazione CORS/callback esplicita. Client nativi usano bearer/PKCE.
 - Nessun pagamento, ricarica, invito/messaggio esterno, pubblicazione o modifica dell'anteprima esistente. Non riusare automaticamente secret di Fungo Italia. Le sezioni precedenti restano archivio storico, non coda di funzioni da risviluppare.
+
