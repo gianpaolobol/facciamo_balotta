@@ -81,3 +81,8 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Stato inventario: 62/83; 21 originali pendenti. Nessuna modifica al codice.
 - Screenshot IMG_0522.jpeg: Unknown error anche su Chrome iPhone; causa non accertata. URL della chat non disponibile dalle fonti accessibili.
 - Prossima azione: trasferire il blob originale pottery.png e verificare il salvataggio prima di altre immagini.
+
+## Recupero originali — 63/83, trasferimento ceramica completato
+- Trasferiti i byte originali di pottery.png: SHA Git restituito da GitHub 7b1a8beb73e1d3db4c82b34f270de0f5a070d14f, identico al calcolo locale. SHA-256 già verificato contro il manifest iniziale.
+- Risolto l'impedimento del blocco precedente; nessuna ricodifica. Inventario 63/83, 20 originali pendenti.
+- Nessuna modifica al codice o nuova esecuzione dei test. Proseguire con i restanti originali a coppie.
