@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS apple_session_grants(hash TEXT PRIMARY KEY REFERENCES sessions(hash) ON DELETE CASCADE, issued_at INTEGER NOT NULL);

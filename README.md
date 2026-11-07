@@ -1,3 +1,7 @@
+# Stato della beta funzionale — 7 novembre 2026
+
+Profilo illustrato, accessi, preferenze/matching, appuntamenti, gruppi, chat, blocchi/segnalazioni, moderazione e notifiche in-app sono collegati nel codice. Tutti i servizi reali restano disabilitati prima del collaudo: non è una pubblicazione sugli store. Stato completo e prerequisiti: [docs/APP_STATUS_2026-11-07.md](docs/APP_STATUS_2026-11-07.md).
+
 # Facciamo Balotta
 
 App Expo / React Native per web, iOS e Android. Prima anteprima illustrativa privata, con un backend OAuth preparato separatamente. Dati, persone ed eventi dimostrativi sono fittizi; non esiste ancora un servizio pubblico di appuntamenti.
@@ -34,7 +38,7 @@ L'IA non è attiva: nessun profilo è inviato a servizi AI e non vengono inventa
 
 ## Accessi reali
 
-Google e Facebook richiedono credenziali sviluppatore e un backend HTTPS. Apple è previsto per iOS; Instagram non è supportato come login. Niente email/password, SMS o account aggiuntivi in questa versione.
+Google e Facebook richiedono credenziali sviluppatore e un backend HTTPS. Apple nativo è predisposto e disabilitato su iOS, con revoca e notifiche implementate, in attesa di configurazione, firma e prove reali (docs/APPLE_NATIVE_SETUP.md); Instagram non è supportato come login. Niente email/password, SMS o account aggiuntivi in questa versione.
 
 Il server usa OAuth provider/subject, sessioni opache con hash in SQLite, protezione dello stato OAuth, allowlist beta controllata sul server e handoff nativo con codice monouso legato a un verifier PKCE. Due provider con la stessa email non vengono uniti automaticamente.
 
@@ -61,3 +65,19 @@ Lo sviluppo prosegue nella repository privata `gianpaolobol/facciamo_balotta`. Q
 ## Prossimo sviluppo approvato
 
 Profilo illustrato: descrizione facoltativa dell’aspetto per un ritratto, descrizione degli interessi con conferma dell’utente e fino a cinque immagini distinte, una per interesse. Stile coerente con la direzione grafica approvata; rigenerazione singola. Matching basato su interessi, intenzioni e disponibilità, senza analisi estetica del ritratto. La generazione personale non è ancora collegata. Nessuna chiave API è stata creata; la creazione è autorizzata, la destinazione sicura è da definire senza inserire segreti nei sorgenti.
+
+## Bozza del profilo illustrato (ramo di sviluppo)
+
+La schermata Profilo permette di descrivere un ritratto facoltativo e fino a cinque interessi, con conferma individuale dei testi. Modificare un campo annulla soltanto la sua conferma.
+
+Gli utenti autenticati possono salvare la bozza illustrata con un pulsante dedicato e ritrovarla al successivo accesso. Il server usa una tabella separata dal profilo base e verifica la versione per impedire sovrascritture da altre sessioni; cancellare l’account elimina anche le descrizioni. Le modifiche non salvate si perdono uscendo dalla schermata.
+
+In demo usare descrizioni inventate: i testi restano locali e si cancellano uscendo dalla schermata. Il ramo include ora generazione, approvazione e rigenerazione singola tramite Cloudflare Workers AI (FLUX.2 Klein4B), disattivate finché account e token del piano Workers Free non sono configurati e verificati. Nessuna generazione reale o confronto di resa artistica è stato eseguito finora. Il ramo non è pubblicato nell’anteprima.
+
+La generazione usa due immagini del progetto come riferimento e mantiene il font Balotta Inchiostro esistente. Il server limita a 50 tentativi al giorno complessivi e 12 per utente, senza retry automatico o fallback a pagamento. L'account deve restare Workers Free: il flag locale non verifica automaticamente un eventuale cambio di piano. Dettagli e fonti in docs/superpowers/specs/2026-11-07-free-profile-ai.md.
+
+## Backend gestito Workers/D1
+
+Il ramo prepara il backend condiviso delle app iOS e Android su Cloudflare Workers e D1. L'adapter Node/SQLite resta utilizzabile per lo sviluppo. Configurazione, migrazioni e prove locali sono descritte in [WORKERS_SETUP.md](docs/WORKERS_SETUP.md). Nessun backend remoto è ancora pubblicato: ID database/origin sono segnaposto, OAuth e AI restano disabilitati. La distribuzione deve avvenire in un ambiente autorizzato al servizio; non è un mezzo per aggirare la policy di rete di questa sessione.
+
+API di interesse reciproco e appuntamenti a due predisposte su Node/D1, disabilitate per default con MEETINGS_ENABLED=false. Due conferme sulla stessa versione, modifiche che azzerano i sì e annullamento terminale. Matching e interfaccia multiutente collegati e disabilitati prima del collaudo reale: docs/MEETINGS_API.md.

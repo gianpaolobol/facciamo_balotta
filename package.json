@@ -18,19 +18,31 @@
     "export:all": "expo export --platform all",
     "server": "node server/index.mjs",
     "check:release": "node scripts/release-check.mjs",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "worker:bundle": "WRANGLER_SEND_METRICS=false wrangler deploy --dry-run --outdir .worker-test-bundle",
+    "test:worker": "npm run worker:bundle && node --test tests/workers/*.test.mjs",
+    "worker:dev": "wrangler dev --local",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "assets:brand": "node scripts/generate-native-icons.mjs"
   },
   "dependencies": {
     "@expo-google-fonts/comic-neue": "^0.4.1",
     "@expo-google-fonts/kalam": "^0.4.1",
     "@expo/metro-runtime": "~58.0.15",
     "expo": "58.0.2",
+    "expo-apple-authentication": "~58.0.2",
     "expo-auth-session": "~58.0.17",
+    "expo-constants": "~58.0.9",
+    "expo-contacts": "~58.0.4",
     "expo-crypto": "~58.0.7",
+    "expo-device": "~58.0.5",
     "expo-font": "~58.0.11",
     "expo-linear-gradient": "~58.0.3",
     "expo-linking": "~58.0.16",
+    "expo-mail-composer": "~58.0.3",
+    "expo-notifications": "~58.0.11",
     "expo-secure-store": "~58.0.2",
+    "expo-sms": "~58.0.2",
     "expo-web-browser": "~58.0.7",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -42,8 +54,11 @@
   "devDependencies": {
     "@types/react": "19.2.14",
     "fontkit": "^2.0.4",
+    "miniflare": "5.20261104.0-beta",
     "react-test-renderer": "^19.3.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "wrangler": "4.158.0",
+    "sharp": "0.35.5"
   },
   "overrides": {
     "react-native": "$react-native"

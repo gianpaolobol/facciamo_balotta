@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-*/
 .expo/
 .env
 .env.*
@@ -12,3 +13,7 @@ android/
 artifacts/
 
 
+
+.wrangler/
+.worker-test-bundle/
+.dev.vars*

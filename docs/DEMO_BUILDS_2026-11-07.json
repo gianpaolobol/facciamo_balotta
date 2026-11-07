@@ -1,0 +1,49 @@
+{
+  "sourceCommit": "fee7bb661e78d22eecaf8213f065852e4f4ee061",
+  "demoOnly": true,
+  "android": {
+    "buildId": "24804f14-58e7-40a6-9baa-3b7700035d46",
+    "status": "FINISHED",
+    "version": "0.1.0",
+    "versionCode": "2",
+    "artifactUrl": "https://expo.dev/artifacts/eas/HpjhseCCjVYf-llERp5dcZAk79pfTGyWnCRgg76KL1E.apk",
+    "bytes": 106281973,
+    "sha256": "d4312d8a5d85e8a40ad94a44a106871a6ec3af4454196f995d3cdd9c6c3d0eb4",
+    "deviceTested": false,
+    "storePublished": false
+  },
+  "ios": {
+    "appStoreConnectId": "6832101489",
+    "bundleIdentifier": "it.facciamobalotta.app",
+    "provisioningConfigured": true,
+    "status": "BLOCKED_BY_NETWORK_POLICY_BEFORE_JOB_ID",
+    "buildNumber": "3",
+    "deviceTested": false,
+    "testFlightUploaded": false,
+    "blocker": "api.expo.dev:443 access blocked by policy",
+    "submissionKeyConfigured": true,
+    "existingKeyReuseExplicitlyAuthorized": true,
+    "submissionKeyName": "fungoitalia",
+    "officialEscalationAttempt": {
+      "result": "REJECTED_BEFORE_EXECUTION",
+      "reason": "Granular policy disallows sandbox_approval and request_permissions",
+      "newBuildStarted": false
+    },
+    "nativeGithubAlternative": {
+      "workflow": ".github/workflows/ios-native.yml",
+      "status": "PREPARED_NOT_RUN",
+      "usesExpoCloudApi": false,
+      "offlinePrebuildPassed": true,
+      "githubSigningSecretsPresent": false,
+      "macQuotaVerified": false,
+      "registeredOnDefaultBranch": false,
+      "xcodeArchiveTested": false
+    }
+  },
+  "oauthLive": false,
+  "repository": {
+    "visibility": "public",
+    "visibilityVerified": true,
+    "changedAtLocalDate": "2026-11-08"
+  }
+}

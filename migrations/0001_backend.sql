@@ -1,0 +1,15 @@
+PRAGMA foreign_keys=ON;
+ CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, provider TEXT NOT NULL, subject TEXT NOT NULL, email TEXT NOT NULL, name TEXT NOT NULL, UNIQUE(provider,subject));
+ CREATE TABLE IF NOT EXISTS profiles(user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, data TEXT NOT NULL);
+ CREATE TABLE IF NOT EXISTS illustrated_profiles(user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, data TEXT NOT NULL, version INTEGER NOT NULL);
+ CREATE TABLE IF NOT EXISTS image_attempts(id TEXT PRIMARY KEY, account_id TEXT NOT NULL, user_id TEXT REFERENCES users(id) ON DELETE SET NULL, slot TEXT NOT NULL, day TEXT NOT NULL, created INTEGER NOT NULL, state TEXT NOT NULL);
+ CREATE INDEX IF NOT EXISTS image_attempts_day ON image_attempts(account_id,day);
+ CREATE TABLE IF NOT EXISTS profile_images(id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, slot TEXT NOT NULL, description_hash TEXT NOT NULL, mime TEXT NOT NULL, model TEXT NOT NULL, style_version TEXT NOT NULL, approved INTEGER NOT NULL, created INTEGER NOT NULL);
+ CREATE TABLE IF NOT EXISTS attempts(hash TEXT PRIMARY KEY, data TEXT NOT NULL, expires INTEGER NOT NULL);
+ CREATE TABLE IF NOT EXISTS sessions(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, expires INTEGER NOT NULL);
+ CREATE TABLE IF NOT EXISTS handoffs(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, challenge TEXT NOT NULL, expires INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS profile_image_chunks(image_id TEXT NOT NULL REFERENCES profile_images(id) ON DELETE CASCADE, part INTEGER NOT NULL, data BLOB NOT NULL, PRIMARY KEY(image_id,part));
+CREATE TABLE IF NOT EXISTS image_storage_usage(id INTEGER PRIMARY KEY CHECK(id=1), bytes INTEGER NOT NULL CHECK(bytes>=0 AND bytes<=200000000));
+INSERT OR IGNORE INTO image_storage_usage VALUES(1,0);
+CREATE TRIGGER IF NOT EXISTS image_storage_add AFTER INSERT ON profile_image_chunks BEGIN UPDATE image_storage_usage SET bytes=bytes+length(NEW.data) WHERE id=1; END;
+CREATE TRIGGER IF NOT EXISTS image_storage_remove AFTER DELETE ON profile_image_chunks BEGIN UPDATE image_storage_usage SET bytes=bytes-length(OLD.data) WHERE id=1; END;

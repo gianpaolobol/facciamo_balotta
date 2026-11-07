@@ -1,0 +1,23 @@
+{
+  "provenance": "resized project illustrations, not recovered originals",
+  "files": [
+    {
+      "path": "assets/ai-reference/cooking.jpg",
+      "source": "assets/events/cooking.jpg",
+      "sha256": "f2ce7f13959fbbd9ef6b32312271eee79f50d64232e5b52390404194089c01d2",
+      "source_sha256": "9a9a43c8198b29d5e0cc5043c3f1bbc8fd4b7e5f41ab6addde13873a7b86ab93",
+      "transformation": "thumbnail within 448x448; JPEG quality88",
+      "width": 448,
+      "height": 252
+    },
+    {
+      "path": "assets/ai-reference/hiking.jpg",
+      "source": "assets/events/hiking.jpg",
+      "sha256": "6b49001abf1d6479ab707d87c201ba4bcc04b9b17b81e4e09f6dc021d9d9dc81",
+      "source_sha256": "96d5df06e0e5d04639d8a1ed015d5591f5945a56bff8e2b66b93aa5de2d359eb",
+      "transformation": "thumbnail within 448x448; JPEG quality88",
+      "width": 448,
+      "height": 252
+    }
+  ]
+}

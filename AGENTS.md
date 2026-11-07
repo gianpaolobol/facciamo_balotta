@@ -1,7 +1,7 @@
 # Istruzioni di continuità — Facciamo Balotta
 
 Prima di lavorare leggere CONTINUITA.md e docs/RECUPERO_2026-11-06.md.
-La repository privata gianpaolobol/facciamo_balotta è il riferimento del progetto.
+La repository gianpaolobol/facciamo_balotta è il riferimento del progetto. L’utente l’ha resa pubblica l’8 novembre 2026; non ripristinare la visibilità privata senza richiesta.
 Confrontare sempre lo stato documentato con branch, commit e file reali.
 
 Dopo ogni blocco coerente di lavoro:

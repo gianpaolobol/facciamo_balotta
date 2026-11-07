@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- Reuses the red three-dot symbol already rendered by src/ui.tsx Brand. -->
+  <rect width="1024" height="1024" fill="#FFF5DC"/>
+  <g transform="rotate(-7 512 512)">
+    <rect x="160" y="160" width="704" height="704" rx="167" fill="#D44935" stroke="#252923" stroke-width="24"/>
+    <g fill="#FFF5DC"><circle cx="361" cy="470" r="50"/><circle cx="512" cy="554" r="50"/><circle cx="663" cy="470" r="50"/></g>
+  </g>
+</svg>

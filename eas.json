@@ -1,11 +1,77 @@
 {
- "cli":{"version":">=16.0.0","appVersionSource":"remote"},
- "build":{
-  "development":{"developmentClient":true,"distribution":"internal","node":"24.3.0"},
-  "preview":{"distribution":"internal","node":"24.3.0","android":{"buildType":"apk"},"ios":{"simulator":false}},
-  "simulator":{"distribution":"internal","node":"24.3.0","ios":{"simulator":true}},
-  "beta":{"distribution":"store","autoIncrement":true,"channel":"beta","node":"24.3.0","android":{"buildType":"app-bundle"}},
-  "production":{"extends":"beta","channel":"production"}
- },
- "submit":{"beta":{"android":{"track":"internal","releaseStatus":"draft"}}}
+  "cli": {
+    "version": ">=16.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "demo": {
+      "distribution": "store",
+      "autoIncrement": true,
+      "environment": "demo",
+      "node": "24.3.0",
+      "android": {
+        "distribution": "internal",
+        "buildType": "apk",
+        "resourceClass": "medium"
+      },
+      "ios": {
+        "resourceClass": "medium"
+      }
+    },
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "node": "24.3.0"
+    },
+    "preview": {
+      "distribution": "internal",
+      "node": "24.3.0",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      }
+    },
+    "simulator": {
+      "distribution": "internal",
+      "node": "24.3.0",
+      "ios": {
+        "simulator": true
+      }
+    },
+    "beta": {
+      "distribution": "store",
+      "autoIncrement": true,
+      "channel": "beta",
+      "node": "24.3.0",
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "environment": "preview"
+    },
+    "production": {
+      "extends": "beta",
+      "channel": "production",
+      "environment": "production"
+    }
+  },
+  "submit": {
+    "demo": {
+      "ios": {
+        "ascAppId": "6832101489",
+        "appleTeamId": "BX9MDXAHKG"
+      }
+    },
+    "beta": {
+      "ios": {
+        "ascAppId": "6832101489",
+        "appleTeamId": "BX9MDXAHKG"
+      },
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
+      }
+    }
+  }
 }
