@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-06",
+  "date": "2026-11-07",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 46,
+  "verified_files": 52,
   "complete": false,
   "files": [
     {
@@ -188,6 +188,30 @@
     {
       "path": "assets/events/basketball.png",
       "sha": "f32363a8faf5288a4b4b48f3eb2b97e122057a66"
+    },
+    {
+      "path": "assets/fonts/lettering-specimen.png",
+      "sha": "114dd84e7a9db4abdbc8005dbdfdbcd3e03c6078"
+    },
+    {
+      "path": "assets/fonts/alphabet-source.png",
+      "sha": "dc1fafdffc9ed04ca0e5b5b85c79fb980bea58ce"
+    },
+    {
+      "path": "assets/fotografia-fumetti.png",
+      "sha": "c2ec6c85e057628ca7a697193e7b27e1d0678c5b"
+    },
+    {
+      "path": "assets/musica-colli.png",
+      "sha": "a2bf4b26b08fa85ade83919db8c04a831a90f5b0"
+    },
+    {
+      "path": "assets/spiaggia-complicita.png",
+      "sha": "1583f4f4b5c35f6eaa8f8e10bb05b44e74df6275"
+    },
+    {
+      "path": "assets/tavolate-giochi.png",
+      "sha": "87c636d26e3c66f0a5333ea6c316d030d33e236d"
     }
   ],
   "pending": [
@@ -221,12 +245,7 @@
     "assets/events/volunteering.png",
     "assets/events/water.png",
     "assets/events/wine.png",
-    "assets/events/yoga.png",
-    "assets/fonts/alphabet-source.png",
-    "assets/fonts/lettering-specimen.png",
-    "assets/fotografia-fumetti.png",
-    "assets/musica-colli.png",
-    "assets/spiaggia-complicita.png",
-    "assets/tavolate-giochi.png"
-  ]
+    "assets/events/yoga.png"
+  ],
+  "source_recovered": "/workspace/scratch/d3626e7704d9/source-recovery"
 }

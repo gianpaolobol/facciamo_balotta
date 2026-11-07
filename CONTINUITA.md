@@ -1,6 +1,6 @@
 # Facciamo Balotta — punto unico di ripresa
 
-Aggiornato il 6 novembre 2026 (Europe/Rome).
+Aggiornato il 7 novembre 2026 (Europe/Rome).
 Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
 
 ## Stato verificato
@@ -32,5 +32,13 @@ Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
 Apri la repository privata gianpaolobol/facciamo_balotta. Leggi AGENTS.md, CONTINUITA.md e docs/RECUPERO_2026-11-06.md. Verifica lo stato remoto effettivo e riprendi dal primo punto aperto della coda. Non ricominciare da zero, non dichiarare il trasferimento completo finché immagini e font non sono verificati e conserva le modifiche locali già presenti.
 
 ## Avanzamento caricamento per lotti
-46/83 file asset salvati su main. Hash Git confrontati con gli originali locali e albero remoto riletto dopo ogni lotto. Elenco verificabile e file pendenti: docs/TRASFERIMENTO_ASSET.json.
-Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 37 file pending senza ricaricare quelli verificati. Nessun originale modificato.
+52/83 file asset salvati su main. Hash Git confrontati con gli originali locali e albero remoto riletto dopo ogni lotto. Elenco verificabile e file pendenti: docs/TRASFERIMENTO_ASSET.json.
+Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 31 file pending senza ricaricare quelli verificati. Nessun originale modificato.
+
+## Ripresa del 7 novembre 2026 — lotto di 6 originali
+- Letti AGENTS.md, CONTINUITA.md, recupero e inventari remoti; main iniziale e00a47c82f057ded061ae1de601a4c0447bccd60.
+- I vecchi percorsi locali non sono presenti nel nuovo ambiente. Recuperata dal repository sorgente dell’anteprima una copia al commit 21d9f2d in /workspace/scratch/d3626e7704d9/source-recovery; questo percorso è temporaneo e non è il checkout GitHub canonico.
+- Trasferiti alphabet-source.png, lettering-specimen.png e i quattro originali fotografia-fumetti, musica-colli, spiaggia-complicita, tavolate-giochi. Dimensioni e SHA-256 confrontati con l’inventario originario, SHA Git dei blob identici ai byte locali.
+- La copia sorgente recuperata contiene tutti i JPEG e il font usati dalla demo, ma non i 31 originali PNG assets/events ancora pendenti. Cercarli tra le immagini originali salvate, verificando SHA-256 e dimensioni prima del trasferimento; non sostituirli con JPEG convertiti o immagini rigenerate.
+- Nessun codice applicativo modificato; test, typecheck ed export non rieseguiti in questo lotto. Checkout remoto completo e recupero integrale restano aperti.
+- Prossima azione: recuperare i 31 PNG elencati in docs/TRASFERIMENTO_ASSET.json, poi completare verifica checkout e controlli applicativi.
