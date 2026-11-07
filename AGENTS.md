@@ -16,3 +16,10 @@ Non dichiarare build native o integrazioni reali sulla base di export o provider
 Non inserire segreti in Git. Mantenere aggiornato l'inventario degli asset quando vengono trasferiti.
 Usare riepiloghi brevi in chat e riferimenti ai file per evitare output inutilmente voluminosi.
 Queste istruzioni non impediscono crash di ChatGPT e non attivano processi a chat chiusa.
+
+## Priorità dopo il debug del 7 novembre 2026
+Leggere la priorità corrente in CONTINUITA.md e docs/DEBUG_INTERRUZIONI_2026-11-07.md.
+Gli originali PNG mancanti sono un problema archivistico separato: non bloccare test, export e sviluppo dell'app che usa JPEG/TTF.
+Non ripetere la ricerca storica o la ricreazione dei PNG a ogni ripresa. L'utente ha già chiesto di interrompere la ricerca e ricreare: per attività sulle immagini lavorare su massimo due immagini per blocco, conservare la provenienza e verificare il salvataggio prima del blocco successivo.
+Se il salvataggio remoto fallisce, fermare il blocco e indicare cosa è solo locale prima di aggiungere altro lavoro.
+Non attribuire i crash ChatGPT a immagini, lunghezza della chat o memoria senza log che lo dimostrino. Test ed export riusciti non provano la risoluzione dei crash della chat.
