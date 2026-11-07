@@ -1,6 +1,6 @@
 # Distribuzione — stato concreto
 
-Richiesta corrente: rendere Facciamo Balotta disponibile su TestFlight e Google Play. Nessun IPA/AAB è stato prodotto, caricato o pubblicato. Non considerare i bundle Expo come binari firmati.
+Richiesta corrente: rendere Facciamo Balotta disponibile su TestFlight e Google Play. APK Android demo0.1.0(2) prodotto con successo; IPA/AAB e pubblicazione store ancora da verificare. Non considerare i bundle Expo come binari firmati.
 
 ## Eseguito
 
@@ -38,3 +38,16 @@ L'output deve stare fuori dalla radice del progetto, in una nuova cartella; non 
 `check:release` resta un rapporto conservativo ready=false con prove manuali, non una promessa di pubblicazione. Riconosce ora il progetto reale; push opzionale non deve essere acceso solo per far sparire un campo mancante. La disponibilità dei servizi e le prove su telefoni rimangono separate dalla correttezza dell'archivio.
 
 Riferimenti ufficiali: [Expo Build](https://docs.expo.dev/build/setup/), [submit iOS](https://docs.expo.dev/submit/ios/), [submit Android](https://docs.expo.dev/submit/android/), [TestFlight](https://developer.apple.com/help/app-store-connect/test-a-beta-version/testflight-overview/), [test per nuovi account personali Play](https://support.google.com/googleplay/android-developer/answer/14151465?hl=it). Per gli account personali a cui si applica il requisito Google, produzione richiede almeno12tester per14giorni consecutivi; non è un requisito del test interno.
+
+## Checkpoint build demo
+
+- Android: EAS FINISHED, job24804f14-58e7-40a6-9baa-3b7700035d46; sorgenti configurazione commit fee7bb661e78d22eecaf8213f065852e4f4ee061. APK106281973byte, SHA256d4312d8a5d85e8a40ad94a44a106871a6ec3af4454196f995d3cdd9c6c3d0eb4. Verificati manifest, DEX, bundle JS e librerie per arm64-v8a/armeabi-v7a/x86/x86_64; nessuna installazione/prova fisica. Non è una release Play Store.
+- Apple: generato provisioning Facciamo Balotta App Store per bundle dedicato; UUID351c91f1-b239-413e-9e06-1c89618b765b, scadenza2027-10-09. Decodifica CMS verifica team/bundle/Sign in with Apple e corrispondenza del seriale del certificato di distribuzione account già conservato su Expo. Non copiati secret da altre app; nessuna nuova API key/certificato privato.
+- Config EAS iOS dedicata salvata tramite interfaccia web con certificato esistente e provisioning nuovo, entrambi Valid. Push/API Submit saltati. Primo tentativo senza firma fallito; secondo annullato al prompt password senza inserirla. Nuovo tentativo firmato non interattivo in avvio con buildNumber3: verificare job/esito prima di dichiarare IPA completato.
+- Profilo mobileprovision è fuori repository, escluso da Git e dai pacchetti utente. APK scaricato fuori repository.
+
+## Blocchi successivi verificati
+
+- Il nuovo comando iOS firmato con buildNumber3 si è fermato durante Using remote iOS credentials: il polling del processo ha restituito `Network access to "https://api.expo.dev:443" was blocked by policy.` Nessun URL job/IPA iOS è stato restituito o verificato. Non ripetere la chiamata e non aggirare la policy tramite browser, GitHub Actions, proxy o altri runner.
+- Apple Integrations mostra una sola Team API key attiva, nome fungoitalia, ruolo Admin; già presente nello stesso account Expo. Metadati verificati, nessun segreto letto/scaricato. Il tentativo di aprire Choose saved ASC API key è stato rifiutato da auto-review per rischio di riuso da altra app senza autorizzazione specifica per Balotta. Nessuna selezione/associazione/nuova chiave eseguita. Richiedere consenso specifico per quel riuso prima di riprovare; alternativa: chiave dedicata da configurare con autorizzazione. Non aggirare il rifiuto tramite CLI/API.
+- Queste limitazioni impediscono la dichiarazione di completamento iOS/TestFlight. Android APK è già disponibile dal job concluso, senza pubblicazione Play Store o prova su telefono.
