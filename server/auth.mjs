@@ -1,3 +1,4 @@
+import {validateIllustratedDraft} from '../src/illustrated-draft.mjs';
 import { randomBytes, createHash, timingSafeEqual } from 'node:crypto';
 
 const random=()=>randomBytes(32).toString('base64url');
@@ -15,8 +16,8 @@ export function createApp({config,store,providerFetch=fetch}) {
   const token=random(); store.putSession(hash(token),user.id);
   return native?Response.json({token},{headers:{'cache-control':'no-store'}}):new Response(null,{status:303,headers:{location:origin+'/?auth=success','set-cookie':cookie('balotta_session',token,604800)}});
  }
- async function jsonBody(request) {
-  const text=await request.text(); if(text.length>16_384) throw new Error('payload');
+ async function jsonBody(request,maxChars=16_384) {
+  const text=await request.text(); if(text.length>maxChars) throw new Error('payload');
   const body=JSON.parse(text); if(!body||Array.isArray(body)||typeof body!=='object') throw new Error('payload'); return body;
  }
  async function route(request) {
@@ -78,6 +79,16 @@ export function createApp({config,store,providerFetch=fetch}) {
    if(!user) return Response.json({error:'Accedi per continuare.'},{status:401});
    if(!['GET','HEAD'].includes(request.method)&&!bearer&&request.headers.get('origin')!==origin) return new Response('Origine non consentita',{status:403});
    if(path==='/api/session'&&request.method==='GET') return Response.json({user});
+   if(path==='/api/illustrated-profile'&&request.method==='GET') return Response.json(store.getIllustratedProfile(user.id));
+   if(path==='/api/illustrated-profile'&&request.method==='PUT') {
+    const body=await jsonBody(request,80_000);let draft;
+    try {
+     if(!Number.isSafeInteger(body.version)||body.version<0) throw new Error('Versione della bozza non valida.');
+     draft=validateIllustratedDraft(body.draft);
+    }catch(error){return Response.json({error:error.message},{status:400});}
+    const saved=store.saveIllustratedProfile(user.id,draft,body.version);
+    return saved?Response.json(saved):Response.json({error:'La bozza è stata aggiornata in un’altra sessione. Ricarica la versione salvata prima di riprovare.'},{status:409});
+   }
    if(path==='/api/profile'&&request.method==='GET') return Response.json({profile:store.getProfile(user.id)});
    if(path==='/api/profile'&&request.method==='PUT') {
     const body=await jsonBody(request);

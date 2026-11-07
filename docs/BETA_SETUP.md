@@ -30,3 +30,12 @@ Il profilo salvato in questo incremento comprende nome visualizzato, maggiore et
 Eseguire `npm run check:release`; l'esito bloccato è atteso finché mancano i collegamenti. Registrare ricevuta della build, versione/numero, commit, esito del test su iPhone e Android e prova di login. Per utenti esterni alla squadra Apple usare il percorso TestFlight esterno appropriato, senza assegnare privilegi App Store Connect ai semplici tester.
 
 La condivisione della sola anteprima privata richiede la configurazione dei visitatori supportata dall'hosting. Nessun tester è stato invitato e nessuna mail è stata inviata in questa sessione.
+
+
+## Bozza del profilo illustrato
+
+Il ramo feat/illustrated-profile-draft-20261107 introduce GET/PUT /api/illustrated-profile. Il client usa la stessa configurazione EXPO_PUBLIC_API_URL e le stesse sessioni del profilo base. Il PUT richiede draft e version; un conflitto restituisce 409 e mantiene le modifiche sul client fino a salvataggio o ricaricamento esplicito.
+
+La tabella illustrated_profiles viene creata all'avvio dal normale createStore: user_id è una FK con cancellazione a cascata, data contiene testi/conferme e version aumenta a ogni scrittura. Conservare il database persistente nell'ambiente del server. La demo non usa questo endpoint.
+
+Il reverse proxy deve ammettere almeno 80000 byte per PUT /api/illustrated-profile. L'adapter mantiene tale limite e il limite ordinario di 16384 byte sugli altri endpoint. Testi, conferme e bozza salvata non rappresentano immagini AI generate; il provider non è ancora collegato.

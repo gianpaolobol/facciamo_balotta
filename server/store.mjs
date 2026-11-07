@@ -6,6 +6,7 @@ export function createStore(path) {
  db.exec(`PRAGMA foreign_keys=ON;
  CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, provider TEXT NOT NULL, subject TEXT NOT NULL, email TEXT NOT NULL, name TEXT NOT NULL, UNIQUE(provider,subject));
  CREATE TABLE IF NOT EXISTS profiles(user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, data TEXT NOT NULL);
+ CREATE TABLE IF NOT EXISTS illustrated_profiles(user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, data TEXT NOT NULL, version INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS attempts(hash TEXT PRIMARY KEY, data TEXT NOT NULL, expires INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS sessions(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, expires INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS handoffs(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, challenge TEXT NOT NULL, expires INTEGER NOT NULL);`);
@@ -27,6 +28,16 @@ export function createStore(path) {
   takeHandoff(hash) { const row=db.prepare('DELETE FROM handoffs WHERE hash=? RETURNING *').get(hash); return row&&row.expires>Date.now()?row:null; },
   getProfile(id) { const row=db.prepare('SELECT data FROM profiles WHERE user_id=?').get(id); return row?JSON.parse(row.data):null; },
   saveProfile(id,profile) { db.prepare('INSERT INTO profiles VALUES(?,?) ON CONFLICT(user_id) DO UPDATE SET data=excluded.data').run(id,JSON.stringify(profile)); },
+  getIllustratedProfile(id) {
+   const row=db.prepare('SELECT data,version FROM illustrated_profiles WHERE user_id=?').get(id);
+   return row?{draft:JSON.parse(row.data),version:row.version}:{draft:null,version:0};
+  },
+  saveIllustratedProfile(id,draft,expectedVersion) {
+   const row=expectedVersion===0
+    ?db.prepare('INSERT INTO illustrated_profiles VALUES(?,?,1) ON CONFLICT(user_id) DO NOTHING RETURNING version').get(id,JSON.stringify(draft))
+    :db.prepare('UPDATE illustrated_profiles SET data=?,version=version+1 WHERE user_id=? AND version=? RETURNING version').get(JSON.stringify(draft),id,expectedVersion);
+   return row?{draft,version:row.version}:null;
+  },
   deleteAccount(id) { db.prepare('DELETE FROM users WHERE id=?').run(id); },
  };
 }

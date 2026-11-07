@@ -64,4 +64,8 @@ Profilo illustrato: descrizione facoltativa dell’aspetto per un ritratto, desc
 
 ## Bozza del profilo illustrato (ramo di sviluppo)
 
-La schermata Profilo include una sezione richiudibile per descrivere un ritratto facoltativo e fino a cinque interessi, con conferma individuale dei testi. Modificare un campo annulla soltanto la sua conferma. I testi restano in memoria e non vengono inclusi nel salvataggio del profilo; uscendo dalla schermata si cancellano. In demo usare descrizioni inventate. Generazione, approvazione delle immagini e rigenerazione sono ancora da collegare. Il ramo non è pubblicato nell’anteprima.
+La schermata Profilo permette di descrivere un ritratto facoltativo e fino a cinque interessi, con conferma individuale dei testi. Modificare un campo annulla soltanto la sua conferma.
+
+Gli utenti autenticati possono salvare la bozza illustrata con un pulsante dedicato e ritrovarla al successivo accesso. Il server usa una tabella separata dal profilo base e verifica la versione per impedire sovrascritture da altre sessioni; cancellare l’account elimina anche le descrizioni. Le modifiche non salvate si perdono uscendo dalla schermata.
+
+In demo usare descrizioni inventate: i testi restano locali e si cancellano uscendo dalla schermata. Generazione, approvazione delle immagini e rigenerazione sono ancora da collegare. Il ramo non è pubblicato nell’anteprima.
