@@ -1,5 +1,6 @@
 import {randomUUID} from 'node:crypto';
 import {Buffer} from 'node:buffer';
+import {createMeetingsStore} from './meetings-store.mjs';
 export function createD1Store(db){
  const stmt=(sql,...args)=>db.prepare(sql).bind(...args);
  const run=(sql,...args)=>stmt(sql,...args).run();
@@ -12,7 +13,7 @@ export function createD1Store(db){
   const day=new Date(now).toISOString().slice(0,10);return {global:(await first('SELECT count(*) AS n FROM image_attempts WHERE account_id=? AND day=?',accountId,day)).n,user:userId?(await first('SELECT count(*) AS n FROM image_attempts WHERE account_id=? AND day=? AND user_id=?',accountId,day,userId)).n:0};
  }
  return {
-  close(){},imageUsage,
+  close(){},imageUsage,meetings:createMeetingsStore({first,all}),
   getIdentity:id=>first('SELECT * FROM users WHERE id=?',id),
   async putAppleIdentitySession(identity,hash,issuedAt){
    const guard='NOT EXISTS(SELECT 1 FROM apple_account_state WHERE subject=? AND revoked_at>=?)',results=await db.batch([

@@ -1,5 +1,6 @@
 import { DatabaseSync } from 'node:sqlite';
 import { randomUUID } from 'node:crypto';
+import {createMeetingsStore,MEETINGS_SCHEMA} from './meetings-store.mjs';
 
 export function createStore(path) {
  const db=new DatabaseSync(path);
@@ -17,6 +18,8 @@ export function createStore(path) {
  CREATE TABLE IF NOT EXISTS apple_notifications(id TEXT PRIMARY KEY, expires INTEGER NOT NULL, processed INTEGER NOT NULL DEFAULT 0);
  CREATE TABLE IF NOT EXISTS apple_session_grants(hash TEXT PRIMARY KEY REFERENCES sessions(hash) ON DELETE CASCADE, issued_at INTEGER NOT NULL);
  CREATE INDEX IF NOT EXISTS apple_notifications_expiry ON apple_notifications(expires);`);
+ db.exec(MEETINGS_SCHEMA);
+ const meetings=createMeetingsStore({first:(sql,...args)=>db.prepare(sql).get(...args)??null,all:(sql,...args)=>db.prepare(sql).all(...args)});
  function prune() { const now=Date.now(); for(const table of ['attempts','sessions','handoffs']) db.prepare(`DELETE FROM ${table} WHERE expires < ?`).run(now); }
  function imageUsage(accountId,userId=null,now=Date.now()){
   const day=new Date(now).toISOString().slice(0,10);
@@ -24,7 +27,7 @@ export function createStore(path) {
    user:userId?db.prepare('SELECT count(*) AS n FROM image_attempts WHERE account_id=? AND day=? AND user_id=?').get(accountId,day,userId).n:0};
  }
  return {
-  imageUsage,
+  imageUsage,meetings,
   reserveImageAttempt(accountId,userId,slot){
    const now=Date.now(),day=new Date(now).toISOString().slice(0,10);db.exec('BEGIN IMMEDIATE');
    try{

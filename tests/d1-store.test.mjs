@@ -33,6 +33,15 @@ test('D1 delayed Apple revocations preserve sessions authorized after the event'
   await store.applyAppleEvent(event);assert.ok(await store.getSession('fresh'));await store.applyAppleEvent({...event,id:'older',eventTime:(now-30)*1000});assert.ok(await store.getSession('fresh'));
  }finally{await mf.dispose();}
 });
+test('D1 appointments combine concurrent confirmations and reject conflicting revisions',async()=>{
+ const {mf,store}=await harness();try{
+  const a=await store.upsertIdentity('google','meeting-a','a@example.com','A'),b=await store.upsertIdentity('google','meeting-b','b@example.com','B'),c=await store.upsertIdentity('google','meeting-c','c@example.com','C');for(const u of [a,b,c])await store.saveProfile(u.id,{adult:true,name:u.name});
+  const p=await store.meetings.offerPair(a.id,b.id);await Promise.all([store.meetings.decide(a.id,p.id,'yes'),store.meetings.decide(b.id,p.id,'yes')]);const created=await store.meetings.createAppointment(a.id,p.id,{activity:'Mostra',startsAt:new Date(Date.now()+86400000).toISOString(),place:'Museo pubblico',cost:'Gratis'});
+  const confirmations=await Promise.all([store.meetings.confirm(a.id,created.id,1),store.meetings.confirm(b.id,created.id,1)]);assert.equal(confirmations.filter(Boolean).length,2);let current=await store.meetings.getAppointment(a.id,created.id);assert.equal(current.confirmed_first,1);assert.equal(current.confirmed_second,1);assert.equal(await store.meetings.getAppointment(c.id,created.id),null);
+  const data={activity:'Passeggiata',startsAt:new Date(Date.now()+172800000).toISOString(),place:'Piazza pubblica',cost:'Gratis'},revisions=await Promise.all([store.meetings.revise(a.id,created.id,1,data),store.meetings.revise(b.id,created.id,1,data)]);assert.equal(revisions.filter(Boolean).length,1);current=await store.meetings.getAppointment(a.id,created.id);assert.equal(current.version,2);assert.equal(current.confirmed_first,0);assert.equal(current.confirmed_second,0);assert.equal(await store.meetings.confirm(a.id,created.id,1),null);
+  await store.deleteAccount(b.id);assert.equal(await store.meetings.getAppointment(a.id,created.id),null);
+ }finally{await mf.dispose();}
+});
 test('D1 quota reservation is atomic under concurrent calls and survives account deletion',async()=>{
  const {mf,store}=await harness();try{const u=await store.upsertIdentity('google','a','a@example.com','A');const jobs=await Promise.all(Array.from({length:6},()=>store.reserveImageAttempt('account',u.id,'portrait')));assert.equal(jobs.filter(x=>x.id).length,1);await store.finishImageAttempt(jobs.find(x=>x.id).id,false);
  for(let i=1;i<12;i++){const job=await store.reserveImageAttempt('account',u.id,'portrait');assert.ok(job.id);await store.finishImageAttempt(job.id,false);}assert.equal((await store.reserveImageAttempt('account',u.id,'portrait')).error,'quota');await store.deleteAccount(u.id);assert.equal((await store.imageUsage('account')).global,12);

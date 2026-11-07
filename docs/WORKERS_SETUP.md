@@ -51,3 +51,6 @@ Il timeout del binding AI è di 60 secondi; una risposta tardiva non viene utili
 - https://developers.cloudflare.com/workers-ai/get-started/workers-wrangler/
 
 Le migrazioni 0002_apple_lifecycle.sql e 0003_apple_session_grants.sql aggiungono ledger notifiche, soglia revoca Apple e tempi delle autorizzazioni. I test locali applicano tutte le migrazioni in ordine. Le credenziali APPLE_TEAM_ID/APPLE_KEY_ID/APPLE_PRIVATE_KEY sono solo server e non vanno aggiunte ai vars pubblici del progetto. APPLE_NOTIFICATIONS_ENABLED resta false finché l’endpoint non è registrato e collaudato.
+
+## Appuntamenti persistenti predisposti
+La migrazione0004_meetings.sql aggiunge candidati e appuntamenti con conferme/versioni atomiche. MEETINGS_ENABLED=false resta il default; leggere docs/MEETINGS_API.md. Il matching che crea candidati e la UI multiutente non sono ancora collegati. Nessuna coppia o prenotazione reale è stata creata.

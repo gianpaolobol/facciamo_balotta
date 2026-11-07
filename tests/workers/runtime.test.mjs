@@ -64,3 +64,13 @@ test('bundled Worker applies signed Apple notifications once and blocks stale se
   const delayed=JSON.stringify({payload:appleJWT({jti:'runtime-delayed',events:{type:'consent-revoked',sub:'apple-owner',event_time:now-30}})});assert.equal((await mf.dispatchFetch('https://balotta.example/auth/apple/notifications',{method:'POST',body:delayed})).status,200);assert.ok(await store.getSession('after'));
  }finally{await mf.dispose();}
 });
+test('bundled Worker persists mutual-interest appointments and enforces versioned double confirmation',async()=>{
+ const {mf,store}=await harness({MEETINGS_ENABLED:'true'});try{
+  const users={};for(const who of ['a','b','c']){users[who]=await store.upsertIdentity('google','meeting-'+who,who+'@example.com',who);await store.saveProfile(users[who].id,{adult:true,name:who});await store.putSession(createHash('sha256').update(who.repeat(43)).digest('base64url'),users[who].id);}
+  const req=(who,path,method='GET',body)=>mf.dispatchFetch('https://balotta.example'+path,{method,headers:{authorization:'Bearer '+who.repeat(43),'content-type':'application/json'},...(body===undefined?{}:{body:JSON.stringify(body)})});
+  const pair=await store.meetings.offerPair(users.a.id,users.b.id);for(const who of ['a','b'])assert.equal((await req(who,'/api/pairings/'+pair.id+'/decision','POST',{decision:'yes'})).status,200);
+  const made=await req('a','/api/pairings/'+pair.id+'/appointment','POST',{activity:'Due passi',startsAt:new Date(Date.now()+86400000).toISOString(),place:'Piazza pubblica',cost:'Gratis',publicPlace:true});assert.equal(made.status,201);const a=(await made.json()).appointment,path='/api/appointments/'+a.id;
+  assert.equal((await req('c',path)).status,404);const results=await Promise.all(['a','b'].map(who=>req(who,path+'/confirm','POST',{version:1})));assert.deepEqual(results.map(r=>r.status),[200,200]);assert.equal((await (await req('a',path)).json()).appointment.status,'confirmed');
+  assert.equal((await req('b',path,'PATCH',{version:1,changes:{place:'Ingresso museo pubblico'}})).status,200);assert.equal((await req('a',path+'/confirm','POST',{version:1})).status,409);const revised=(await (await req('a',path)).json()).appointment;assert.equal(revised.version,2);assert.deepEqual(revised.confirmations,[]);
+ }finally{await mf.dispose();}
+});
