@@ -59,3 +59,10 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Stato: 55/83 asset trasferiti, 28 PNG ancora pendenti. I vecchi percorsi di scratch non esistono in questo ambiente; tre originali materializzati in /workspace/scratch/cd1199ef16ff/originals.
 - Nessuna modifica al codice; test, typecheck, export e checkout integrale non eseguiti in questo lotto.
 - Prossima azione: recuperare i 28 PNG ancora elencati in docs/TRASFERIMENTO_ASSET.json, mantenendo lotti piccoli e verifica degli hash, poi verificare checkout e applicazione.
+
+## Recupero originali ripreso da Chrome — lotto 1
+- Ritrovati localmente tutti i 28 originali mancanti, SHA-256 identici al manifest originario.
+- Primo lotto: cinema.png e climbing.png, byte originali senza conversione.
+- Inventario: 57/83 asset; 26 ancora da collegare a main.
+- Gli oggetti binari del primo lotto risultavano già disponibili su GitHub: riutilizzati gli SHA originali, evitando un nuovo trasferimento in base64.
+- Coda: completare i restanti originali a due per commit e verificare ogni albero remoto.
