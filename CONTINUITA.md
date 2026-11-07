@@ -66,3 +66,7 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Inventario: 57/83 asset; 26 ancora da collegare a main.
 - Gli oggetti binari del primo lotto risultavano già disponibili su GitHub: riutilizzati gli SHA originali, evitando un nuovo trasferimento in base64.
 - Coda: completare i restanti originali a due per commit e verificare ogni albero remoto.
+
+## Recupero originali — 59/83
+- Lotto: community.png, crafts.png. SHA-256 locali identici al manifest originario; blob Git originali riutilizzati senza ricodifica.
+- Stato: 59/83; pendenti 24. Verificare l'albero remoto dopo il commit prima del lotto successivo.
