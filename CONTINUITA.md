@@ -128,3 +128,11 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Aggiunti painting.png e reading.png: dimensioni e SHA-256 locali identici al manifest iniziale; SHA Git calcolati sui byte originali. Nessuna ricodifica.
 - Inventario: 78/83, 5 originali pendenti. Codice invariato; test ed export non ripetuti per questo lotto archivistico.
 - Prossima azione: running.png e tennis.png, massimo due originali per blocco e verifica remota. Causa del crash ChatGPT non accertata.
+
+## Sviluppo profilo illustrato — bozza isolata del 7 novembre 2026
+- Ramo di lavoro: feat/illustrated-profile-draft-20261107. Questa sezione descrive soltanto tale ramo; main e demo non sono stati modificati.
+- Aggiunti src/illustrated-profile.mjs e tests/illustrated-profile.test.mjs: descrizione facoltativa del ritratto, massimo cinque descrizioni di interessi distinte, conferma del testo per slot e revisione che invalida soltanto la conferma della descrizione modificata.
+- Non sono immagini generate: nessun provider AI, richiesta a pagamento, chiave, persistenza o collegamento UI è stato aggiunto. Conferma del testo e approvazione dell'immagine futura sono concetti separati.
+- Verifica locale Node 24.22.1: cinque test nuovi superati. npm test sulla copia testuale selettiva: 38 pass, 4 fail per materiale locale non disponibile: art-catalog (JPEG assenti), lettering (fontkit assente), phone-demo (fixtures.ts non materializzato), profile-scope (React assente). Non è una prova di regressioni né una suite completamente superata.
+- Nessun typecheck, export o collaudo nativo eseguito in questo blocco. Il ramo è una bozza, non pronto per merge.
+- Prossima azione: completare il checkout eseguibile e le dipendenze, verificare l'intera suite, poi integrare le descrizioni e conferme nella schermata Profile. Il provider AI richiede un passaggio separato e configurazione sicura.
