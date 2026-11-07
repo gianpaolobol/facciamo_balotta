@@ -3,7 +3,17 @@
 Aggiornato il 7 novembre 2026 (Europe/Rome).
 Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
 
-## Stato verificato
+## Priorità attuale — debug delle interruzioni (7 novembre 2026)
+Questo aggiornamento prevale sulla coda storica di recupero riportata sotto.
+- Leggere docs/DEBUG_INTERRUZIONI_2026-11-07.md: causa del crash ChatGPT NON accertata; nessun accesso ai log del client iOS o interni ChatGPT.
+- Verificati ora nella copia /workspace/scratch/752ef5edfb9c/facciamo_balotta: 40/40 test, typecheck ed export web/iOS/Android, tutti exit 0. Non è una verifica di un checkout remoto completo o di build native.
+- L'app richiama 39 asset JPEG/TTF, nessun PNG; hash locali coincidenti con le rispettive voci del manifest di trasferimento remoto. I 28 PNG mancanti riguardano l'archivio originali, non l'esecuzione della demo.
+- Non ricominciare il recupero degli originali come prerequisito dello sviluppo. L'utente ha già chiesto di smettere di cercarli e ricreare: conservare la provenienza e lavorare su massimo due immagini per blocco quando richiesto.
+- Le ricodifiche PNG da JPEG della sessione precedente sono solo locali: non dichiararle originali recuperati o file salvati su GitHub.
+- Prossima azione tecnica: verifica del checkout remoto dei sorgenti e degli asset runtime, poi sviluppo approvato. Il recupero integrale 55/83 resta incompleto e distinto.
+- Per la diagnosi del blocco ChatGPT manca l'errore esatto e la distinzione tra chiusura dell'app iOS e conversazione non continuabile.
+
+## Stato verificato (storico)
 - La repository contiene codice testuale e docs/RECUPERO_2026-11-06.md, riletto dal remoto in questa sessione.
 - Il recupero integrale NON è completato: il checkpoint remoto dichiara immagini e font ancora da trasferire. Il dato size=0 dei metadati GitHub non prova che la repository sia vuota.
 - Sorgente locale recuperabile: /workspace/sites/facciamo-balotta, commit 21d9f2d, con modifiche locali al README/.gitignore e originali PNG non tracciati. Non sovrascrivere.
