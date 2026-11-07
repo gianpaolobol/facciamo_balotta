@@ -118,3 +118,8 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Aggiunti photography.png e videogames.png dagli originali salvati: dimensioni e SHA-256 identici al manifest iniziale; SHA Git restituiti da GitHub identici al calcolo locale. Nessuna ricodifica.
 - Inventario: 75/83, 8 originali pendenti. Codice applicativo invariato; test ed export non ripetuti per questo lotto archivistico.
 - Prossima azione: proseguire con massimo due originali per blocco e verifica remota. Causa del crash ChatGPT non accertata.
+
+## Recupero originali — 76/83
+- Aggiunto volleyball.png dall’originale salvato Beach volley sulla costa romagnola.png: 3228690 byte e SHA-256 2245a8e45a8499ded12e3c4f51f04cda3b151f3dd0a278b908cd0db741cf5b95 identici al manifest iniziale; SHA Git restituito identico al calcolo locale. Nessuna ricodifica.
+- Inventario: 76/83, 7 originali pendenti. Codice invariato; test ed export non ripetuti per questo lotto archivistico.
+- Prossima azione: continuare con massimo due originali per blocco e verifica remota. Causa del crash ChatGPT non accertata.
