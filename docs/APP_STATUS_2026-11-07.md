@@ -34,7 +34,7 @@ Queste prove non sono login Google/Meta/Apple reali, generazioni Workers AI real
 3. Configurare Google/Meta e Apple per il bundle it.facciamobalotta.app, callback HTTPS, allowlist beta, secret Apple e server notification endpoint. Nessun secret in EXPO_PUBLIC_ o Git. Configurare MODERATOR_EMAILS per avere un referente reale alle segnalazioni.
 4. Verificare piano gratuito/quote e due generazioni Cloudflare reali. Font e riferimenti sono preservati, ma non è dimostrato che il modello produca risultati identici alla grafica approvata.
 5. Completare informative/termini con titolare, contatti, fornitori e conservazione effettivi. Le regole della beta nel client non sono documenti legali approvati per pubblicazione.
-6. Collegare il nuovo progetto Expo/EAS e le schede store, configurare API HTTPS e firme, produrre IPA/AAB/APK e provare su iPhone/iPad/Android con due account reali. Si può usare l’account sviluppatore del titolare con identificativi dedicati alla nuova app; non copiare automaticamente client OAuth, provisioning o secret di Fungo Italia.
+6. Progetto Expo/EAS dedicato ora creato e collegato: completare le schede store, configurare API HTTPS e firme, produrre IPA/AAB/APK e provare su iPhone/iPad/Android con due account reali. Si può usare l’account sviluppatore del titolare con identificativi dedicati alla nuova app; non copiare automaticamente client OAuth, provisioning o secret di Fungo Italia.
 7. Abilitare i flag soltanto dopo questi collaudi. check:release rimane ready=false perché le prove reali non sono state eseguite.
 
 Push nativi predisposti con Expo: consenso esplicito, token cifrati, revoca sessione, quote atomiche e ricevute. Tutto spento per default; nessun cron o invio reale. APNs/FCM/EAS e build firmate restano da configurare/collaudare. Leggere NATIVE_PUSH.md. Le chat richiedono aggiornamento manuale; nessuna consegna in background è stata provata.
@@ -66,3 +66,7 @@ Sul commit di codice5681326d2707eb3b3c684cc12b75c302bacbdd87 il run42404274263 (
 ## Incremento inviti
 
 La richiesta successiva ha sostituito l'inserimento manuale con rubrica autorizzata e soli nomi: WhatsApp, SMS, email personali. Nota piccola veritiera sul mittente visibile. Nessun contatto caricato al backend, invio automatico o gruppo; ogni apertura richiede gesto e conferma nel canale personale. Il vecchio adapter anonimo è separato/spento. EXPO_PUBLIC_INVITATION_URL non configurato, nuova build e prove fisiche mancanti. Dettagli in INVITATIONS.md.276/276 test,11/11 Worker compilato/D1, typecheck/export tutte piattaforme e browser mobile superati; nessuna rubrica reale letta o messaggio spedito.
+
+## Distribuzione predisposta
+
+Progetto Expo verificato e icone native/archivio pulito pronti. Non esistono ancora IPA/AAB firmati, upload o release. Apple login necessario; Play modulo precompilato e non inviato, dichiarazioni legali del titolare in sospeso. Vedere DISTRIBUTION_2026-11-07.md per i blocchi reali e i passi verso TestFlight/test interno Play e successiva produzione.

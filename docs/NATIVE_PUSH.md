@@ -27,7 +27,7 @@ ID UUID, segreto64hex; registrazione solo per una sessione valida e un profilo m
 ## Configurazione esterna
 
 1. Applicare `0010_push.sql` dopo `0009_notifications.sql` nel database autorizzato. Node applica `PUSH_SCHEMA` dopo lo schema delle notifiche.
-2. Configurare EAS reale tramite `EXPO_PROJECT_ID` prima della build; usare lo stesso UUID per `PUSH_PROJECT_ID` sul server.
+2. Il progetto EAS reale Balotta è collegato in `config/distribution.mjs`; usare lo stesso UUID per `PUSH_PROJECT_ID` sul server.
 3. Configurare credenziali APNs/FCM per i bundle `it.facciamobalotta.app` e abilitare enhanced push security nel progetto Expo.
 4. Conservare `PUSH_ENCRYPTION_KEY` (64hex casuali) ed `EXPO_ACCESS_TOKEN` soltanto nel secret manager server. Nessun segreto nelle variabili `EXPO_PUBLIC_`, nel client o in Git. La rotazione della chiave richiede una migrazione dei cifrati oppure la revoca delle registrazioni e un nuovo consenso.
 5. Collaudare build firmate iOS/Android: rifiuto/consenso, cambio account, logout/revoca, arrivo generico, tap e ricevute. Solo dopo impostare `PUSH_ENABLED=true` e configurare deliberatamente un trigger `scheduled` nell'ambiente autorizzato. Il repository non installa cron o workflow di invio.

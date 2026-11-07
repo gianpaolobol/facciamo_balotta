@@ -22,7 +22,8 @@
     "worker:bundle": "WRANGLER_SEND_METRICS=false wrangler deploy --dry-run --outdir .worker-test-bundle",
     "test:worker": "npm run worker:bundle && node --test tests/workers/*.test.mjs",
     "worker:dev": "wrangler dev --local",
-    "db:migrate:local": "wrangler d1 migrations apply DB --local"
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "assets:brand": "node scripts/generate-native-icons.mjs"
   },
   "dependencies": {
     "@expo-google-fonts/comic-neue": "^0.4.1",
@@ -56,7 +57,8 @@
     "miniflare": "5.20261104.0-beta",
     "react-test-renderer": "^19.3.0",
     "typescript": "5.9.3",
-    "wrangler": "4.158.0"
+    "wrangler": "4.158.0",
+    "sharp": "0.35.5"
   },
   "overrides": {
     "react-native": "$react-native"

@@ -1,0 +1,21 @@
+# Deliberate native-client archive from the selective working directory.
+# Everything else, including env, keys, server databases and dist-* exports,
+# stays out. The API is deployed independently in an authorized environment.
+**
+!App.tsx
+!index.ts
+!app.config.ts
+!package.json
+!package-lock.json
+!tsconfig.json
+!babel.config.js
+!metro.config.js
+!eas.json
+!.easignore
+!.gitignore
+!src
+!src/**
+!config
+!config/**
+!assets
+!assets/**
