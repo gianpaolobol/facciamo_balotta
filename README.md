@@ -61,3 +61,7 @@ Lo sviluppo prosegue nella repository privata `gianpaolobol/facciamo_balotta`. Q
 ## Prossimo sviluppo approvato
 
 Profilo illustrato: descrizione facoltativa dell’aspetto per un ritratto, descrizione degli interessi con conferma dell’utente e fino a cinque immagini distinte, una per interesse. Stile coerente con la direzione grafica approvata; rigenerazione singola. Matching basato su interessi, intenzioni e disponibilità, senza analisi estetica del ritratto. La generazione personale non è ancora collegata. Nessuna chiave API è stata creata; la creazione è autorizzata, la destinazione sicura è da definire senza inserire segreti nei sorgenti.
+
+## Bozza del profilo illustrato (ramo di sviluppo)
+
+La schermata Profilo include una sezione richiudibile per descrivere un ritratto facoltativo e fino a cinque interessi, con conferma individuale dei testi. Modificare un campo annulla soltanto la sua conferma. I testi restano in memoria e non vengono inclusi nel salvataggio del profilo; uscendo dalla schermata si cancellano. In demo usare descrizioni inventate. Generazione, approvazione delle immagini e rigenerazione sono ancora da collegare. Il ramo non è pubblicato nell’anteprima.

@@ -136,3 +136,13 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Verifica locale Node 24.22.1: cinque test nuovi superati. npm test sulla copia testuale selettiva: 38 pass, 4 fail per materiale locale non disponibile: art-catalog (JPEG assenti), lettering (fontkit assente), phone-demo (fixtures.ts non materializzato), profile-scope (React assente). Non è una prova di regressioni né una suite completamente superata.
 - Nessun typecheck, export o collaudo nativo eseguito in questo blocco. Il ramo è una bozza, non pronto per merge.
 - Prossima azione: completare il checkout eseguibile e le dipendenze, verificare l'intera suite, poi integrare le descrizioni e conferme nella schermata Profile. Il provider AI richiede un passaggio separato e configurazione sicura.
+
+## Sviluppo profilo illustrato — modulo collegato alla schermata, 7 novembre 2026
+- Ramo: feat/illustrated-profile-draft-20261107. Aggiunti hook e componente; Profile ora espone una sezione richiudibile con ritratto facoltativo e cinque interessi, massimo 1000 caratteri per campo.
+- Conferme del testo indipendenti, invalidate alla modifica del solo campo interessato. Identità fisse degli slot anche dopo cancellazione; duplicati normalizzati rifiutati, senza bloccare campi indipendenti. Errori accanto al campo e accessibilityHint.
+- Bozza soltanto in memoria; esclusa dal PUT del profilo. Nessuna persistenza, generazione AI, immagine approvata o rigenerazione implementata. Avviso visibile; demo invita a usare descrizioni inventate.
+- Ricostruita copia eseguibile selettiva dal ramo: sorgenti/configurazioni/test e tutti i 39 JPEG/TTF runtime con SHA Git verificati. Archivio PNG escluso da questa verifica, recupero integrale ancora distinto.
+- npm ci --ignore-scripts --no-audit --no-fund: 522 pacchetti installati da lockfile. npm test: 54/54, exit 0. npm run typecheck: exit 0. CI=1 npm run export:all: exit 0, bundle web, Android e iOS prodotti. Sono export, non build firmate o test su dispositivi.
+- Revisione indipendente eseguita: due rilievi corretti (duplicati estranei bloccanti; errori lontani dal campo), entrambi riprodotti con test falliti e poi superati. Nessun rilievo importante noto lasciato aperto su questo blocco.
+- Controllo visivo non completato: Playwright privo di browser, installazione fallita per archivio scaricato non valido. I test del renderer coprono il comportamento del hook, non layout o interazioni native.
+- main e anteprima pubblicata non aggiornati. Prima del merge: controllo visivo e integrazione UI/sessioni. Poi persistenza autenticata della bozza e collegamento AI server con credenziali sicure, approvazione delle immagini e rigenerazione singola.

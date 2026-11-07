@@ -5,6 +5,7 @@ import {CITIES} from '../fixtures';
 import {api,deleteAccount,signOut,type User} from '../auth';
 import {INTEREST_LABELS} from '../art-catalog.mjs';
 import {toggleInterest} from '../interest-tools.mjs';
+import {IllustratedProfileForm} from '../IllustratedProfileForm';
 export function Profile({user,onExit}:{user:User|null;onExit:()=>void}) {
  const [name,setName]=useState(user?.name||'');const [city,setCity]=useState('Bologna');const [adult,setAdult]=useState(false);const [interests,setInterests]=useState<string[]>([]);const [message,setMessage]=useState('');const [busy,setBusy]=useState(false);const [confirmDelete,setConfirmDelete]=useState(false);
  useEffect(()=>{let active=true;if(user) api('/api/profile').then(({profile})=>{if(active&&profile){setName(profile.name);setCity(profile.city);setAdult(profile.adult);setInterests(profile.interests);}}).catch(e=>{if(active)setMessage(e.message);});return()=>{active=false;};},[user]);
@@ -18,6 +19,7 @@ export function Profile({user,onExit}:{user:User|null;onExit:()=>void}) {
    {user?<><View style={{flexDirection:'row',gap:12,alignItems:'center'}}><Switch accessibilityLabel="Confermo di avere almeno 18 anni" value={adult} onValueChange={setAdult}/><Text style={[s.body,{flex:1}]}>Confermo di avere almeno 18 anni.</Text></View><Button label={busy?'Salvataggio…':'Salva il profilo'} disabled={busy||!adult||!name.trim()} onPress={save}/></>:<View style={{backgroundColor:C.paper,padding:15,borderWidth:1.5,borderRadius:10}}><Text style={s.body}>Puoi toccare gli interessi per provare la selezione. Le scelte si azzerano uscendo dalla schermata e non vengono inviate a un server.</Text></View>}
    {message?<Text accessibilityLiveRegion="polite" style={s.body}>{message}</Text>:null}
   </View>
+  <IllustratedProfileForm demo={!user}/>
   {user?<View style={{gap:15}}><Button label="Esci dall’account" secondary onPress={async()=>{try{await signOut();onExit();}catch(e){setMessage((e as Error).message);}}}/><Button label={confirmDelete?'Conferma cancellazione definitiva':'Cancella il mio account'} secondary onPress={async()=>{if(!confirmDelete){setConfirmDelete(true);setMessage('Premi di nuovo per cancellare account e profilo.');return;}try{await deleteAccount();onExit();}catch(e){setMessage((e as Error).message);}}}/></View>:null}
  </View>;
 }
