@@ -30,3 +30,10 @@ Copia esistente: /workspace/scratch/752ef5edfb9c/facciamo_balotta. Non è un che
 Verificare il checkout remoto dei sorgenti e dei soli asset usati a runtime, poi riprendere lo sviluppo approvato. Non anteporre a questo lavoro il recupero archivistico dei PNG. Per la diagnosi del blocco ChatGPT raccogliere errore esatto e orario Europe/Rome, senza riaprire trasferimenti massivi.
 
 Riferimento ufficiale consultato: https://learn.chatgpt.com/docs/reference/troubleshooting (stati bloccati e raccolta log). Non è una diagnosi specifica di questo incidente.
+
+## Evidenza successiva: screenshot fornito dall'utente
+Messaggio visibile: “Impossibile completare l’operazione. (Errore APICore.ConversationDetailError.DetailError 1).”
+Lo screenshot documenta un errore del componente conversazione di ChatGPT; non documenta un crash del processo dell'app, un HTTP status, un problema del codice Balotta, cancellazione dei dati o la causa sottostante.
+Non esiste nelle fonti ufficiali consultate una spiegazione del significato specifico del codice 1.
+Prova successiva: aprire la stessa conversazione su https://chatgpt.com con lo stesso account e workspace, confrontando anche una chat diversa; annotare esito e orario. Se funziona sul web, proseguire da lì mentre si isola il client iOS. Se fallisce su entrambi, raccogliere il link privato per assistenza, senza pubblicarlo.
+Guida ufficiale: https://help.openai.com/en/articles/7910461-troubleshooting-the-chatgpt-mobile-app — aggiornamento app, confronto Wi-Fi/dati mobili e web, dati da fornire all'assistenza.
