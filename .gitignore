@@ -12,3 +12,7 @@ android/
 artifacts/
 
 
+
+.wrangler/
+.worker-test-bundle/
+.dev.vars*

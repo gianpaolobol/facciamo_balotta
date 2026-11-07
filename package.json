@@ -18,7 +18,11 @@
     "export:all": "expo export --platform all",
     "server": "node server/index.mjs",
     "check:release": "node scripts/release-check.mjs",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "worker:bundle": "WRANGLER_SEND_METRICS=false wrangler deploy --dry-run --outdir .worker-test-bundle",
+    "test:worker": "npm run worker:bundle && node --test tests/workers/*.test.mjs",
+    "worker:dev": "wrangler dev --local",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local"
   },
   "dependencies": {
     "@expo-google-fonts/comic-neue": "^0.4.1",
@@ -42,8 +46,10 @@
   "devDependencies": {
     "@types/react": "19.2.14",
     "fontkit": "^2.0.4",
+    "miniflare": "5.20261104.0-beta",
     "react-test-renderer": "^19.3.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "wrangler": "4.158.0"
   },
   "overrides": {
     "react-native": "$react-native"

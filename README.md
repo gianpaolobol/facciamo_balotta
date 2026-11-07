@@ -71,3 +71,7 @@ Gli utenti autenticati possono salvare la bozza illustrata con un pulsante dedic
 In demo usare descrizioni inventate: i testi restano locali e si cancellano uscendo dalla schermata. Il ramo include ora generazione, approvazione e rigenerazione singola tramite Cloudflare Workers AI (FLUX.2 Klein4B), disattivate finché account e token del piano Workers Free non sono configurati e verificati. Nessuna generazione reale o confronto di resa artistica è stato eseguito finora. Il ramo non è pubblicato nell’anteprima.
 
 La generazione usa due immagini del progetto come riferimento e mantiene il font Balotta Inchiostro esistente. Il server limita a 50 tentativi al giorno complessivi e 12 per utente, senza retry automatico o fallback a pagamento. L'account deve restare Workers Free: il flag locale non verifica automaticamente un eventuale cambio di piano. Dettagli e fonti in docs/superpowers/specs/2026-11-07-free-profile-ai.md.
+
+## Backend gestito Workers/D1
+
+Il ramo prepara il backend condiviso delle app iOS e Android su Cloudflare Workers e D1. L'adapter Node/SQLite resta utilizzabile per lo sviluppo. Configurazione, migrazioni e prove locali sono descritte in [WORKERS_SETUP.md](docs/WORKERS_SETUP.md). Nessun backend remoto è ancora pubblicato: ID database/origin sono segnaposto, OAuth e AI restano disabilitati. La distribuzione deve avvenire in un ambiente autorizzato al servizio; non è un mezzo per aggirare la policy di rete di questa sessione.

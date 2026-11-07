@@ -32,16 +32,18 @@ export function createStore(path) {
    }catch(error){db.exec('ROLLBACK');throw error;}
   },
   finishImageAttempt(id,success){db.prepare('UPDATE image_attempts SET state=? WHERE id=?').run(success?'done':'failed',id);},
-  saveProfileImage(userId,slot,descriptionHash,image,id){
+  saveProfileImage(userId,slot,descriptionHash,image,id,expectedVersion){
    db.exec('BEGIN IMMEDIATE');try{
+    if(expectedVersion!==undefined&&db.prepare('SELECT version FROM illustrated_profiles WHERE user_id=?').get(userId)?.version!==expectedVersion)throw Object.assign(new Error('Bozza aggiornata durante la generazione.'),{status:409});
     db.prepare('DELETE FROM profile_images WHERE user_id=? AND slot=? AND approved=0').run(userId,slot);
     db.prepare('INSERT INTO profile_images VALUES(?,?,?,?,?,?,?,?,?,?)').run(id,userId,slot,descriptionHash,image.bytes,image.mime,image.model,image.styleVersion,0,Date.now());
     db.exec('COMMIT');
    }catch(error){db.exec('ROLLBACK');throw error;}
   },
   getProfileImages(userId,slot){return db.prepare('SELECT * FROM profile_images WHERE user_id=? AND slot=? ORDER BY approved ASC,created DESC').all(userId,slot);},
-  approveProfileImage(userId,slot,id){
+  approveProfileImage(userId,slot,id,expectedVersion){
    db.exec('BEGIN IMMEDIATE');try{
+    if(expectedVersion!==undefined&&db.prepare('SELECT version FROM illustrated_profiles WHERE user_id=?').get(userId)?.version!==expectedVersion){db.exec('COMMIT');return false;}
     const result=db.prepare('UPDATE profile_images SET approved=1 WHERE user_id=? AND slot=? AND id=?').run(userId,slot,id);
     if(result.changes)db.prepare('DELETE FROM profile_images WHERE user_id=? AND slot=? AND id<>?').run(userId,slot,id);
     db.exec('COMMIT');return Boolean(result.changes);
