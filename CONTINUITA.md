@@ -6,12 +6,12 @@ Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
 ## Priorità attuale — debug delle interruzioni (7 novembre 2026)
 Questo aggiornamento prevale sulla coda storica di recupero riportata sotto.
 - Leggere docs/DEBUG_INTERRUZIONI_2026-11-07.md: causa del crash ChatGPT NON accertata; nessun accesso ai log del client iOS o interni ChatGPT.
-- Verificati ora nella copia /workspace/scratch/752ef5edfb9c/facciamo_balotta: 40/40 test, typecheck ed export web/iOS/Android, tutti exit 0. Non è una verifica di un checkout remoto completo o di build native.
+- Ripetuti nella copia selettiva verificata /workspace/scratch/52db29df5fbb/balotta-runtime-verificato: 40/40 test, typecheck ed export web/iOS/Android, tutti exit 0. Dipendenze esistenti riutilizzate tramite symlink; npm ci non ripetuto. Non sono build native o un checkout integrale dell'archivio.
 - L'app richiama 39 asset JPEG/TTF, nessun PNG; hash locali coincidenti con le rispettive voci del manifest di trasferimento remoto. I 28 PNG mancanti riguardano l'archivio originali, non l'esecuzione della demo.
 - Non ricominciare il recupero degli originali come prerequisito dello sviluppo. L'utente ha già chiesto di smettere di cercarli e ricreare: conservare la provenienza e lavorare su massimo due immagini per blocco quando richiesto.
 - Le ricodifiche PNG da JPEG della sessione precedente sono solo locali: non dichiararle originali recuperati o file salvati su GitHub.
-- Prossima azione tecnica: verifica del checkout remoto dei sorgenti e degli asset runtime, poi sviluppo approvato. Il recupero integrale 55/83 resta incompleto e distinto.
-- Per la diagnosi del blocco ChatGPT manca l'errore esatto e la distinzione tra chiusura dell'app iOS e conversazione non continuabile.
+- Verifica successiva completata: copia selettiva con 99 file identici ai blob dell'albero GitHub 25664a1d939a7efbe60a62cde3bfbd102fa898c5, inclusi tutti i 35 file applicativi/test/configurazione richiesti e i 39 asset runtime. Nessun asset runtime mancante. Dettagli: docs/VERIFICA_RUNTIME_2026-11-07.json. Il recupero integrale 55/83 resta incompleto e distinto. Prossima azione: sviluppo approvato, senza ripetere il recupero archivistico.
+- Screenshot ricevuto: APICore.ConversationDetailError.DetailError 1. Successivamente l'utente riferisce la chat aperta in Chrome. Usare Chrome per proseguire; non è dimostrata la causa sottostante né una risoluzione permanente. Non ripetere la richiesta dello screenshot già ricevuto.
 
 ## Stato verificato (storico)
 - La repository contiene codice testuale e docs/RECUPERO_2026-11-06.md, riletto dal remoto in questa sessione.
