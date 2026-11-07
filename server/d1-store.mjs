@@ -1,6 +1,11 @@
 import {randomUUID} from 'node:crypto';
 import {Buffer} from 'node:buffer';
 import {createMeetingsStore} from './meetings-store.mjs';
+import {createCommunityStore} from './community-store.mjs';
+import {createGroupsStore} from './groups-store.mjs';
+import {createMatchingStore} from './matching-store.mjs';
+import {SHARED_IMAGE_FROM,SHARED_IMAGE_WHERE} from './peer-images-store.mjs';
+import {createNotificationsStore} from './notifications-store.mjs';
 export function createD1Store(db){
  const stmt=(sql,...args)=>db.prepare(sql).bind(...args);
  const run=(sql,...args)=>stmt(sql,...args).run();
@@ -13,7 +18,8 @@ export function createD1Store(db){
   const day=new Date(now).toISOString().slice(0,10);return {global:(await first('SELECT count(*) AS n FROM image_attempts WHERE account_id=? AND day=?',accountId,day)).n,user:userId?(await first('SELECT count(*) AS n FROM image_attempts WHERE account_id=? AND day=? AND user_id=?',accountId,day,userId)).n:0};
  }
  return {
-  close(){},imageUsage,meetings:createMeetingsStore({first,all}),
+  close(){},imageUsage,meetings:createMeetingsStore({first,all}),community:createCommunityStore({first,all}),groups:createGroupsStore({first,all}),matching:createMatchingStore({first,all}),notifications:createNotificationsStore({first,all}),
+  async getSharedProfileImage(actor,pairId,slot){const rows=await all(`WITH chosen AS(SELECT i.id ${SHARED_IMAGE_FROM} WHERE ${SHARED_IMAGE_WHERE} ORDER BY i.created DESC,i.id LIMIT 1) SELECT i.*,c.part,c.data AS chunk FROM profile_images i JOIN chosen ON chosen.id=i.id JOIN profile_image_chunks c ON c.image_id=i.id ORDER BY c.part`,pairId,actor,actor,actor,slot);if(!rows.length)return null;const {chunk,part,...metadata}=rows[0];return {...metadata,data:Buffer.concat(rows.map(r=>Buffer.from(r.chunk)))};},
   getIdentity:id=>first('SELECT * FROM users WHERE id=?',id),
   async putAppleIdentitySession(identity,hash,issuedAt){
    const guard='NOT EXISTS(SELECT 1 FROM apple_account_state WHERE subject=? AND revoked_at>=?)',results=await db.batch([

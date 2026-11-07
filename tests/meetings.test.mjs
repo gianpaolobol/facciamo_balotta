@@ -46,3 +46,9 @@ test('a stale server snapshot cannot overwrite fields omitted from a newer expec
   const result=await h.req('a','/api/appointments/'+a.id,'PATCH',{version:2,changes:{cost:'5 EUR'}});assert.equal(result.status,409);const current=await read(h.users.a.id,a.id);assert.equal(current.place,'Nuovo luogo pubblico');assert.equal(current.version,2);
  }finally{h.store.close();}
 });
+test('interest can be withdrawn and repeated no is idempotent without reopening the pair',async()=>{
+ const h=harness();try{const a=await h.appointment(),pairPath='/api/pairings/'+a.pairId;assert.equal((await h.req('a',pairPath+'/decision','POST',{decision:'no'})).status,200);assert.equal((await h.req('a',pairPath+'/decision','POST',{decision:'no'})).status,200);assert.equal((await h.req('a',pairPath+'/decision','POST',{decision:'yes'})).status,404);assert.equal((await h.req('b','/api/appointments/'+a.id)).status,404);}finally{h.store.close();}
+});
+test('a past appointment cannot be revived after matching has proposed a different person',async()=>{
+ const h=harness(),clock=Date.now;try{const a=await h.appointment();for(const id of ['a','b','c'])await h.store.matching.save(h.users[id].id,{enabled:true,accepted:true,policyVersion:'2026-11-07',scope:'province',intent:'friendship',availability:['weekend_day']});Date.now=()=>clock()+2*86400000;const next=await h.store.matching.ensureSuggestion(h.users.a.id);assert.ok(next);assert.notEqual(next.id,a.pairId);const r=await h.req('a','/api/appointments/'+a.id,'PATCH',{version:1,changes:{startsAt:new Date(Date.now()+86400000).toISOString()}});assert.equal(r.status,409);}finally{Date.now=clock;h.store.close();}
+});

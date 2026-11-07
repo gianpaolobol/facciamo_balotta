@@ -1,0 +1,1 @@
+ALTER TABLE reports ADD COLUMN resolved INTEGER NOT NULL DEFAULT 0 CHECK(resolved IN(0,1));

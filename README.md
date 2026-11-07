@@ -1,3 +1,7 @@
+# Stato della beta funzionale — 7 novembre 2026
+
+Profilo illustrato, accessi, preferenze/matching, appuntamenti, gruppi, chat, blocchi/segnalazioni, moderazione e notifiche in-app sono collegati nel codice. Tutti i servizi reali restano disabilitati prima del collaudo: non è una pubblicazione sugli store. Stato completo e prerequisiti: [docs/APP_STATUS_2026-11-07.md](docs/APP_STATUS_2026-11-07.md).
+
 # Facciamo Balotta
 
 App Expo / React Native per web, iOS e Android. Prima anteprima illustrativa privata, con un backend OAuth preparato separatamente. Dati, persone ed eventi dimostrativi sono fittizi; non esiste ancora un servizio pubblico di appuntamenti.
@@ -76,4 +80,4 @@ La generazione usa due immagini del progetto come riferimento e mantiene il font
 
 Il ramo prepara il backend condiviso delle app iOS e Android su Cloudflare Workers e D1. L'adapter Node/SQLite resta utilizzabile per lo sviluppo. Configurazione, migrazioni e prove locali sono descritte in [WORKERS_SETUP.md](docs/WORKERS_SETUP.md). Nessun backend remoto è ancora pubblicato: ID database/origin sono segnaposto, OAuth e AI restano disabilitati. La distribuzione deve avvenire in un ambiente autorizzato al servizio; non è un mezzo per aggirare la policy di rete di questa sessione.
 
-API di interesse reciproco e appuntamenti a due predisposte su Node/D1, disabilitate per default con MEETINGS_ENABLED=false. Due conferme sulla stessa versione, modifiche che azzerano i sì e annullamento terminale. Matching e interfaccia multiutente da collegare: docs/MEETINGS_API.md.
+API di interesse reciproco e appuntamenti a due predisposte su Node/D1, disabilitate per default con MEETINGS_ENABLED=false. Due conferme sulla stessa versione, modifiche che azzerano i sì e annullamento terminale. Matching e interfaccia multiutente collegati e disabilitati prima del collaudo reale: docs/MEETINGS_API.md.

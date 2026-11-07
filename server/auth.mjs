@@ -2,6 +2,11 @@ import {createProfileImageRoutes} from './profile-images.mjs';
 import {verifyAppleToken,verifyAppleNotification} from './apple-token.mjs';
 import {appleRevocationReady,revokeAppleAuthorization} from './apple-revoke.mjs';
 import {createMeetingRoutes} from './meetings.mjs';
+import {createGroupRoutes} from './groups.mjs';
+import {createCommunityRoutes} from './community.mjs';
+import {createMatchingRoutes} from './matching.mjs';
+import {createPeerImageRoutes} from './peer-images.mjs';
+import {createNotificationRoutes} from './notifications.mjs';
 import {validateIllustratedDraft} from '../src/illustrated-draft.mjs';
 import { randomBytes, createHash, timingSafeEqual } from 'node:crypto';
 
@@ -15,6 +20,11 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  const origin=new URL(config.origin).origin;
  const profileImages=createProfileImageRoutes({store,provider:imageProvider});
  const meetingRoutes=createMeetingRoutes({store,enabled:config.meetingsEnabled===true});
+ const groupRoutes=createGroupRoutes({store,enabled:config.groupsEnabled===true});
+ const communityRoutes=createCommunityRoutes({store,enabled:config.communityEnabled===true,moderatorEmails:config.moderatorEmails||[]});
+ const matchingRoutes=createMatchingRoutes({store,enabled:config.matchingEnabled===true&&config.meetingsEnabled===true});
+ const peerImageRoutes=createPeerImageRoutes({store,enabled:config.matchingEnabled===true&&config.meetingsEnabled===true});
+ const notificationRoutes=createNotificationRoutes({store,enabled:config.notificationsEnabled===true});
  const secure=origin.startsWith('https:');
  const cookie=(name,value,maxAge)=>`${name}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${secure?'; Secure':''}`;
  const ready=provider=>config.enabled===true && (provider==='google'?Boolean(config.googleId&&config.googleSecret):provider==='facebook'?Boolean(config.facebookId&&config.facebookSecret&&/^v\d+\.\d+$/.test(config.facebookVersion||'')):false);
@@ -30,7 +40,7 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  }
  async function route(request) {
   const url=new URL(request.url); const path=url.pathname;
-  if(path==='/api/config') return Response.json({providers:{google:ready('google'),facebook:ready('facebook'),apple:appleReady()},features:{meetings:config.meetingsEnabled===true},restrictedBeta:true});
+  if(path==='/api/config') return Response.json({providers:{google:ready('google'),facebook:ready('facebook'),apple:appleReady()},features:{meetings:config.meetingsEnabled===true,matching:config.matchingEnabled===true&&config.meetingsEnabled===true,groups:config.groupsEnabled===true,community:config.communityEnabled===true,notifications:config.notificationsEnabled===true},restrictedBeta:true});
   if(path==='/auth/apple/notifications'){
    if(request.method!=='POST')return new Response('Metodo non consentito',{status:405});
    if(config.appleNotificationsEnabled!==true||config.appleBundleId!=='it.facciamobalotta.app')return Response.json({error:'Notifiche Apple non configurate.'},{status:503});
@@ -117,7 +127,16 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
    const user=raw?(await store.getSession(hash(raw))):null;
    if(!user) return Response.json({error:'Accedi per continuare.'},{status:401});
    if(!['GET','HEAD'].includes(request.method)&&!bearer&&request.headers.get('origin')!==origin) return new Response('Origine non consentita',{status:403});
-   const meetingResponse=await meetingRoutes({path,request,user,jsonBody});if(meetingResponse)return meetingResponse;
+   if(path==='/api/community-capabilities'&&request.method==='GET')return Response.json({moderation:config.communityEnabled===true&&(config.moderatorEmails||[]).map(s=>s.trim().toLowerCase()).includes(user.email.toLowerCase())});
+   const safetyAllowed=path.startsWith('/api/account')||path==='/api/logout'||path==='/api/session'||path.startsWith('/api/blocks')||path.startsWith('/api/moderation')||(request.method==='GET'&&(path==='/api/profile'||path==='/api/illustrated-profile'));
+   if(!safetyAllowed&&store.community&&await store.community.isSuspended(user.id))return Response.json({error:'Account sospeso. Puoi consultare il profilo, uscire o cancellare l’account.'},{status:403});
+   const social={path,request,user,jsonBody};
+   const notificationResponse=await notificationRoutes(social);if(notificationResponse)return notificationResponse;
+   const peerImageResponse=await peerImageRoutes(social);if(peerImageResponse)return peerImageResponse;
+   const communityResponse=await communityRoutes(social);if(communityResponse)return communityResponse;
+   const groupResponse=await groupRoutes(social);if(groupResponse)return groupResponse;
+   const matchingResponse=await matchingRoutes(social);if(matchingResponse)return matchingResponse;
+   const meetingResponse=await meetingRoutes(social);if(meetingResponse)return meetingResponse;
    const imageResponse=await profileImages({path,request,user,jsonBody});if(imageResponse)return imageResponse;
    if(path==='/api/session'&&request.method==='GET') return Response.json({user});
    if(path==='/api/account/deletion-method'&&request.method==='GET'){

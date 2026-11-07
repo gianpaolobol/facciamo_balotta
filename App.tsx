@@ -7,6 +7,7 @@ import {ComicNeue_400Regular,ComicNeue_700Bold} from '@expo-google-fonts/comic-n
 import {Brand,Button,Chip,Avatar,C,s} from './src/ui';
 import {getSession,getProviders,signIn,type User,type Provider} from './src/auth';
 import {AppleSignInButton} from './src/AppleSignInButton';
+import {LiveArea} from './src/LiveArea';
 import {type Activity,CITIES,INTERESTS} from './src/fixtures';
 import {Discover} from './src/screens/Discover';
 import {Pair} from './src/screens/Pair';
@@ -38,7 +39,7 @@ function Balotta() {
   <View style={{borderBottomWidth:2,borderBottomColor:C.ink,backgroundColor:C.paper}}><View style={{width:'100%',maxWidth:1230,alignSelf:'center',paddingHorizontal:desktop?28:19,paddingVertical:desktop?19:14,flexDirection:'row',justifyContent:'space-between',alignItems:'center',gap:12}}><Pressable accessibilityRole="button" accessibilityLabel="Facciamo Balotta, torna all’inizio" onPress={()=>{setMode(user?'live':'welcome');setPopup(null);}}><Brand small={!desktop}/></Pressable>
    <View style={{flexDirection:'row',alignItems:'center',gap:desktop?27:12}}>{desktop?<Pressable accessibilityRole="button" onPress={()=>setPopup('about')}><Text style={{fontFamily:'ComicNeue_700Bold',fontSize:13,color:C.ink}}>Come funziona</Text></Pressable>:null}<Pressable accessibilityRole="button" onPress={()=>{setMessage('');setPopup('login');}} style={{borderWidth:1.5,borderRadius:10,paddingHorizontal:14,paddingVertical:9,backgroundColor:C.white}}><Text style={{fontFamily:'ComicNeue_700Bold',fontSize:12,color:C.ink}}>{user?'Account':'Accedi'} ↗</Text></Pressable></View>
   </View></View>
-  {mode!=='welcome'?<View style={{backgroundColor:mode==='demo'?'#F7D98E':C.lime,paddingHorizontal:16,paddingVertical:8,borderBottomWidth:1.5}}><Text style={{fontFamily:'ComicNeue_400Regular',fontSize:11,textAlign:'center',color:C.ink}}>{mode==='demo'?'DEMO ILLUSTRATIVA · Persone e attività fittizie · Nessuna prenotazione reale':'BETA RISERVATA · Registrazione e profilo · Incontri ancora in preparazione'}</Text></View>:null}
+  {mode!=='welcome'?<View style={{backgroundColor:mode==='demo'?'#F7D98E':C.lime,paddingHorizontal:16,paddingVertical:8,borderBottomWidth:1.5}}><Text style={{fontFamily:'ComicNeue_400Regular',fontSize:11,textAlign:'center',color:C.ink}}>{mode==='demo'?'DEMO ILLUSTRATIVA · Persone e attività fittizie · Nessuna prenotazione reale':'BETA RISERVATA · Le funzioni disponibili dipendono dall’attivazione del servizio'}</Text></View>:null}
   <ScrollView style={{flex:1}} contentContainerStyle={{paddingBottom:100}}>
    {mode==='welcome'?<>
     <View style={{maxWidth:1230,width:'100%',alignSelf:'center',paddingHorizontal:desktop?28:21,paddingTop:desktop?55:30,gap:desktop?35:24,flexDirection:desktop?'row':'column',alignItems:'center'}}>
@@ -57,7 +58,7 @@ function Balotta() {
     </View>
    </>:<View style={{maxWidth:1180,width:'100%',alignSelf:'center',paddingHorizontal:desktop?28:19,paddingTop:desktop?28:23,gap:28}}>
     {desktop?<View style={{flexDirection:'row',gap:12}}>{(['Scopri','A due','Le mie balotte','Profilo'] as Tab[]).map(t=><Chip key={t} label={t} active={tab===t} onPress={()=>setTab(t)}/>)}</View>:null}
-    {mode==='live'&&tab!=='Profilo'?<View style={[s.card,{padding:30,gap:20}]}><Text style={s.title}>La prima balotta si sta preparando.</Text><Text style={s.body}>Il tuo account è nella beta riservata. Puoi completare il profilo; proposte reali, chat e gruppi saranno attivati dopo il collaudo.</Text><Button label="Completa il profilo" onPress={()=>setTab('Profilo')}/><Button label="Esplora gli esempi fittizi" secondary onPress={()=>setMode('demo')}/></View>:<>
+    {mode==='live'&&tab!=='Profilo'&&user?<LiveArea key={user.id+':'+tab} userId={user.id} tab={tab}/>:<>
      {tab==='Scopri'?<Discover onMatch={()=>setTab('A due')} onActivity={openActivity} onCreate={()=>{setCreated(false);setPopup('create');}}/>:null}
      {tab==='A due'?<Pair initialStep={scene==='appointment'?2:0}/>:null}{tab==='Le mie balotte'?<Groups/>:null}{tab==='Profilo'?<ProfileScope mode={mode} userId={user?.id}><Profile user={mode==='live'?user:null} onExit={reset}/></ProfileScope>:null}
     </>}

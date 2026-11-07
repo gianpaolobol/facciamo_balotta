@@ -18,13 +18,14 @@ export function createMeetingRoutes({store,enabled}){
   if(!match)return new Response('Non trovato',{status:404});
   const [,kind,id,action]=match;
   if(!id){if(method!=='GET')return new Response('Metodo non consentito',{status:405});return kind==='pairings'?Response.json({pairings:(await meetings.listPairs(user.id)).map(r=>presentPair(r,user.id))}):Response.json({appointments:(await meetings.listAppointments(user.id)).map(presentAppointment)});}
+  if(kind==='pairings'&&action==='decision'&&method==='POST'){
+   const body=await jsonBody(request);if(Object.keys(body).length!==1||!['yes','no'].includes(body.decision))return invalid('Scegli se questa persona ti interessa.');
+   if(await meetings.decide(user.id,id,body.decision))return Response.json({ok:true});
+   return await meetings.getPair(user.id,id)?conflict():new Response('Non trovato',{status:404});
+  }
   const current=kind==='pairings'?await meetings.getPair(user.id,id):await meetings.getAppointment(user.id,id);
   if(!current)return new Response('Non trovato',{status:404});
   if(!action&&method==='GET')return kind==='pairings'?Response.json({pairing:presentPair(current,user.id)}):Response.json({appointment:presentAppointment(current)});
-  if(kind==='pairings'&&action==='decision'&&method==='POST'){
-   const body=await jsonBody(request);if(Object.keys(body).length!==1||!['yes','no'].includes(body.decision))return invalid('Scegli se questa persona ti interessa.');
-   return await meetings.decide(user.id,id,body.decision)?Response.json({ok:true}):conflict();
-  }
   if(kind==='pairings'&&action==='appointment'&&method==='POST'){
    let data;try{data=validate(await jsonBody(request));}catch(e){return invalid(e.message);}
    const created=await meetings.createAppointment(user.id,id,data);if(!created)return conflict();

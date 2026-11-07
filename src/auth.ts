@@ -17,7 +17,12 @@ export async function api(path:string,method='GET',body?:unknown) {
  const token=Platform.OS==='web'?null:await SecureStore.getItemAsync(TOKEN_KEY);
  const response=await fetch(API+path,{method,credentials:'include',headers:{...(body?{'content-type':'application/json'}:{}),...(token?{authorization:'Bearer '+token}:{})},...(body?{body:JSON.stringify(body)}:{})});
  const data=await response.json().catch(()=>({error:'Il servizio non è disponibile.'}));
- if(!response.ok) throw new Error(data.error||'Operazione non disponibile.');return data;
+ if(!response.ok){const error=new Error(data.error||'Operazione non disponibile.') as Error&{status:number};error.status=response.status;throw error;}return data;
+}
+export type Features={meetings:boolean;matching:boolean;groups:boolean;community:boolean;notifications:boolean};
+export async function getFeatures():Promise<Features>{
+ if(!API)return {meetings:false,matching:false,groups:false,community:false,notifications:false};
+ const {features:f}=await api('/api/config');return {meetings:f?.meetings===true,matching:f?.matching===true,groups:f?.groups===true,community:f?.community===true,notifications:f?.notifications===true};
 }
 export async function getProviders():Promise<Record<Provider,boolean>> {
  if(!API) return {google:false,facebook:false,apple:false};
