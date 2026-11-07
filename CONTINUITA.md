@@ -97,3 +97,8 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Aggiunti languages.png e makers.png dagli originali salvati: dimensioni e SHA-256 identici al manifest iniziale. Blob GitHub caricati e SHA Git restituiti identici al calcolo sui byte locali; nessuna ricodifica.
 - Inventario: 67/83; 16 originali pendenti. Codice applicativo invariato; test ed export non ripetuti per questo lotto archivistico.
 - Prossima azione: continuare con massimo due originali per blocco, verificando il commit remoto prima del successivo. Il crash ChatGPT resta senza causa accertata.
+
+## Recupero originali — 69/83
+- Aggiunti pets.png e skating.png dagli originali salvati: dimensioni e SHA-256 identici al manifest iniziale; SHA Git verificati con GitHub, nessuna ricodifica.
+- Inventario: 69/83; 14 originali pendenti. Codice applicativo invariato; test ed export non ripetuti per questo lotto archivistico.
+- Prossima azione: proseguire con massimo due originali per blocco e verifica remota. Causa del crash ChatGPT non accertata.

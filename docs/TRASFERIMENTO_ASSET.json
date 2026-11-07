@@ -2,7 +2,7 @@
   "date": "2026-11-07",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 67,
+  "verified_files": 69,
   "complete": false,
   "files": [
     {
@@ -272,17 +272,23 @@
     {
       "path": "assets/events/makers.png",
       "sha": "1a47c8913377c79720a0b872fee90c4e2f8899e2"
+    },
+    {
+      "path": "assets/events/pets.png",
+      "sha": "bc2c87f42e7dc9c783861ef1c7dfb6c1aba420b1"
+    },
+    {
+      "path": "assets/events/skating.png",
+      "sha": "d52680e5512771dbb73c3f2125a5a6bdc376a8d0"
     }
   ],
   "pending": [
     "assets/events/hiking.png",
     "assets/events/padel.png",
     "assets/events/painting.png",
-    "assets/events/pets.png",
     "assets/events/photography.png",
     "assets/events/reading.png",
     "assets/events/running.png",
-    "assets/events/skating.png",
     "assets/events/tennis.png",
     "assets/events/theatre.png",
     "assets/events/videogames.png",
