@@ -12,5 +12,5 @@ export default {async fetch(request,env){
   const body=new Uint8Array(size);let offset=0;for(const chunk of chunks){body.set(chunk,offset);offset+=chunk.length;}request=new Request(request,{body});
  }
  const store=createD1Store(env.DB),imageProvider=createBoundImageProvider(env);
- return createApp({store,imageProvider,config:{origin:origin.origin,enabled:env.OAUTH_ENABLED==='true',googleId:env.GOOGLE_CLIENT_ID,googleSecret:env.GOOGLE_CLIENT_SECRET,facebookId:env.FACEBOOK_APP_ID,facebookSecret:env.FACEBOOK_APP_SECRET,facebookVersion:env.FACEBOOK_API_VERSION,allowedEmails:(env.BETA_ALLOWED_EMAILS||'').split(',').filter(Boolean)}})(request);
+ return createApp({store,imageProvider,config:{origin:origin.origin,enabled:env.OAUTH_ENABLED==='true',appleNativeEnabled:env.APPLE_NATIVE_ENABLED==='true',appleBundleId:env.APPLE_BUNDLE_ID,googleId:env.GOOGLE_CLIENT_ID,googleSecret:env.GOOGLE_CLIENT_SECRET,facebookId:env.FACEBOOK_APP_ID,facebookSecret:env.FACEBOOK_APP_SECRET,facebookVersion:env.FACEBOOK_API_VERSION,allowedEmails:(env.BETA_ALLOWED_EMAILS||'').split(',').filter(Boolean)}})(request);
 }};

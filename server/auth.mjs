@@ -1,4 +1,5 @@
 import {createProfileImageRoutes} from './profile-images.mjs';
+import {verifyAppleToken} from './apple-token.mjs';
 import {validateIllustratedDraft} from '../src/illustrated-draft.mjs';
 import { randomBytes, createHash, timingSafeEqual } from 'node:crypto';
 
@@ -14,6 +15,7 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  const secure=origin.startsWith('https:');
  const cookie=(name,value,maxAge)=>`${name}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${secure?'; Secure':''}`;
  const ready=provider=>config.enabled===true && (provider==='google'?Boolean(config.googleId&&config.googleSecret):provider==='facebook'?Boolean(config.facebookId&&config.facebookSecret&&/^v\d+\.\d+$/.test(config.facebookVersion||'')):false);
+ const appleReady=()=>config.enabled===true&&config.appleNativeEnabled===true&&config.appleBundleId==='it.facciamobalotta.app';
  async function sessionResponse(user,native=false) {
   const token=random(); (await store.putSession(hash(token),user.id));
   return native?Response.json({token},{headers:{'cache-control':'no-store'}}):new Response(null,{status:303,headers:{location:origin+'/?auth=success','set-cookie':cookie('balotta_session',token,604800)}});
@@ -24,7 +26,28 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  }
  async function route(request) {
   const url=new URL(request.url); const path=url.pathname;
-  if(path==='/api/config') return Response.json({providers:{google:ready('google'),facebook:ready('facebook'),apple:false},restrictedBeta:true});
+  if(path==='/api/config') return Response.json({providers:{google:ready('google'),facebook:ready('facebook'),apple:appleReady()},restrictedBeta:true});
+  if(path==='/auth/apple/native/start'||path==='/auth/apple/native/exchange'){
+   if(request.method!=='POST')return new Response('Metodo non consentito',{status:405});
+   if(!appleReady())return Response.json({error:'Accesso Apple in preparazione.'},{status:503});
+   const body=await jsonBody(request);
+   if(path.endsWith('/start')){
+    if(typeof body.challenge!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(body.challenge))return Response.json({error:'Richiesta non valida.'},{status:400});
+    const attempt=random(),nonce=random();
+    await store.putAttempt(hash(attempt),{provider:'apple',challenge:body.challenge,nonce,created:Date.now()});
+    return Response.json({attempt,nonce});
+   }
+   if(typeof body.attempt!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(body.attempt)||typeof body.verifier!=='string'||!/^[A-Za-z0-9_-]{43,128}$/.test(body.verifier))return Response.json({error:'Richiesta non valida.'},{status:400});
+   const attempt=await store.takeAttempt(hash(body.attempt));
+   if(!attempt||attempt.provider!=='apple'||!Number.isSafeInteger(attempt.created)||Date.now()-attempt.created>300000||!equal(attempt.challenge,hash(body.verifier)))return Response.json({error:'Richiesta scaduta o non valida. Riprova ad accedere.'},{status:400});
+   let identity;
+   try{identity=await verifyAppleToken(body.identityToken,{audience:config.appleBundleId,nonce:attempt.nonce,providerFetch});}
+   catch(error){return Response.json({error:error.status===503?'Accesso Apple temporaneamente non disponibile. Riprova.':'Identità Apple non verificata.'},{status:error.status===503?503:401});}
+   const allowed=(config.allowedEmails||[]).map(s=>s.trim().toLowerCase());
+   if(!allowed.includes(identity.email))return Response.json({error:'Questa beta è riservata alle persone invitate. Usa l’indirizzo associato all’invito, anche se è un indirizzo privato Apple.'},{status:401});
+   const user=await store.upsertIdentity('apple',identity.subject,identity.email,'');
+   return sessionResponse(user,true);
+  }
   const auth=path.match(/^\/auth\/(google|facebook)\/(start|callback)$/);
   if(auth) {
    const [,provider,action]=auth;
