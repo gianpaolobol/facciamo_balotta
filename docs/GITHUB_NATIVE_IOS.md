@@ -25,7 +25,7 @@ Usare copie originali ottenute normalmente e autorizzate. Non recuperare secret 
 
 Il workflow deve essere presente sul ramo predefinito per registrare workflow_dispatch. Questa preparazione resta nel ramo di lavoro: main invariato. Prima dell'avvio integrare il lavoro revisionato e scegliere il commit corretto, senza compilare il vecchio main.
 
-Quota/budget GitHub da verificare prima del runner macOS del repository privato. Non modificati piano, limiti, visibilita o pagamenti. Nessun job nativo GitHub avviato.
+Repository resa pubblica su richiesta dell’utente: i runner GitHub standard per repository pubbliche non consumano la quota inclusa. Non selezionare larger runner o risorse a pagamento. Non modificati piano, limiti, visibilita o pagamenti. Nessun job nativo GitHub avviato.
 
 ## Firma e output
 

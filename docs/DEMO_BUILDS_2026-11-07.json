@@ -40,5 +40,10 @@
       "xcodeArchiveTested": false
     }
   },
-  "oauthLive": false
+  "oauthLive": false,
+  "repository": {
+    "visibility": "public",
+    "visibilityVerified": true,
+    "changedAtLocalDate": "2026-11-08"
+  }
 }

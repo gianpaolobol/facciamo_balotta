@@ -1,5 +1,11 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Pubblicazione repository richiesta — 8 novembre 2026
+
+- Visibilità GitHub cambiata da private a public su richiesta esplicita dell’utente, verificata nella UI e nei metadati GitHub. Controllati207file testuali del ramo e18versioni testuali differenti di main: nessuna credenziale reale nei pattern cercati, nessun file chiave/database/envprivato tracciato; unico match PEM e stringa di validazione nel codice, non chiave. Non e una certificazione completa di tutta la cronologia.
+- Ripetuti npm test276/276, Worker11/11 e TypeScript exit0 sul codice corrente. Pronto allineamento di PR1/main per registrare il workflow iOS nativo; risultato integrazione da aggiornare.
+- I segreti di firma GitHub restano assenti. Nessuna nuova credenziale creata o trasferita e nessuna build iOS avviata.
+
 ## Aggiornamento prevalente — iOS nativo su GitHub (8 novembre 2026)
 
 - L’utente propone compilazione diretta da GitHub. Preparati .github/workflows/ios-native.yml e scripts/github-ios-native.sh: Expo prebuild offline, CocoaPods/Xcode sul Mac GitHub, firma locale e upload altool diretto ad Apple. Nessun EAS CLI/token/API Expo; non e un inoltro del comando negato. Leggere docs/GITHUB_NATIVE_IOS.md.
@@ -22,7 +28,7 @@ Questa sezione prevale su tutte le priorità storiche successive. Leggere docs/A
 - Ultimo tentativo di autorizzazione ufficiale: richiesta di esecuzione elevata per build iOS + auto-submit rifiutata prima di eseguire il comando; policy Granular con sandbox_approval=false e request_permissions=false. Nessuna nuova build/versione/upload avviata. Non chiedere altre chiavi o ripetere consenso: occorre modifica autorizzata della policy di rete/esecuzione dell’ambiente.
 
 Aggiornato l’8 novembre 2026 (Europe/Rome).
-Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
+Repository pubblica canonica: https://github.com/gianpaolobol/facciamo_balotta
 
 ## Priorità attuale — debug delle interruzioni (7 novembre 2026)
 Questo aggiornamento prevale sulla coda storica di recupero riportata sotto.
