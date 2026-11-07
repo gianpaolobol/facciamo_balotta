@@ -176,3 +176,10 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Accesso Cloudflare NON riuscito. Non è stata accertata la causa; non classificarlo come CAPTCHA, blocco bot o disservizio generale. Nessun tentativo aggiuntivo o cambio di metodo effettuato dopo l'errore generico.
 - Nessuna credenziale è stata letta o riportata nella chat/documenti. Nessun token Cloudflare creato o collegato, nessun piano verificato/attivato, nessuna generazione reale o addebito. Provider ancora disabilitato.
 - Ripresa: risolvere l'accesso Cloudflare attraverso un nuovo passaggio scelto dall'utente, poi verificare Workers Free e configurare il token solo server. Conservare codice/test già salvati; non dichiarare l'AI attiva o la resa artistica validata.
+
+## Device login approvato ma scambio bloccato dalla rete — 7 novembre 2026
+- Profilo TinyFish salvato dall'utente; l'elenco riporta ancora solo Google/GitHub, accesso Cloudflare non verificato. Automazione TinyFish non avviata: servizio a consumo, saldo insufficiente. Nessuna ricarica o nuova automazione a pagamento attivata.
+- Avviato Wrangler 4.158.0 login --device --browser=false con soli scope account:read e user:read. L'utente ha confermato «approvato».
+- Il recupero del processo ha restituito: Network access to https://dash.cloudflare.com:443 was blocked by policy. Non attribuire questo errore a password errata o mancata autorizzazione dell'utente. Nessuna credenziale OAuth salvata nei percorsi di configurazione standard verificati, senza esporre valori.
+- Non ripetere il device login in questo ambiente senza una modifica documentata delle possibilità di accesso alla rete. Non aggirare la policy con proxy o percorsi alternativi. Provider ancora disattivato; nessuna generazione reale e nessuna verifica del piano Free completata.
+- Per proseguire serve una connessione autorizzata al provider oppure configurazione sicura del token direttamente nell'ambiente server che eseguirà l'app. GitHub Actions può usarlo come secret ma non elimina il requisito iniziale di accesso Cloudflare. Le credenziali di Fungo Italia non vanno copiate o riutilizzate automaticamente per questo progetto.
