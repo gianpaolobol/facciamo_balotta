@@ -4,6 +4,7 @@
 Questa sezione prevale su tutte le priorità storiche successive. Leggere docs/APP_STATUS_2026-11-07.md. Non ricominciare recuperi o funzioni già implementate.
 - Ramo feat/illustrated-profile-draft-20261107, PR #1: UI live, preferenze/matching, profilo illustrato approvato, appuntamenti, gruppi, chat, blocchi/segnalazioni/moderazione e notifiche interne integrati. Demo/font/asset preservati.
 - Verifiche finali locali:195/195 test generali;9/9 Worker compilato/Miniflare-D1; TypeScript ed export web/iOS/Android exit0. Browser mobile con due account sintetici superato, inclusi approvazioni, chat, revisioni e inbox. Nessun provider reale o telefono collaudato.
+- GitHub Actions sul codice5681326: run42404274263/job128498490018 termina failure in2secondi con steps vuoto, prima dei comandi. Causa non accertata; non dichiarare CI verde o attribuire il problema alla fatturazione senza annotazioni.
 - Tutti i flag sociali/OAuth/Apple/AI restano disabilitati per default; check:release ready=false. Nessun deploy, nuova chiave/spesa, build firmata o merge in main. Anteprima precedente invariata.
 - Prossimo passo: attivazione in un ambiente normalmente autorizzato, configurazione account/callback/secret/progetto Expo/store, vere generazioni AI e firme/prove fisiche. Diniego di rete Cloudflare invariato: non aggirarlo.
 - Push APNs/FCM non implementati; notifiche attuali solo interne all'app. Informative/termini definitivi e monitoraggio quote restano prerequisiti di pubblicazione.

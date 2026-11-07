@@ -54,3 +54,7 @@ Il flag Free è un'attestazione dell'operatore, non una verifica automatica dell
 Per la prova browser esportare il web con EXPO_PUBLIC_API_URL=http://127.0.0.1:8768 in dist-social-qa e usare Playwright/Chromium locali con PLAYWRIGHT_MODULE_PATH/BROWSER_EXECUTABLE_PATH. È solo un ambiente di test; l'export destinato alla configurazione reale non deve contenere questo origin locale.
 
 Per il web reale servire bundle statico e API dallo stesso origin HTTPS, come nella prova locale, oppure predisporre esplicitamente CORS/callback per il frontend scelto. Il Worker di esempio è API-only. I client nativi usano bearer e handoff PKCE senza dipendere dall’hosting web.
+
+## Stato GitHub Actions
+
+Sul commit di codice5681326d2707eb3b3c684cc12b75c302bacbdd87 il run42404274263 (job128498490018) termina failure dopo due secondi, con elenco step vuoto: i comandi non vengono avviati. La causa non è disponibile dalle API esaminate; non è accertato un problema del codice o della fatturazione. I195+9 test riportati sono prove locali, non un CI GitHub superato. Non sono stati attivati minuti/piani a pagamento o runner alternativi.
