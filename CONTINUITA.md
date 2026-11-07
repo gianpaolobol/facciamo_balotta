@@ -74,3 +74,10 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 ## Recupero originali — 61/83
 - Lotto: dance.png, football.png. Byte originali, SHA-256 locali identici al manifest originario e SHA blob restituiti da GitHub coincidenti.
 - Stato: 61/83, pendenti 22. Nessun JPEG o codice applicativo modificato.
+
+## Recupero originali — 62/83
+- Recuperato gardening.png: dimensione e SHA-256 identici al manifest iniziale; SHA Git calcolato sui byte originali.
+- Recuperato anche pottery.png localmente e verificato SHA-256, ma il blob non è disponibile su GitHub. Il tentativo di includerlo nell'albero è fallito (422); NON è salvato sul remoto e resta pending.
+- Stato inventario: 62/83; 21 originali pendenti. Nessuna modifica al codice.
+- Screenshot IMG_0522.jpeg: Unknown error anche su Chrome iPhone; causa non accertata. URL della chat non disponibile dalle fonti accessibili.
+- Prossima azione: trasferire il blob originale pottery.png e verificare il salvataggio prima di altre immagini.
