@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-07",
+  "source_commit": "25664a1d939a7efbe60a62cde3bfbd102fa898c5",
+  "browser_observation": "L'utente riferisce la chat aperta in Chrome dopo errore APICore.ConversationDetailError.DetailError 1 su iOS; causa sottostante non accertata",
+  "verification": {
+    "git_tree_truncated": false,
+    "exact_local_files": 99,
+    "required_code_files": 35,
+    "runtime_assets": 39,
+    "missing_runtime_assets": 0,
+    "test": {
+      "exit_code": 0,
+      "passed": 40,
+      "failed": 0
+    },
+    "typecheck": {
+      "exit_code": 0
+    },
+    "export_all": {
+      "exit_code": 0,
+      "platforms": [
+        "web",
+        "ios",
+        "android"
+      ]
+    }
+  },
+  "limits": [
+    "Dipendenze node_modules riutilizzate tramite symlink; npm ci non rieseguito",
+    "Copia selettiva dei sorgenti e asset runtime; non checkout integrale degli originali PNG",
+    "Export non equivalente a build native firmate o collaudo fisico",
+    "Il successo su Chrome non prova una causa esclusivamente iOS o una risoluzione permanente"
+  ],
+  "next_action": "Proseguire lo sviluppo approvato senza ripetere il recupero PNG; per nuove immagini massimo due per blocco con salvataggio verificato"
+}
