@@ -3,6 +3,19 @@ import {appleFixture,appleIdentity,appleJWT} from '../support/apple-fixture.mjs'
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile,writeFile,readdir} from 'node:fs/promises';import {resolve} from 'node:path';
 import {Miniflare,convertV4MiniflareOptions} from 'miniflare';import {createD1Store} from '../../server/d1-store.mjs';import {createHash,generateKeyPairSync,sign} from 'node:crypto';
 const directory=resolve(process.env.WORKER_BUNDLE_DIR||'.worker-test-bundle');
+test('bundled Worker gates official invitations and D1 reserves concurrent batches once',async()=>{
+ const {mf,store}=await harness({INVITATIONS_ENABLED:'true',INVITATION_URL:'https://facciamobalotta.it/app',INVITATION_HASH_KEY64HEX:'ab'.repeat(32)});
+ try{
+  const u=await store.upsertIdentity('google','invitation-test','invite@example.test','Test'),raw='n'.repeat(43),hash=createHash('sha256').update(raw).digest('base64url');await store.putSession(hash,u.id);await store.saveProfile(u.id,{adult:true});
+  const config=await(await mf.dispatchFetch('https://balotta.example/api/config')).json();assert.equal(config.features.invitations,false);assert.deepEqual(config.invitationChannels,[]);
+  assert.equal((await mf.dispatchFetch('https://balotta.example/api/invitations',{method:'POST',headers:{authorization:'Bearer '+raw,'content-type':'application/json'},body:'{}'})).status,503);
+  assert.equal((await store.invitations.actor(hash,u.id)).id,u.id);
+  const input={accountHash:'a'.repeat(64),batchId:'runtime-invitations',fingerprint:'b'.repeat(64),contacts:['c'.repeat(64),'d'.repeat(64)]};
+  const writes=await Promise.all([store.invitations.reserve(input),store.invitations.reserve(input)]);assert.equal(writes.filter(r=>r.owner).length,1);
+  await store.invitations.finish(input.accountHash,input.batchId,0,'accepted');assert.deepEqual(JSON.parse((await store.invitations.statuses(input.accountHash,input.batchId)).statuses),['accepted','unknown']);
+  await store.dropSession(hash);assert.equal(await store.invitations.actor(hash,u.id),null);
+ }finally{await mf.dispose();}
+});
 test('bundled Worker stores push consent encrypted in D1 and revokes on logout',async()=>{
  const projectId='b12d747a-2ade-4894-a847-381026c7089a';
  const {mf,store}=await harness({PUSH_ENABLED:'true',PUSH_PROJECT_ID:projectId,PUSH_ENCRYPTION_KEY:'ab'.repeat(32),EXPO_ACCESS_TOKEN:'runtime-test-access'});

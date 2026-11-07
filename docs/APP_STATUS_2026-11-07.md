@@ -14,13 +14,14 @@ Il codice della beta collega i percorsi multiutente web/iOS/Android mantenendo f
 | Gruppi | Creazione, richieste, approvazione/rifiuto organizzatore, capienza atomica, uscita/annullamento |
 | Chat | Coppie reciproche e membri approvati, testo, idempotenza, limiti persistenti e aggiornamento manuale |
 | Sicurezza | Blocchi bilaterali, segnalazioni, sospensioni; moderazione riservata a email verificate configurate sul server |
+| Inviti ai contatti | Selezione multipla/tutti, anteprima e nota anonima piccola; adapter ufficiale e API idempotente predisposti ma nessun invio reale |
 | Aggiornamenti | Inbox interna, lettura personale e lettura collettiva degli aggiornamenti visibili; trasporto push nativo facoltativo predisposto e spento; nessun invio reale o email |
 
 Le schermate live non simulano azioni dell'altra persona. La demo è separata ed esplicitamente fittizia. Ogni account rimonta i pannelli privati, evitando di mantenere dati del precedente utente.
 
 ## Controlli svolti
 
-Test di regole, API/SQLite e D1 locale; Worker compilato eseguito in Miniflare, con provider sintetici; TypeScript ed export Expo. Prova browser mobile con due sessioni sintetiche: interesse reciproco, proposta, doppia conferma, chat, modifica che azzera entrambe le conferme, creazione/richiesta/approvazione gruppo. Risultati finali:230/230 test generali e10/10 Worker, TypeScript ed export web/iOS/Android superati; migrazioni locali applicate. Dettagli e punto di ripresa in CONTINUITA.md.
+Test di regole, API/SQLite e D1 locale; Worker compilato eseguito in Miniflare, con provider sintetici; TypeScript ed export Expo. Prova browser mobile con due sessioni sintetiche: interesse reciproco, proposta, doppia conferma, chat, modifica che azzera entrambe le conferme, creazione/richiesta/approvazione gruppo. Risultati finali:248/248 test generali e11/11 Worker, TypeScript ed export web/iOS/Android superati; migrazioni locali applicate. Dettagli e punto di ripresa in CONTINUITA.md.
 
 La revisione indipendente ha prodotto regressioni per revoca consenso, lettura atomica delle immagini, incontri passati, coda segnalazioni e segnalazione di gruppi visibili prima dell'ammissione. I difetti sono stati riprodotti e corretti. Una seconda revisione delle notifiche non ha trovato difetti importanti; aggiunta l'azione di lettura totale per svuotare anche gli aggiornamenti oltre la prima pagina.
 
@@ -29,7 +30,7 @@ Queste prove non sono login Google/Meta/Apple reali, generazioni Workers AI real
 ## Attivazione ancora necessaria
 
 1. Usare un ambiente normalmente autorizzato a Cloudflare: quello dell'agente ha un diniego di rete esplicito e non viene aggirato con proxy o altri runner.
-2. Verificare Workers Free; configurare D1/origin reali e applicare tutte le migrazioni0001–0010. Origin e ID del repository sono ancora segnaposto; workers_dev e preview URLs disattivati.
+2. Verificare Workers Free; configurare D1/origin reali e applicare tutte le migrazioni0001–0011. Origin e ID del repository sono ancora segnaposto; workers_dev e preview URLs disattivati.
 3. Configurare Google/Meta e Apple per il bundle it.facciamobalotta.app, callback HTTPS, allowlist beta, secret Apple e server notification endpoint. Nessun secret in EXPO_PUBLIC_ o Git. Configurare MODERATOR_EMAILS per avere un referente reale alle segnalazioni.
 4. Verificare piano gratuito/quote e due generazioni Cloudflare reali. Font e riferimenti sono preservati, ma non è dimostrato che il modello produca risultati identici alla grafica approvata.
 5. Completare informative/termini con titolare, contatti, fornitori e conservazione effettivi. Le regole della beta nel client non sono documenti legali approvati per pubblicazione.
@@ -61,3 +62,7 @@ Per il web reale servire bundle statico e API dallo stesso origin HTTPS, come ne
 
 Sul commit di codice5681326d2707eb3b3c684cc12b75c302bacbdd87 il run42404274263 (job128498490018) termina failure dopo due secondi, con elenco step vuoto: i comandi non vengono avviati. Le annotazioni sono state lette direttamente nel browser GitHub: il servizio indica una restrizione di Billing & plans, relativa a pagamenti recenti o al limite di spesa. Il messaggio non distingue quale delle due condizioni sia attiva. Non sono state effettuate modifiche di fatturazione o budget. I195+9 test riportati sono prove locali, non un CI GitHub superato. Non sono stati attivati minuti/piani a pagamento o runner alternativi.
 
+
+## Incremento inviti
+
+Flusso e limiti in INVITATIONS.md. Nota esatta: “L’invito non mostra la tua identità o il tuo profilo agli invitati.” La demo non legge contatti veri; il live non invia senza adapter anonimo e gratuito configurato.248/248 test,11/11 Worker, TypeScript/export tutte piattaforme e browser mobile superati. Nessun messaggio reale, mittente personale, servizio a pagamento o deploy.

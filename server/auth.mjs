@@ -7,6 +7,7 @@ import {createCommunityRoutes} from './community.mjs';
 import {createMatchingRoutes} from './matching.mjs';
 import {createPeerImageRoutes} from './peer-images.mjs';
 import {createNotificationRoutes} from './notifications.mjs';
+import {createInvitationRoutes,invitationReady} from './invitations.mjs';
 import {createPushRoutes,pushReady} from './push.mjs';
 import {validateIllustratedDraft} from '../src/illustrated-draft.mjs';
 import { randomBytes, createHash, timingSafeEqual } from 'node:crypto';
@@ -17,7 +18,7 @@ const equal=(a,b)=>typeof a==='string'&&typeof b==='string'&&a.length===b.length
 const cookies=request=>Object.fromEntries((request.headers.get('cookie')||'').split(';').map(s=>s.trim().split('=')).filter(p=>p.length===2));
 const cities=new Set(['Bologna','Ferrara','Forlì-Cesena','Modena','Parma','Piacenza','Ravenna','Reggio Emilia','Rimini']);
 
-export function createApp({config,store,providerFetch=fetch,imageProvider=null}) {
+export function createApp({config,store,providerFetch=fetch,imageProvider=null,invitationProvider=null}) {
  const origin=new URL(config.origin).origin;
  const profileImages=createProfileImageRoutes({store,provider:imageProvider});
  const meetingRoutes=createMeetingRoutes({store,enabled:config.meetingsEnabled===true});
@@ -27,6 +28,7 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  const peerImageRoutes=createPeerImageRoutes({store,enabled:config.matchingEnabled===true&&config.meetingsEnabled===true});
  const notificationRoutes=createNotificationRoutes({store,enabled:config.notificationsEnabled===true});
  const pushRoutes=createPushRoutes({store,config});
+ const invitationRoutes=createInvitationRoutes({store,config,invitationProvider});
  const secure=origin.startsWith('https:');
  const cookie=(name,value,maxAge)=>`${name}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${secure?'; Secure':''}`;
  const ready=provider=>config.enabled===true && (provider==='google'?Boolean(config.googleId&&config.googleSecret):provider==='facebook'?Boolean(config.facebookId&&config.facebookSecret&&/^v\d+\.\d+$/.test(config.facebookVersion||'')):false);
@@ -42,7 +44,7 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  }
  async function route(request) {
   const url=new URL(request.url); const path=url.pathname;
-  if(path==='/api/config') return Response.json({providers:{google:ready('google'),facebook:ready('facebook'),apple:appleReady()},features:{meetings:config.meetingsEnabled===true,matching:config.matchingEnabled===true&&config.meetingsEnabled===true,groups:config.groupsEnabled===true,community:config.communityEnabled===true,notifications:config.notificationsEnabled===true,push:pushReady(config)},restrictedBeta:true});
+  if(path==='/api/config') return Response.json({providers:{google:ready('google'),facebook:ready('facebook'),apple:appleReady()},features:{meetings:config.meetingsEnabled===true,matching:config.matchingEnabled===true&&config.meetingsEnabled===true,groups:config.groupsEnabled===true,community:config.communityEnabled===true,notifications:config.notificationsEnabled===true,push:pushReady(config),invitations:invitationReady(config,invitationProvider)},invitationChannels:invitationReady(config,invitationProvider)?[...new Set(invitationProvider.channels)]:[],invitationLimit:20,restrictedBeta:true});
   if(path==='/auth/push/disable'){
    if(request.headers.has('origin')&&request.headers.get('origin')!==origin)return new Response('Origine non consentita',{status:403});
    return await pushRoutes({path,request,user:null,sessionHash:null,jsonBody});
@@ -137,6 +139,7 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
    const safetyAllowed=path.startsWith('/api/account')||path==='/api/logout'||path==='/api/session'||path.startsWith('/api/blocks')||path.startsWith('/api/moderation')||(request.method==='GET'&&(path==='/api/profile'||path==='/api/illustrated-profile'));
    if(!safetyAllowed&&store.community&&await store.community.isSuspended(user.id))return Response.json({error:'Account sospeso. Puoi consultare il profilo, uscire o cancellare l’account.'},{status:403});
    const social={path,request,user,jsonBody,sessionHash:hash(raw)};
+   const invitationResponse=await invitationRoutes(social);if(invitationResponse)return invitationResponse;
    const pushResponse=await pushRoutes(social);if(pushResponse)return pushResponse;
    const notificationResponse=await notificationRoutes(social);if(notificationResponse)return notificationResponse;
    const peerImageResponse=await peerImageRoutes(social);if(peerImageResponse)return peerImageResponse;
