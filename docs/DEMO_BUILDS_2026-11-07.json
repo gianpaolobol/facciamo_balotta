@@ -21,7 +21,9 @@
     "deviceTested": false,
     "testFlightUploaded": false,
     "blocker": "api.expo.dev:443 access blocked by policy",
-    "submissionBlocker": "Auto-review rejected saved key reuse without specific Balotta authorization"
+    "submissionKeyConfigured": true,
+    "existingKeyReuseExplicitlyAuthorized": true,
+    "submissionKeyName": "fungoitalia"
   },
   "oauthLive": false
 }
