@@ -170,3 +170,9 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Font esistente e direzione grafica preservati; identità del risultato artistico di un modello diverso NON dimostrata. Riferimenti e prompt sono predisposti, ma occorrono due generazioni reali dopo l'attivazione per valutare somiglianza e qualità. Non usare imagegen/altro provider per simulare una prova Cloudflare.
 - Prossimo passaggio concreto: accesso sicuro Cloudflare, verifica Workers Free, collegamento del token al solo server e prova di due immagini. Se l'autenticazione richiede l'utente, completare prima tutto il lavoro autorizzato e chiedere soltanto quel passaggio. Non chiedere chiavi o password in chat.
 - Ramo/PR #1 conservati; nessun merge in main o aggiornamento dell'anteprima pubblicata eseguito.
+
+## Esito accesso Cloudflare — 7 novembre 2026
+- Dopo la selezione esplicita del metodo Google e dell'account nel flusso sicuro, la verifica ha riportato alla pagina Cloudflare https://dash.cloudflare.com/login con il messaggio visibile «Unable to sign in. Try again or use your email and password.».
+- Accesso Cloudflare NON riuscito. Non è stata accertata la causa; non classificarlo come CAPTCHA, blocco bot o disservizio generale. Nessun tentativo aggiuntivo o cambio di metodo effettuato dopo l'errore generico.
+- Nessuna credenziale è stata letta o riportata nella chat/documenti. Nessun token Cloudflare creato o collegato, nessun piano verificato/attivato, nessuna generazione reale o addebito. Provider ancora disabilitato.
+- Ripresa: risolvere l'accesso Cloudflare attraverso un nuovo passaggio scelto dall'utente, poi verificare Workers Free e configurare il token solo server. Conservare codice/test già salvati; non dichiarare l'AI attiva o la resa artistica validata.
