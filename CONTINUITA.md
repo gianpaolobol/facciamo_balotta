@@ -195,3 +195,10 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file
 - Nessuna chiamata remota al provider, pubblicazione, DB remoto, chiave creata, nuova spesa, IPA/APK firmata o prova su dispositivo fisico. Non è stata aggirata la policy di rete con proxy, altri runner o GitHub Actions.
 - Istruzioni complete: docs/WORKERS_SETUP.md; piano: docs/superpowers/plans/2026-11-07-workers-d1.md. La distribuzione va completata dal gestore in un ambiente normalmente autorizzato a Cloudflare, con piano Free verificato, database/origin/callback/allowlist reali e secret OAuth. Il client dovrà poi avere EXPO_PUBLIC_API_URL HTTPS e build native.
 - Ramo/PR #1 restano separati da main e dall'anteprima pubblicata. Prossima azione: configurazione/distribuzione autorizzata, verifica account/provider reale e prove native; Apple login e servizi multiutente di incontri/chat restano ulteriori incrementi.
+
+## Verifiche GitHub del 7 novembre 2026 — backend Workers
+- Sul commit 53000433da83f9c20bb5bb9358efc0e550212e74 i run 42391084700 (push) e 42391089176 (pull request) terminano failure prima di eseguire qualsiasi step. L'API restituisce steps vuoto e nessun log disponibile; causa non accertata, nessuna prova di errore del codice o di fatturazione.
+- Il workflow ora include npm run test:worker: bundle dry-run e runtime Miniflare/D1 locale con AI sintetica, senza accessi o pubblicazione Cloudflare. Non costituisce un metodo alternativo di distribuzione.
+- Confermati separatamente i risultati locali del blocco backend: 95 test generali e 3 test runtime Worker superati, TypeScript ed export Expo completati. Non sono build native firmate né test AI reali.
+- Pubblicazione HTTPS, piano gratuito effettivo, OAuth reale, Apple login e collaudo iOS/Android restano aperti. Il diniego di rete verso Cloudflare non è risolto e non va aggirato con runner o proxy.
+- Prossimo passo operativo: leggere il messaggio delle annotazioni Actions nell'account GitHub e ripristinare l'esecuzione dei controlli; poi completare il setup in un ambiente normalmente autorizzato ad accedere a Cloudflare. Non attivare piani a pagamento.
