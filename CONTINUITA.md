@@ -32,8 +32,8 @@ Repository privata canonica: https://github.com/gianpaolobol/facciamo_balotta
 Apri la repository privata gianpaolobol/facciamo_balotta. Leggi AGENTS.md, CONTINUITA.md e docs/RECUPERO_2026-11-06.md. Verifica lo stato remoto effettivo e riprendi dal primo punto aperto della coda. Non ricominciare da zero, non dichiarare il trasferimento completo finché immagini e font non sono verificati e conserva le modifiche locali già presenti.
 
 ## Avanzamento caricamento per lotti
-52/83 file asset salvati su main. Hash Git confrontati con gli originali locali e albero remoto riletto dopo ogni lotto. Elenco verificabile e file pendenti: docs/TRASFERIMENTO_ASSET.json.
-Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 31 file pending senza ricaricare quelli verificati. Nessun originale modificato.
+55/83 file asset salvati su main. Hash Git confrontati con gli originali locali e albero remoto riletto dopo ogni lotto. Elenco verificabile e file pendenti: docs/TRASFERIMENTO_ASSET.json.
+Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 28 file pending senza ricaricare quelli verificati. Nessun originale modificato.
 
 ## Ripresa del 7 novembre 2026 — lotto di 6 originali
 - Letti AGENTS.md, CONTINUITA.md, recupero e inventari remoti; main iniziale e00a47c82f057ded061ae1de601a4c0447bccd60.
@@ -42,3 +42,10 @@ Trasferimento e verifica checkout completo ancora aperti. Proseguire dai 31 file
 - La copia sorgente recuperata contiene tutti i JPEG e il font usati dalla demo, ma non i 31 originali PNG assets/events ancora pendenti. Cercarli tra le immagini originali salvate, verificando SHA-256 e dimensioni prima del trasferimento; non sostituirli con JPEG convertiti o immagini rigenerate.
 - Nessun codice applicativo modificato; test, typecheck ed export non rieseguiti in questo lotto. Checkout remoto completo e recupero integrale restano aperti.
 - Prossima azione: recuperare i 31 PNG elencati in docs/TRASFERIMENTO_ASSET.json, poi completare verifica checkout e controlli applicativi.
+
+## Ripresa del 7 novembre 2026 — lotto di 3 originali
+- Verificato main al commit 577c18b12b6444157b2ad0ce6c7bd85ff1fce614; letti AGENTS.md, continuità, recupero e inventari.
+- Recuperati dagli originali salvati chess.png, concert.png e cooking.png. Dimensioni e SHA-256 identici al manifest iniziale; SHA Git dei tre blob confrontati con i byte locali.
+- Stato: 55/83 asset trasferiti, 28 PNG ancora pendenti. I vecchi percorsi di scratch non esistono in questo ambiente; tre originali materializzati in /workspace/scratch/cd1199ef16ff/originals.
+- Nessuna modifica al codice; test, typecheck, export e checkout integrale non eseguiti in questo lotto.
+- Prossima azione: recuperare i 28 PNG ancora elencati in docs/TRASFERIMENTO_ASSET.json, mantenendo lotti piccoli e verifica degli hash, poi verificare checkout e applicazione.

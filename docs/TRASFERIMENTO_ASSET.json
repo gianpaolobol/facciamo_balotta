@@ -2,7 +2,7 @@
   "date": "2026-11-07",
   "source": "/workspace/sites/facciamo-balotta",
   "total_files": 83,
-  "verified_files": 52,
+  "verified_files": 55,
   "complete": false,
   "files": [
     {
@@ -212,15 +212,24 @@
     {
       "path": "assets/tavolate-giochi.png",
       "sha": "87c636d26e3c66f0a5333ea6c316d030d33e236d"
+    },
+    {
+      "path": "assets/events/chess.png",
+      "sha": "f78b3cb1e1a1cb5936e5fd4a2fbe80a2fc1dafac"
+    },
+    {
+      "path": "assets/events/concert.png",
+      "sha": "1433d50742eff8c9b9680799abc8c653ee91067e"
+    },
+    {
+      "path": "assets/events/cooking.png",
+      "sha": "4304f987c799b9f219ea6bc0d6345135d5222ff3"
     }
   ],
   "pending": [
-    "assets/events/chess.png",
     "assets/events/cinema.png",
     "assets/events/climbing.png",
     "assets/events/community.png",
-    "assets/events/concert.png",
-    "assets/events/cooking.png",
     "assets/events/crafts.png",
     "assets/events/dance.png",
     "assets/events/football.png",
