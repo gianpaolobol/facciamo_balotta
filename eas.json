@@ -4,6 +4,20 @@
     "appVersionSource": "remote"
   },
   "build": {
+    "demo": {
+      "distribution": "store",
+      "autoIncrement": true,
+      "environment": "demo",
+      "node": "24.3.0",
+      "android": {
+        "distribution": "internal",
+        "buildType": "apk",
+        "resourceClass": "medium"
+      },
+      "ios": {
+        "resourceClass": "medium"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal",
@@ -43,7 +57,17 @@
     }
   },
   "submit": {
+    "demo": {
+      "ios": {
+        "ascAppId": "6832101489",
+        "appleTeamId": "BX9MDXAHKG"
+      }
+    },
     "beta": {
+      "ios": {
+        "ascAppId": "6832101489",
+        "appleTeamId": "BX9MDXAHKG"
+      },
       "android": {
         "track": "internal",
         "releaseStatus": "draft"
