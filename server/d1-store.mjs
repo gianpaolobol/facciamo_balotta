@@ -13,6 +13,29 @@ export function createD1Store(db){
  }
  return {
   close(){},imageUsage,
+  getIdentity:id=>first('SELECT * FROM users WHERE id=?',id),
+  async putAppleIdentitySession(identity,hash,issuedAt){
+   const guard='NOT EXISTS(SELECT 1 FROM apple_account_state WHERE subject=? AND revoked_at>=?)',results=await db.batch([
+    stmt(`INSERT INTO users SELECT ?,'apple',?,? ,'' WHERE ${guard} ON CONFLICT(provider,subject) DO NOTHING`,randomUUID(),identity.subject,identity.email,identity.subject,issuedAt*1000),
+    stmt(`INSERT INTO sessions SELECT ?,id,? FROM users WHERE provider='apple' AND subject=? AND ${guard}`,hash,Date.now()+604800000,identity.subject,identity.subject,issuedAt*1000),
+    stmt('INSERT INTO apple_session_grants SELECT hash,? FROM sessions WHERE hash=?',issuedAt*1000,hash)
+   ]);return Boolean(results[1].meta.changes);
+  },
+  revokeAndDeleteAppleAccount(userId,revokedAt){return db.batch([stmt("INSERT INTO apple_account_state(subject,revoked_at) SELECT subject,? FROM users WHERE id=? AND provider='apple' ON CONFLICT(subject) DO UPDATE SET revoked_at=MAX(revoked_at,excluded.revoked_at)",revokedAt,userId),stmt("DELETE FROM users WHERE id=? AND provider='apple'",userId)]);},
+  async putAppleSession(hash,userId,issuedAt){const results=await db.batch([stmt("INSERT INTO sessions SELECT ?,id,? FROM users WHERE id=? AND provider='apple' AND NOT EXISTS(SELECT 1 FROM apple_account_state WHERE subject=users.subject AND revoked_at>=?)",hash,Date.now()+604800000,userId,issuedAt*1000),stmt('INSERT INTO apple_session_grants SELECT hash,? FROM sessions WHERE hash=?',issuedAt*1000,hash)]);return Boolean(results[0].meta.changes);},
+  async applyAppleEvent(event){
+   const pending='EXISTS(SELECT 1 FROM apple_notifications WHERE id=? AND processed=0)',jobs=[stmt('DELETE FROM apple_notifications WHERE expires<?',Date.now()),stmt('INSERT INTO apple_notifications VALUES(?,?,0) ON CONFLICT(id) DO NOTHING',event.id,event.expires)];
+   if(event.type==='email-enabled'||event.type==='email-disabled'){
+    jobs.push(stmt(`INSERT INTO apple_account_state(subject,email_event_time,email_enabled) SELECT ?,?,? WHERE ${pending} ON CONFLICT(subject) DO UPDATE SET email_event_time=excluded.email_event_time,email_enabled=excluded.email_enabled WHERE excluded.email_event_time>apple_account_state.email_event_time`,event.subject,event.eventTime,event.type==='email-enabled'?1:0,event.id));
+   }else{
+    jobs.push(stmt(`INSERT INTO apple_account_state(subject,revoked_at) SELECT ?,? WHERE ${pending} ON CONFLICT(subject) DO UPDATE SET revoked_at=MAX(revoked_at,excluded.revoked_at)`,event.subject,event.eventTime,event.id));
+    jobs.push(stmt(`DELETE FROM sessions WHERE user_id IN(SELECT id FROM users WHERE provider='apple' AND subject=?) AND NOT EXISTS(SELECT 1 FROM apple_session_grants WHERE hash=sessions.hash AND issued_at>?) AND ${pending}`,event.subject,event.eventTime,event.id));
+    jobs.push(stmt(`DELETE FROM handoffs WHERE user_id IN(SELECT id FROM users WHERE provider='apple' AND subject=?) AND ${pending}`,event.subject,event.id));
+    if(event.type==='account-deleted')jobs.push(stmt(`DELETE FROM users WHERE provider='apple' AND subject=? AND ${pending}`,event.subject,event.id));
+   }
+   jobs.push(stmt('UPDATE apple_notifications SET processed=1 WHERE id=? AND processed=0',event.id));
+   const results=await db.batch(jobs);return Boolean(results.at(-1).meta.changes);
+  },
   async upsertIdentity(provider,subject,email,name){
    const row=await first('INSERT INTO users VALUES(?,?,?,?,?) ON CONFLICT(provider,subject) DO NOTHING RETURNING *',randomUUID(),provider,subject,email,name);
    return row||first('SELECT * FROM users WHERE provider=? AND subject=?',provider,subject);

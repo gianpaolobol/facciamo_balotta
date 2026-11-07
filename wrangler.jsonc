@@ -9,6 +9,6 @@
   "d1_databases": [{"binding": "DB", "database_name": "facciamo-balotta", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations"}],
   "ai": {"binding": "AI", "remote": false},
   "rules": [{"type": "Data", "globs": ["**/assets/ai-reference/*.jpg"], "fallthrough": true}],
-  "vars": {"PUBLIC_ORIGIN": "https://configure-before-deploy.invalid", "OAUTH_ENABLED": "false", "APPLE_NATIVE_ENABLED": "false", "APPLE_BUNDLE_ID": "it.facciamobalotta.app", "CLOUDFLARE_FREE_PLAN_CONFIRMED": "false", "BETA_ALLOWED_EMAILS": ""},
+  "vars": {"PUBLIC_ORIGIN": "https://configure-before-deploy.invalid", "OAUTH_ENABLED": "false", "APPLE_NATIVE_ENABLED": "false", "APPLE_NOTIFICATIONS_ENABLED": "false", "APPLE_BUNDLE_ID": "it.facciamobalotta.app", "CLOUDFLARE_FREE_PLAN_CONFIRMED": "false", "BETA_ALLOWED_EMAILS": ""},
   "observability": {"enabled": false}
 }

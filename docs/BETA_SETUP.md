@@ -10,7 +10,7 @@ Il progetto contiene sorgenti e configurazioni. La disponibilità di account svi
 4. Configurare i client Google e l'app Meta, relativi domini/callback, schermata consenso e modalità test/review appropriate. Callback previste: `/auth/google/callback` e `/auth/facebook/callback` sull'origin effettivo. `FACEBOOK_API_VERSION` va scelta fra le versioni supportate dall'app Meta.
 5. Preparare informative, termini, consensi necessari, processo di cancellazione e contatto di supporto prima di raccogliere dati. L'app demo non è un servizio di moderazione, emergenza o verifica documentale dell'identità.
 6. Inserire in `BETA_ALLOWED_EMAILS` soltanto gli indirizzi dei tester realmente invitati. L'email è ricevuta e controllata dal provider, non digitata come login nell'app. Gli account Google devono restituire email verificata; senza email disponibile il test non viene abilitato.
-7. Per iOS configurare Sign in with Apple e il suo backend prima di distribuire la beta conforme ai requisiti applicabili. La verifica JWT e il flusso nativo sono predisposti e disabilitati: leggere `docs/APPLE_NATIVE_SETUP.md`. Restano capability/firma reali, revoche Apple, notifiche e prove su dispositivi prima dell’attivazione; la sola capability non basta.
+7. Per iOS configurare Sign in with Apple e il suo backend prima di distribuire la beta conforme ai requisiti applicabili. La verifica JWT e il flusso nativo sono predisposti e disabilitati: leggere `docs/APPLE_NATIVE_SETUP.md`. Revoca e notifiche sono predisposte: restano secret, endpoint/capability/firma reali e prove su dispositivi prima dell’attivazione; la sola capability non basta.
 
 ## Percorso di collaudo
 

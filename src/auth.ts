@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 import * as WebBrowser from 'expo-web-browser';
 import * as Crypto from 'expo-crypto';
 import * as AuthSession from 'expo-auth-session';
-import {authenticateWithApple} from './apple-native-flow.mjs';
+import {authenticateWithApple,reauthenticateAndDeleteAppleAccount} from './apple-native-flow.mjs';
 
 WebBrowser.maybeCompleteAuthSession();
 const API=(process.env.EXPO_PUBLIC_API_URL||'').replace(/\/$/,'');
@@ -52,4 +52,14 @@ async function nativeProof(){
  return {verifier,challenge:digest.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')};
 }
 export async function signOut() {try{await api('/api/logout','POST');}finally{if(Platform.OS!=='web') await SecureStore.deleteItemAsync(TOKEN_KEY);}}
-export async function deleteAccount() {await api('/api/account','DELETE');if(Platform.OS!=='web') await SecureStore.deleteItemAsync(TOKEN_KEY);}
+export async function deleteAccount() {
+ const {provider}=await api('/api/account/deletion-method');
+ if(provider==='apple'){
+  if(Platform.OS!=='ios')throw new Error('Conferma la cancellazione dall’app iOS con lo stesso account Apple.');
+  const Apple=await import('expo-apple-authentication');
+  if(!await Apple.isAvailableAsync())throw new Error('Conferma Apple non disponibile su questo dispositivo.');
+  try{await reauthenticateAndDeleteAppleAccount({createProof:nativeProof,request:api,authorize:(options:{nonce:string;state:string})=>Apple.signInAsync({...options,requestedScopes:[Apple.AppleAuthenticationScope.EMAIL]})});}
+  catch(error){if((error as {code?:string}).code==='ERR_REQUEST_CANCELED')throw new Error('Cancellazione annullata. Il tuo account è ancora presente.');throw error;}
+ }else await api('/api/account','DELETE');
+ if(Platform.OS!=='web')await SecureStore.deleteItemAsync(TOKEN_KEY);
+}

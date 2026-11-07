@@ -12,7 +12,11 @@ export function createStore(path) {
  CREATE TABLE IF NOT EXISTS profile_images(id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, slot TEXT NOT NULL, description_hash TEXT NOT NULL, data BLOB NOT NULL, mime TEXT NOT NULL, model TEXT NOT NULL, style_version TEXT NOT NULL, approved INTEGER NOT NULL, created INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS attempts(hash TEXT PRIMARY KEY, data TEXT NOT NULL, expires INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS sessions(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, expires INTEGER NOT NULL);
- CREATE TABLE IF NOT EXISTS handoffs(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, challenge TEXT NOT NULL, expires INTEGER NOT NULL);`);
+ CREATE TABLE IF NOT EXISTS handoffs(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, challenge TEXT NOT NULL, expires INTEGER NOT NULL);
+ CREATE TABLE IF NOT EXISTS apple_account_state(subject TEXT PRIMARY KEY, revoked_at INTEGER NOT NULL DEFAULT 0, email_event_time INTEGER NOT NULL DEFAULT 0, email_enabled INTEGER);
+ CREATE TABLE IF NOT EXISTS apple_notifications(id TEXT PRIMARY KEY, expires INTEGER NOT NULL, processed INTEGER NOT NULL DEFAULT 0);
+ CREATE TABLE IF NOT EXISTS apple_session_grants(hash TEXT PRIMARY KEY REFERENCES sessions(hash) ON DELETE CASCADE, issued_at INTEGER NOT NULL);
+ CREATE INDEX IF NOT EXISTS apple_notifications_expiry ON apple_notifications(expires);`);
  function prune() { const now=Date.now(); for(const table of ['attempts','sessions','handoffs']) db.prepare(`DELETE FROM ${table} WHERE expires < ?`).run(now); }
  function imageUsage(accountId,userId=null,now=Date.now()){
   const day=new Date(now).toISOString().slice(0,10);
@@ -51,6 +55,43 @@ export function createStore(path) {
   },
   discardProfileImage(userId,slot,id){return Boolean(db.prepare('DELETE FROM profile_images WHERE user_id=? AND slot=? AND id=? AND approved=0').run(userId,slot,id).changes);},
   close:()=>db.close(),
+  getIdentity:id=>db.prepare('SELECT * FROM users WHERE id=?').get(id),
+  putAppleIdentitySession(identity,hash,issuedAt){
+   db.exec('BEGIN IMMEDIATE');try{
+    if(db.prepare('SELECT subject FROM apple_account_state WHERE subject=? AND revoked_at>=?').get(identity.subject,issuedAt*1000)){db.exec('COMMIT');return false;}
+    let user=db.prepare("SELECT id FROM users WHERE provider='apple' AND subject=?").get(identity.subject);
+    if(!user){user={id:randomUUID()};db.prepare("INSERT INTO users VALUES(?,'apple',?,?,'')").run(user.id,identity.subject,identity.email);}
+    db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hash,user.id,Date.now()+604800000);
+    db.prepare('INSERT INTO apple_session_grants VALUES(?,?)').run(hash,issuedAt*1000);db.exec('COMMIT');return true;
+   }catch(error){db.exec('ROLLBACK');throw error;}
+  },
+  revokeAndDeleteAppleAccount(userId,revokedAt){
+   db.exec('BEGIN IMMEDIATE');try{
+    db.prepare("INSERT INTO apple_account_state(subject,revoked_at) SELECT subject,? FROM users WHERE id=? AND provider='apple' ON CONFLICT(subject) DO UPDATE SET revoked_at=MAX(revoked_at,excluded.revoked_at)").run(revokedAt,userId);
+    db.prepare("DELETE FROM users WHERE id=? AND provider='apple'").run(userId);db.exec('COMMIT');
+   }catch(error){db.exec('ROLLBACK');throw error;}
+  },
+  putAppleSession(hash,userId,issuedAt){
+   db.exec('BEGIN IMMEDIATE');try{
+    const changed=Boolean(db.prepare("INSERT INTO sessions SELECT ?,id,? FROM users WHERE id=? AND provider='apple' AND NOT EXISTS(SELECT 1 FROM apple_account_state WHERE subject=users.subject AND revoked_at>=?)").run(hash,Date.now()+604800000,userId,issuedAt*1000).changes);
+    if(changed)db.prepare('INSERT INTO apple_session_grants VALUES(?,?)').run(hash,issuedAt*1000);db.exec('COMMIT');return changed;
+   }catch(error){db.exec('ROLLBACK');throw error;}
+  },
+  applyAppleEvent(event){
+   db.exec('BEGIN IMMEDIATE');try{
+    db.prepare('DELETE FROM apple_notifications WHERE expires<?').run(Date.now());
+    if(!db.prepare('INSERT INTO apple_notifications VALUES(?,?,1) ON CONFLICT(id) DO NOTHING').run(event.id,event.expires).changes){db.exec('COMMIT');return false;}
+    if(event.type==='email-enabled'||event.type==='email-disabled'){
+     db.prepare('INSERT INTO apple_account_state(subject,email_event_time,email_enabled) VALUES(?,?,?) ON CONFLICT(subject) DO UPDATE SET email_event_time=excluded.email_event_time,email_enabled=excluded.email_enabled WHERE excluded.email_event_time>apple_account_state.email_event_time').run(event.subject,event.eventTime,event.type==='email-enabled'?1:0);
+    }else{
+     db.prepare('INSERT INTO apple_account_state(subject,revoked_at) VALUES(?,?) ON CONFLICT(subject) DO UPDATE SET revoked_at=MAX(revoked_at,excluded.revoked_at)').run(event.subject,event.eventTime);
+     db.prepare("DELETE FROM sessions WHERE user_id IN(SELECT id FROM users WHERE provider='apple' AND subject=?) AND NOT EXISTS(SELECT 1 FROM apple_session_grants WHERE hash=sessions.hash AND issued_at>?)").run(event.subject,event.eventTime);
+     db.prepare("DELETE FROM handoffs WHERE user_id IN(SELECT id FROM users WHERE provider='apple' AND subject=?)").run(event.subject);
+     if(event.type==='account-deleted')db.prepare("DELETE FROM users WHERE provider='apple' AND subject=?").run(event.subject);
+    }
+    db.exec('COMMIT');return true;
+   }catch(error){db.exec('ROLLBACK');throw error;}
+  },
   upsertIdentity(provider,subject,email,name) {
    const existing=db.prepare('SELECT * FROM users WHERE provider=? AND subject=?').get(provider,subject);
    if(existing) return existing;

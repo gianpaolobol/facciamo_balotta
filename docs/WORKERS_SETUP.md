@@ -27,7 +27,7 @@ Questi sono passi per il gestore dell'account nel suo ambiente di distribuzione,
 1. Verificare che l'account sia Workers Free e che database/AI siano nelle quote gratuite. Non attivare Paid, crediti Gateway o servizi accessori a pagamento.
 2. Creare un database D1 denominato facciamo-balotta; sostituire in wrangler.jsonc l'ID fittizio con l'ID reale e applicare migrations/0001_backend.sql nell'ambiente di destinazione. L'ID tutto zero non identifica un database pubblicato.
 3. Configurare un origin HTTPS reale per il backend e un dominio/route autorizzato. workers_dev e preview_urls sono disabilitati per evitare una pubblicazione involontaria della bozza. Non basta eseguire deploy con la configurazione di esempio.
-4. Conservare le credenziali OAuth Google/Meta come secret del Worker; impostare gli ID client, la allowlist beta e le callback HTTPS del backend. Per il client nativo resta lo schema facciamobalotta con handoff monouso/PKCE; Apple nativo è predisposto ma disabilitato; revoche presso il provider, notifiche e collaudo sui telefoni restano da completare (docs/APPLE_NATIVE_SETUP.md).
+4. Conservare le credenziali OAuth Google/Meta come secret del Worker; impostare gli ID client, la allowlist beta e le callback HTTPS del backend. Per il client nativo resta lo schema facciamobalotta con handoff monouso/PKCE; Apple nativo, revoca e notifiche sono predisposti ma disabilitati: configurazione reale e collaudo sui telefoni restano da completare (docs/APPLE_NATIVE_SETUP.md).
 5. In Workers, AI usa il binding env.AI dell'account: non occorre un token Cloudflare dentro il telefono o nel Worker per ogni inferenza. L'eventuale token di distribuzione resta nello strumento di deployment e non nei sorgenti. Non riutilizzare credenziali di Fungo Italia.
 6. Lasciare OAUTH_ENABLED e CLOUDFLARE_FREE_PLAN_CONFIRMED false finché accessi, piano Free e allowlist non sono verificati. Il flag Free è un'attestazione dell'operatore, non un controllo automatico della fatturazione del provider.
 7. Dopo la distribuzione, configurare EXPO_PUBLIC_API_URL del client con l'origin HTTPS del backend e produrre build native di sviluppo separate per iOS e Android. Nessun secret deve avere prefisso EXPO_PUBLIC_.
@@ -36,7 +36,7 @@ Non è stato preparato un workflow che faccia chiamate a Cloudflare da GitHub pe
 
 ## Persistenza e limiti
 
-Accesso Apple nativo predisposto e disabilitato per default: leggere docs/APPLE_NATIVE_SETUP.md. La verifica JWT locale è implementata, ma revoche presso Apple, notifiche e collaudo dei dispositivi restano prerequisiti di attivazione/rilascio. Non abilitare APPLE_NATIVE_ENABLED durante il solo setup del database.
+Accesso Apple nativo predisposto e disabilitato per default: leggere docs/APPLE_NATIVE_SETUP.md. JWT, revoca con conferma fresca e notifiche firmate sono implementati localmente; secret, registrazione endpoint e collaudo reale restano prerequisiti di attivazione/rilascio. Non abilitare APPLE_NATIVE_ENABLED durante il solo setup del database.
 
 D1 è asincrono: l'API attende le operazioni anche quando viene usato lo store SQLite locale. Quote, versioni e consumi non sono conservati nella memoria dell'isolate. La prenotazione di una generazione usa un unico INSERT condizionato; le mutazioni delle immagini verificano la versione nel relativo write atomico.
 
@@ -49,3 +49,5 @@ Il timeout del binding AI è di 60 secondi; una risposta tardiva non viene utili
 - https://developers.cloudflare.com/d1/platform/limits/
 - https://developers.cloudflare.com/d1/platform/pricing/
 - https://developers.cloudflare.com/workers-ai/get-started/workers-wrangler/
+
+Le migrazioni 0002_apple_lifecycle.sql e 0003_apple_session_grants.sql aggiungono ledger notifiche, soglia revoca Apple e tempi delle autorizzazioni. I test locali applicano tutte le migrazioni in ordine. Le credenziali APPLE_TEAM_ID/APPLE_KEY_ID/APPLE_PRIVATE_KEY sono solo server e non vanno aggiunte ai vars pubblici del progetto. APPLE_NOTIFICATIONS_ENABLED resta false finché l’endpoint non è registrato e collaudato.

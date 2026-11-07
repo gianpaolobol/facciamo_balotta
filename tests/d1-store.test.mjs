@@ -1,12 +1,36 @@
+import {applyLocalMigrations} from './support/d1-migrations.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
 import {Miniflare,convertV4MiniflareOptions} from 'miniflare';import {createD1Store} from '../server/d1-store.mjs';import {createApp} from '../server/auth.mjs';import {createHash} from 'node:crypto';
-async function harness(){const mf=new Miniflare(convertV4MiniflareOptions({modules:true,script:'export default {fetch(){return new Response("test")}}',d1Databases:{DB:'test'}}));const db=await mf.getD1Database('DB');const sql=await readFile(new URL('../migrations/0001_backend.sql',import.meta.url),'utf8');await db.batch(sql.trim().split(/;\s*(?=(?:CREATE|INSERT|PRAGMA)\b)/i).map(s=>s.trim()).filter(Boolean).map(s=>db.prepare(s)));return {mf,db,store:createD1Store(db)};}
+async function harness(){const mf=new Miniflare(convertV4MiniflareOptions({modules:true,script:'export default {fetch(){return new Response("test")}}',d1Databases:{DB:'test'}}));const db=await mf.getD1Database('DB');await applyLocalMigrations(db);return {mf,db,store:createD1Store(db)};}
 test('D1 drives authenticated API and versioned profile writes',async()=>{
  const {mf,store}=await harness();try{const user=await store.upsertIdentity('google','a','a@example.com','Ada'),token='a'.repeat(43);await store.putSession(createHash('sha256').update(token).digest('base64url'),user.id);const app=createApp({store,config:{origin:'https://balotta.example'}}),headers={authorization:'Bearer '+token};assert.equal((await (await app(new Request('https://balotta.example/api/session',{headers}))).json()).user.id,user.id);
  assert.equal((await store.saveIllustratedProfile(user.id,{fields:{},confirmed:{}},0)).version,1);assert.equal(await store.saveIllustratedProfile(user.id,{},0),null);
  const writes=await Promise.all([store.saveIllustratedProfile(user.id,{x:1},1),store.saveIllustratedProfile(user.id,{x:2},1)]);assert.equal(writes.filter(Boolean).length,1);
  await store.putAttempt('a',{test:true});const attempts=await Promise.all([store.takeAttempt('a'),store.takeAttempt('a')]);assert.equal(attempts.filter(Boolean).length,1);
  await store.putHandoff('h',user.id,'challenge');assert.ok(await store.takeHandoff('h'));assert.equal(await store.takeHandoff('h'),null);
+ }finally{await mf.dispose();}
+});
+test('D1 Apple notifications apply once atomically and block stale native sessions',async()=>{
+ const {mf,store,db}=await harness();try{
+  const apple=await store.upsertIdentity('apple','owner','owner@example.com',''),other=await store.upsertIdentity('google','owner','owner@example.com','Other'),now=Date.now(),event={id:'revoked',subject:'owner',type:'consent-revoked',eventTime:now,expires:now+691200000};
+  await store.putSession('old',apple.id);await store.putSession('other',other.id);await store.putHandoff('handoff',apple.id,'challenge');
+  const changes=await Promise.all([store.applyAppleEvent(event),store.applyAppleEvent(event)]);assert.equal(changes.filter(Boolean).length,1);assert.equal(await store.getSession('old'),null);assert.ok(await store.getSession('other'));assert.equal(await store.takeHandoff('handoff'),null);assert.equal(await store.putAppleSession('stale',apple.id,Math.floor(now/1000)-1),false);
+  assert.equal(await store.putAppleSession('new',apple.id,Math.floor(now/1000)+1),true);assert.equal(await store.applyAppleEvent(event),false);assert.ok(await store.getSession('new'));
+  await store.applyAppleEvent({...event,id:'mail',type:'email-disabled'});assert.equal((await db.prepare('SELECT email_enabled FROM apple_account_state WHERE subject=?').bind('owner').first()).email_enabled,0);assert.ok(await store.getSession('new'));
+  await store.applyAppleEvent({...event,id:'delete',type:'account-deleted'});assert.equal(await store.getIdentity(apple.id),null);assert.ok(await store.getIdentity(other.id));
+ }finally{await mf.dispose();}
+});
+test('D1 Apple deletion tombstone atomically prevents stale identity and session resurrection',async()=>{
+ const {mf,store,db}=await harness();try{
+  const u=await store.upsertIdentity('apple','deleted','old@example.com',''),now=Date.now();await store.revokeAndDeleteAppleAccount(u.id,now);
+  assert.equal(await store.putAppleIdentitySession({subject:'deleted',email:'old@example.com'},'stale',Math.floor(now/1000)-1),false);assert.equal((await db.prepare("SELECT count(*) AS n FROM users WHERE provider='apple' AND subject='deleted'").first()).n,0);
+  assert.equal(await store.putAppleIdentitySession({subject:'deleted',email:'new@example.com'},'fresh',Math.floor(now/1000)+1),true);assert.equal((await store.getSession('fresh')).email,'new@example.com');
+ }finally{await mf.dispose();}
+});
+test('D1 delayed Apple revocations preserve sessions authorized after the event',async()=>{
+ const {mf,store}=await harness();try{
+  const u=await store.upsertIdentity('apple','delayed','a@example.com',''),now=Math.floor(Date.now()/1000),event={id:'late',subject:'delayed',type:'consent-revoked',eventTime:(now-20)*1000,expires:Date.now()+691200000};assert.equal(await store.putAppleSession('fresh',u.id,now-10),true);
+  await store.applyAppleEvent(event);assert.ok(await store.getSession('fresh'));await store.applyAppleEvent({...event,id:'older',eventTime:(now-30)*1000});assert.ok(await store.getSession('fresh'));
  }finally{await mf.dispose();}
 });
 test('D1 quota reservation is atomic under concurrent calls and survives account deletion',async()=>{

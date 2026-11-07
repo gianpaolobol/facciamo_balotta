@@ -1,5 +1,6 @@
 import {createProfileImageRoutes} from './profile-images.mjs';
-import {verifyAppleToken} from './apple-token.mjs';
+import {verifyAppleToken,verifyAppleNotification} from './apple-token.mjs';
+import {appleRevocationReady,revokeAppleAuthorization} from './apple-revoke.mjs';
 import {validateIllustratedDraft} from '../src/illustrated-draft.mjs';
 import { randomBytes, createHash, timingSafeEqual } from 'node:crypto';
 
@@ -17,7 +18,8 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  const ready=provider=>config.enabled===true && (provider==='google'?Boolean(config.googleId&&config.googleSecret):provider==='facebook'?Boolean(config.facebookId&&config.facebookSecret&&/^v\d+\.\d+$/.test(config.facebookVersion||'')):false);
  const appleReady=()=>config.enabled===true&&config.appleNativeEnabled===true&&config.appleBundleId==='it.facciamobalotta.app';
  async function sessionResponse(user,native=false) {
-  const token=random(); (await store.putSession(hash(token),user.id));
+  const token=random();
+  await store.putSession(hash(token),user.id);
   return native?Response.json({token},{headers:{'cache-control':'no-store'}}):new Response(null,{status:303,headers:{location:origin+'/?auth=success','set-cookie':cookie('balotta_session',token,604800)}});
  }
  async function jsonBody(request,maxChars=16_384) {
@@ -27,6 +29,14 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
  async function route(request) {
   const url=new URL(request.url); const path=url.pathname;
   if(path==='/api/config') return Response.json({providers:{google:ready('google'),facebook:ready('facebook'),apple:appleReady()},restrictedBeta:true});
+  if(path==='/auth/apple/notifications'){
+   if(request.method!=='POST')return new Response('Metodo non consentito',{status:405});
+   if(config.appleNotificationsEnabled!==true||config.appleBundleId!=='it.facciamobalotta.app')return Response.json({error:'Notifiche Apple non configurate.'},{status:503});
+   const body=await jsonBody(request);let event;
+   try{event=await verifyAppleNotification(body.payload,{audience:config.appleBundleId,providerFetch});}
+   catch(error){return Response.json({error:'Notifica Apple non verificata.'},{status:error.status===503?503:401});}
+   await store.applyAppleEvent(event);return Response.json({ok:true});
+  }
   if(path==='/auth/apple/native/start'||path==='/auth/apple/native/exchange'){
    if(request.method!=='POST')return new Response('Metodo non consentito',{status:405});
    if(!appleReady())return Response.json({error:'Accesso Apple in preparazione.'},{status:503});
@@ -45,8 +55,10 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
    catch(error){return Response.json({error:error.status===503?'Accesso Apple temporaneamente non disponibile. Riprova.':'Identità Apple non verificata.'},{status:error.status===503?503:401});}
    const allowed=(config.allowedEmails||[]).map(s=>s.trim().toLowerCase());
    if(!allowed.includes(identity.email))return Response.json({error:'Questa beta è riservata alle persone invitate. Usa l’indirizzo associato all’invito, anche se è un indirizzo privato Apple.'},{status:401});
-   const user=await store.upsertIdentity('apple',identity.subject,identity.email,'');
-   return sessionResponse(user,true);
+   const token=random();
+   const authorizationTime=Math.min(identity.issuedAt,Math.floor(attempt.created/1000));
+   if(!await store.putAppleIdentitySession(identity,hash(token),authorizationTime))return Response.json({error:'Accesso Apple revocato. Riprova con una nuova autorizzazione.'},{status:401});
+   return Response.json({token});
   }
   const auth=path.match(/^\/auth\/(google|facebook)\/(start|callback)$/);
   if(auth) {
@@ -105,6 +117,29 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
    if(!['GET','HEAD'].includes(request.method)&&!bearer&&request.headers.get('origin')!==origin) return new Response('Origine non consentita',{status:403});
    const imageResponse=await profileImages({path,request,user,jsonBody});if(imageResponse)return imageResponse;
    if(path==='/api/session'&&request.method==='GET') return Response.json({user});
+   if(path==='/api/account/deletion-method'&&request.method==='GET'){
+    const identity=await store.getIdentity(user.id);return Response.json({provider:identity.provider});
+   }
+   if((path==='/api/account/apple/start'||path==='/api/account/apple/delete')&&request.method==='POST'){
+    const identity=await store.getIdentity(user.id);
+    if(identity.provider!=='apple')return Response.json({error:'Metodo non disponibile per questo account.'},{status:400});
+    if(!appleRevocationReady(config))return Response.json({error:'Revoca Apple non ancora configurata. Riprova più tardi.'},{status:503});
+    const body=await jsonBody(request);
+    if(path.endsWith('/start')){
+     if(typeof body.challenge!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(body.challenge))return Response.json({error:'Richiesta non valida.'},{status:400});
+     const attempt=random(),nonce=random();await store.putAttempt(hash(attempt),{provider:'apple-delete',userId:user.id,nonce,challenge:body.challenge,created:Date.now()});return Response.json({attempt,nonce});
+    }
+    if(typeof body.attempt!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(body.attempt)||typeof body.verifier!=='string'||!/^[A-Za-z0-9_-]{43,128}$/.test(body.verifier))return Response.json({error:'Richiesta non valida.'},{status:400});
+    const attempt=await store.takeAttempt(hash(body.attempt));
+    if(!attempt||attempt.provider!=='apple-delete'||attempt.userId!==user.id||Date.now()-attempt.created>300000||!equal(attempt.challenge,hash(body.verifier)))return Response.json({error:'Conferma scaduta o non valida. Riprova.'},{status:400});
+    let confirmed;
+    try{confirmed=await verifyAppleToken(body.identityToken,{audience:config.appleBundleId,nonce:attempt.nonce,providerFetch});}
+    catch(error){return Response.json({error:'Conferma Apple non verificata.'},{status:error.status===503?503:401});}
+    if(confirmed.subject!==identity.subject)return Response.json({error:'Conferma con lo stesso account Apple usato per accedere.'},{status:401});
+    try{await revokeAppleAuthorization({config,code:body.authorizationCode,subject:identity.subject,nonce:attempt.nonce,providerFetch});}
+    catch{return Response.json({error:'Impossibile completare la revoca Apple. Account ancora presente: riprova più tardi.'},{status:503});}
+    await store.revokeAndDeleteAppleAccount(user.id,Date.now());return Response.json({ok:true},{headers:{'set-cookie':cookie('balotta_session','',0)}});
+   }
    if(path==='/api/illustrated-profile'&&request.method==='GET') return Response.json((await store.getIllustratedProfile(user.id)));
    if(path==='/api/illustrated-profile'&&request.method==='PUT') {
     const body=await jsonBody(request,80_000);let draft;
@@ -123,7 +158,7 @@ export function createApp({config,store,providerFetch=fetch,imageProvider=null})
     (await store.saveProfile(user.id,profile)); return Response.json({profile});
    }
    if(path==='/api/logout'&&request.method==='POST') {(await store.dropSession(hash(raw)));return Response.json({ok:true},{headers:{'set-cookie':cookie('balotta_session','',0)}});}
-   if(path==='/api/account'&&request.method==='DELETE') {(await store.deleteAccount(user.id));return Response.json({ok:true},{headers:{'set-cookie':cookie('balotta_session','',0)}});}
+   if(path==='/api/account'&&request.method==='DELETE') {if((await store.getIdentity(user.id)).provider==='apple')return Response.json({error:'Conferma prima la cancellazione con Apple nell’app iOS.'},{status:409});(await store.deleteAccount(user.id));return Response.json({ok:true},{headers:{'set-cookie':cookie('balotta_session','',0)}});}
   }
   return new Response('Non trovato',{status:404});
  }

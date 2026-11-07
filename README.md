@@ -34,7 +34,7 @@ L'IA non è attiva: nessun profilo è inviato a servizi AI e non vengono inventa
 
 ## Accessi reali
 
-Google e Facebook richiedono credenziali sviluppatore e un backend HTTPS. Apple nativo è predisposto e disabilitato su iOS, in attesa di firma, gestione revoche e prove reali (docs/APPLE_NATIVE_SETUP.md); Instagram non è supportato come login. Niente email/password, SMS o account aggiuntivi in questa versione.
+Google e Facebook richiedono credenziali sviluppatore e un backend HTTPS. Apple nativo è predisposto e disabilitato su iOS, con revoca e notifiche implementate, in attesa di configurazione, firma e prove reali (docs/APPLE_NATIVE_SETUP.md); Instagram non è supportato come login. Niente email/password, SMS o account aggiuntivi in questa versione.
 
 Il server usa OAuth provider/subject, sessioni opache con hash in SQLite, protezione dello stato OAuth, allowlist beta controllata sul server e handoff nativo con codice monouso legato a un verifier PKCE. Due provider con la stessa email non vengono uniti automaticamente.
 
