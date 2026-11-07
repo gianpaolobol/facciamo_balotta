@@ -14,14 +14,14 @@ Il codice della beta collega i percorsi multiutente web/iOS/Android mantenendo f
 | Gruppi | Creazione, richieste, approvazione/rifiuto organizzatore, capienza atomica, uscita/annullamento |
 | Chat | Coppie reciproche e membri approvati, testo, idempotenza, limiti persistenti e aggiornamento manuale |
 | Sicurezza | Blocchi bilaterali, segnalazioni, sospensioni; moderazione riservata a email verificate configurate sul server |
-| Inviti ai contatti | Selezione multipla/tutti, anteprima e nota anonima piccola; adapter ufficiale e API idempotente predisposti ma nessun invio reale |
+| Inviti ai contatti | Rubrica autorizzata nativa, solo nomi, scelta WhatsApp/SMS/email e coda di composer individuali; mittente personale visibile, nessuna rubrica al backend |
 | Aggiornamenti | Inbox interna, lettura personale e lettura collettiva degli aggiornamenti visibili; trasporto push nativo facoltativo predisposto e spento; nessun invio reale o email |
 
 Le schermate live non simulano azioni dell'altra persona. La demo è separata ed esplicitamente fittizia. Ogni account rimonta i pannelli privati, evitando di mantenere dati del precedente utente.
 
 ## Controlli svolti
 
-Test di regole, API/SQLite e D1 locale; Worker compilato eseguito in Miniflare, con provider sintetici; TypeScript ed export Expo. Prova browser mobile con due sessioni sintetiche: interesse reciproco, proposta, doppia conferma, chat, modifica che azzera entrambe le conferme, creazione/richiesta/approvazione gruppo. Risultati finali:248/248 test generali e11/11 Worker, TypeScript ed export web/iOS/Android superati; migrazioni locali applicate. Dettagli e punto di ripresa in CONTINUITA.md.
+Test di regole, API/SQLite e D1 locale; Worker compilato eseguito in Miniflare, con provider sintetici; TypeScript ed export Expo. Prova browser mobile con due sessioni sintetiche: interesse reciproco, proposta, doppia conferma, chat, modifica che azzera entrambe le conferme, creazione/richiesta/approvazione gruppo. Risultati finali:276/276 test generali e11/11 Worker, TypeScript ed export web/iOS/Android superati; migrazioni locali applicate. Dettagli e punto di ripresa in CONTINUITA.md.
 
 La revisione indipendente ha prodotto regressioni per revoca consenso, lettura atomica delle immagini, incontri passati, coda segnalazioni e segnalazione di gruppi visibili prima dell'ammissione. I difetti sono stati riprodotti e corretti. Una seconda revisione delle notifiche non ha trovato difetti importanti; aggiunta l'azione di lettura totale per svuotare anche gli aggiornamenti oltre la prima pagina.
 
@@ -65,4 +65,4 @@ Sul commit di codice5681326d2707eb3b3c684cc12b75c302bacbdd87 il run42404274263 (
 
 ## Incremento inviti
 
-Flusso e limiti in INVITATIONS.md. Nota esatta: “L’invito non mostra la tua identità o il tuo profilo agli invitati.” La demo non legge contatti veri; il live non invia senza adapter anonimo e gratuito configurato.248/248 test,11/11 Worker, TypeScript/export tutte piattaforme e browser mobile superati. Nessun messaggio reale, mittente personale, servizio a pagamento o deploy.
+La richiesta successiva ha sostituito l'inserimento manuale con rubrica autorizzata e soli nomi: WhatsApp, SMS, email personali. Nota piccola veritiera sul mittente visibile. Nessun contatto caricato al backend, invio automatico o gruppo; ogni apertura richiede gesto e conferma nel canale personale. Il vecchio adapter anonimo è separato/spento. EXPO_PUBLIC_INVITATION_URL non configurato, nuova build e prove fisiche mancanti. Dettagli in INVITATIONS.md.276/276 test,11/11 Worker compilato/D1, typecheck/export tutte piattaforme e browser mobile superati; nessuna rubrica reale letta o messaggio spedito.

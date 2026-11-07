@@ -1,33 +1,33 @@
-# Inviti anonimi ai contatti scelti
+# Inviti dalla rubrica — direzione corrente
 
-Pannello in Profilo per web/iOS/Android: aggiunta manuale email o telefoni internazionali, selezione multipla, seleziona/deseleziona tutti, anteprima e `Invita tutti i selezionati (N)`. La nota in12px compare sotto la selezione e prima della conferma: «L’invito non mostra la tua identità o il tuo profilo agli invitati.» Il contatto non selezionato e il nome locale non sono trasmessi. La rubrica non viene letta automaticamente. Il pannello resta facoltativo.
+La richiesta aggiornata dell'utente prevale sul precedente flusso manuale anonimo: contatti del telefono, solo nomi nell'elenco, canali WhatsApp, messaggio SMS ed email. Implementazione nella stessa PR1; nessuna build firmata, rubrica reale o canale personale è stato collaudato/aperto da questa sessione.
 
-La demo usa soltanto tre destinatari fittizi, non accetta contatti reali e simula esplicitamente. Il profilo live mantiene bozza e selezione solo in memoria, con isolamento per account e scarto delle risposte obsolete. Contatti duplicati vengono normalizzati/deduplicati; numeri senza prefisso internazionale non validi. Massimo20 destinatari per invio.
+## Comportamento
 
-## Stato operativo
+Nel profilo nativo `Scegli dalla rubrica` chiede il consenso di sistema dopo un gesto esplicito e carica i nomi autorizzati. Non legge la rubrica all'avvio e non offre più campi manuali per nome/numero/email. Elenco, ricerca ed etichette accessibili mostrano solo i nomi; nessun numero o email viene usato come fallback per un contatto senza nome. Omonimi restano distinti tramite ID locale, senza mostrare recapiti.
 
-`INVITATIONS_ENABLED=false`; nessun fornitore collegato e nessun invito reale inviato. Il pulsante live non può spedire finché non è configurato un canale ufficiale anonimo e gratuito. L'anteprima precedente pubblicata non viene aggiornata dal solo salvataggio di questa PR.
+Scegliendo WhatsApp/Messaggio/Email compaiono i contatti compatibili; il cambio canale azzera selezione e coda. Selezione multipla e `Seleziona tutti` si applicano ai risultati della ricerca corrente. I nomi già scelti fuori dalla ricerca restano selezionati. Numeri locali italiani assumono +39, coerentemente con la beta Emilia-Romagna; numeri internazionali restano invariati. Per un contatto con più recapiti si usa il primo valido del canale. Recapiti condivisi vengono deduplicati nella coda, evitando aperture duplicate.
 
-Non sono usati SMS, WhatsApp, email o account personali per spedire: esporrebbero il mittente. L'anonimato richiesto riguarda identità/profilo dell'invitante verso i destinatari; il fornitore deve necessariamente trattare il recapito di destinazione. Non è una promessa di anonimato assoluto.
+L'anteprima contiene soltanto testo dell'app e link pubblico d'installazione. `Invita tutti i selezionati` prepara una sequenza: apre il primo composer, poi l'utente torna nell'app e prosegue esplicitamente al nome successivo. Ogni destinatario è separato dagli altri. Nessun invio automatico in background, nessun gruppo SMS/email e nessuna dichiarazione di consegna. Annullamento ed errore consentono retry o salto esplicito. WhatsApp segnala soltanto apertura, Android SMS può restituire esito sconosciuto e una bozza email non equivale a invio.
 
-## API e adattatore
+## Nota piccola e costi
 
-POST `/api/invitations`, sessione idonea maggiorenne e origine autorizzata/bearer nativo. Corpo `{batchId,recipients:[{channel:'email'|'phone',address}],anonymityAcknowledged:true}`. Risposta privata `{results:[{channel,address,status:'accepted'|'failed'|'unknown'}]}`. `accepted` significa accettazione del servizio, senza garanzia di consegna o lettura; `unknown` conserva l'incertezza di timeout/eccezioni/risposte non conclusive.
+La nota12px in elenco e anteprima è ora: **«L’invito non include il tuo profilo Balotta. WhatsApp, SMS ed email mostrano il mittente.»** La precedente promessa d'invito anonimo non viene mostrata su questi canali personali. Gli SMS seguono il piano telefonico dell'utente; non viene attivata alcuna API, servizio o abbonamento a pagamento.
 
-Tutti i destinatari sono validati e prenotati prima del primo invio; i canali non supportati respingono l'intera richiesta. Invii singoli: nessun invitato vede gli altri recapiti. Testo fisso condiviso con l'anteprima, link pubblico senza identificatori/referral, nessun nome/numero/alias/profilo dell'invitante. Retry dello stesso batch non ripete gli invii; un payload diverso con stesso batch restituisce409. Durante un invio già avviato la cancellazione dell'account non può annullare la consegna del fornitore; impedisce i destinatari successivi tramite ricontrollo di sessione e idoneità.
+L'elenco interno all'app nasconde recapiti, ma il composer esterno può mostrare numero/email per consentire all'utente di verificare il destinatario. È il canale personale a gestire l'invio e il mittente visibile. Nessun nome, profilo Balotta, ID personale/referral o metadato di matching viene incluso automaticamente nel testo dell'invito.
 
-`createApp({invitationProvider})` accetta un adattatore esclusivamente server con `freePlanConfirmed:true`, `anonymousSender:true`, `channels` espliciti e `send({channel,address,message,link,idempotencyKey,signal})`. Solo `{accepted:true}` attesta accettazione; `{accepted:false}` rifiuto certo. La sua integrazione reale, verifica del mittente ufficiale e rispetto del piano gratuito restano da eseguire in un ambiente autorizzato. Non esiste fallback personale o a pagamento. I punti di avvio Node/Worker non istanziano alcun adattatore.
+## Dati e autorizzazioni
 
-Configurazione: `INVITATIONS_ENABLED`, `INVITATION_URL` HTTPS pubblico reale senza query/credenziali/fragment, `INVITATION_HASH_KEY64HEX` server-only. Nessun segreto in `EXPO_PUBLIC_`. Presenza flag/chiave senza adattatore mantiene `features.invitations=false`, canali vuoti e API503. La config pubblica fornisce soltanto disponibilità, canali e limite20.
+Lettura paginata read-only dei soli campi nome/telefono/email; nessuna rubrica caricata sul backend, persistita dall'app o inclusa nei log. Android: READ_CONTACTS, WRITE_CONTACTS rimosso dal manifest; iOS: descrizione del permesso dedicata e accesso limitato rispettato. Campi/SDK supportati verificati nei pacchetti Expo58 installati. Uso di `expo-contacts/legacy`: i vecchi metodi importati dal namespace principale SDK58 lancerebbero un errore runtime.
 
-## Persistenza e limiti
+Cambio account/smontaggio invalida permessi/importazioni/composer ancora in preparazione. A ogni ritorno in foreground, dopo la prima richiesta rubrica, viene riletta la lista autorizzata senza nuove richieste di permesso. Durante il controllo i nomi/coda sono nascosti e le azioni bloccate; un vecchio import in volo è invalidato. Riduzione dell'accesso limitato rimuove i nomi non più autorizzati e invalida la coda se un destinatario non è più disponibile. Prima di ogni apertura l'adattatore ricontrolla la rubrica corrente e la presenza del recapito. Un composer già aperto non può essere ritirato dall'app.
 
-Applicare `0011_invitations.sql` dopo le migrazioni esistenti. Node applica `INVITATIONS_SCHEMA`. Un solo statement SQLite/D1 prenota l'intero batch con limiti20/account e50globali/giorno UTC, compresi errori. Ledger HMAC dei destinatari e dell'identità provider, nessun recapito o nome in chiaro persistito. Eliminare e ricreare l'account non azzera il limite della giornata.
+La demo usa solo nomi fittizi, senza leggere il telefono o aprire canali. Nel web live compare la spiegazione che la rubrica richiede l'app nativa; nessun SDK contatti viene incluso nel bundle web.
 
-La finestra operativa del ledger è7giorni: le righe scadute sono eliminate alla successiva prenotazione. Senza nuove prenotazioni, o a funzione spenta, la pulizia è differita; non esiste un processo periodico nel repository. Prima dell'attivazione reale, configurare pulizia periodica o dichiarare questa conservazione effettiva nell'informativa. Un batch oltre la finestra di conservazione non garantisce idempotenza e non va ritentato.
+## Configurazione e prove mancanti
 
-Timeout10s per adattatore con AbortSignal; esito ambiguo non viene ritentato automaticamente, perché il fornitore potrebbe aver già accettato. La selezione completa può richiedere fino a200secondi nel caso peggiore. Un servizio operativo dovrà avere timeout di ingresso coerenti oppure un trasporto asincrono: non è stato eseguito alcun test di carico o consegna reale.
+Impostare `EXPO_PUBLIC_INVITATION_URL` al link pubblico ufficiale HTTPS prima della build. Nessun URL di installazione viene inventato: senza valore valido il pannello consente selezione/anteprima ma non apre il canale live. Servono una nuova build con plugin/permessi e prove fisiche iOS/Android su consenso limitato/revoca, WhatsApp presente/assente, disponibilità SMS/mail, annullo/ritorno alla sequenza. Export e test sintetici non sostituiscono queste prove.
 
-## Verifiche
+Il precedente endpoint `/api/invitations` e il ledger0011 sono conservati come servizio ufficiale separato, spento e senza provider. Non ricevono la rubrica e non sono chiamati da questo pannello. I loro limiti20/50 al giorno non si applicano alla sequenza di composer personali. La pulizia differita del vecchio ledger e gli altri vincoli restano documentati nei precedenti spec/plan, che sono storici rispetto alla nuova UI.
 
-Test helper/controller, API e quote su SQLite reale con adattatore simulato; gate e prenotazione concorrente nel Worker compilato/D1 locale; browser mobile con selezione di tutti, esclusione di uno, nota12px, anteprima, simulazione e salto. Nessun accesso a rubrica o invio esterno durante i test.
+Riferimenti: [Expo Contacts](https://docs.expo.dev/versions/latest/sdk/contacts/), [SMS](https://docs.expo.dev/versions/latest/sdk/sms/), [MailComposer](https://docs.expo.dev/versions/latest/sdk/mail-composer/), [WhatsApp click to chat](https://faq.whatsapp.com/5913398998672934/).
