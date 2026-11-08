@@ -16,7 +16,7 @@
     "appStoreConnectId": "6832101489",
     "bundleIdentifier": "it.facciamobalotta.app",
     "provisioningConfigured": true,
-    "status": "APPLE_UPLOAD_SUCCEEDED_PROCESSING_PENDING",
+    "status": "READY_TO_TEST",
     "buildNumber": "1201",
     "deviceTested": false,
     "testFlightUploaded": true,
@@ -63,8 +63,17 @@
       "privateTemporaryCopiesRemoved": true
     },
     "version": "0.1.0",
-    "testFlightProcessingVerified": false,
-    "previousExpoBlocker": "api.expo.dev:443 access blocked by policy"
+    "testFlightProcessingVerified": true,
+    "previousExpoBlocker": "api.expo.dev:443 access blocked by policy",
+    "appleBuildId": "88914f8f-6002-40f9-94d3-92bd6f56ddcc",
+    "testFlightGroup": {
+      "id": "6d7bcbb1-273c-48ee-9120-47da2d79fc66",
+      "name": "Balotta demo",
+      "builds": 1,
+      "testers": 0,
+      "automaticDistribution": false,
+      "invitationsSent": false
+    }
   },
   "oauthLive": false,
   "repository": {

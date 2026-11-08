@@ -2,7 +2,7 @@
 
 ## Esito verificato — 8 novembre 2026
 
-Run42432579018 sul commit a8f04359410d6295dc49128dda8421dacc4c265f: SUCCESS. Archivio Xcode, export IPA e controlli firma/versione riusciti; altool ha restituito UPLOAD SUCCEEDED with no errors alle01:16:23Z. Versione0.1.0/build1201, bundle it.facciamobalotta.app. Artifact13598174121 conserva IPA e checksum per7giorni. Elaborazione TestFlight e accesso dei tester restano da verificare; nessun invito inviato. Copie locali temporanee delle credenziali eliminate, custodia nei segreti cifrati GitHub confermata.
+Run42432579018 sul commit a8f04359410d6295dc49128dda8421dacc4c265f: SUCCESS. Archivio Xcode, export IPA e controlli firma/versione riusciti; altool ha restituito UPLOAD SUCCEEDED with no errors alle01:16:23Z. Versione0.1.0/build1201, bundle it.facciamobalotta.app. Artifact13598174121 conserva IPA e checksum per7giorni. Elaborazione TestFlight completata e verificata nella UI: Ready to Test. Creazione gruppo interno Balotta demo e associazione build1201 confermate;0tester/1build, distribuzione automatica disattivata. Nessun invito inviato; installazione sul telefono non collaudata. Copie locali temporanee delle credenziali eliminate, custodia nei segreti cifrati GitHub confermata.
 
 Le note di preparazione e prove precedenti sotto sono cronologiche; questo esito prevale.
 
