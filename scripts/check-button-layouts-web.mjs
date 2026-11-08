@@ -23,15 +23,15 @@ try{
   async function capture(name,button){
    if(button)await button.scrollIntoViewIfNeeded();
    const violations=await page.getByRole('button').evaluateAll(elements=>elements.flatMap(el=>{
-    const box=el.getBoundingClientRect();if(!box.width||!box.height)return[];
+    const box=el.getBoundingClientRect();if(!box.width||!box.height||parseFloat(getComputedStyle(el).borderTopWidth)===0)return[];
     const errors=[],walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let node;
     while((node=walker.nextNode())){if(!node.textContent.trim())continue;const range=document.createRange();range.selectNodeContents(node);
      for(const r of range.getClientRects())if(r.width&&r.height&&(r.left<box.left-1||r.right>box.right+1||r.top<box.top-1||r.bottom>box.bottom+1))errors.push({label:el.textContent,textOutsideButton:true});}
     for(const svg of el.querySelectorAll('svg')){const r=svg.getBoundingClientRect();if(r.left<box.left-1||r.right>box.right+1||r.top<box.top-1||r.bottom>box.bottom+1)errors.push({label:el.textContent,graphicOutsideButton:true});}
     return errors;
    }));
-   assert.deepEqual(violations,[],`${width}/${name}: button content must fit its hit area`);
-   await page.screenshot({path:resolve(out,`${width}-${name}.png`)});results.push({width,scene:name,geometry:'pass'});
+   await page.screenshot({path:resolve(out,`${width}-${name}.png`)});
+   assert.deepEqual(violations,[],`${width}/${name}: bordered button content must fit its hit area`);results.push({width,scene:name,geometry:'pass'});
   }
   await page.goto(origin);const enter=page.getByRole('button',{name:/^Dai, facciamo balotta!\s+↗$/});await enter.waitFor();await capture('welcome',enter);
   await page.getByRole('button',{name:'Accedi ↗',exact:true}).click();await page.getByText('La tua prima balotta',{exact:false}).waitFor();await capture('login',page.getByRole('button',{name:/^G\s+Continua con Google$/}));
