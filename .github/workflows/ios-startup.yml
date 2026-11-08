@@ -1,0 +1,38 @@
+name: Balotta iOS - release startup diagnosis
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: balotta-ios-startup
+  cancel-in-progress: false
+jobs:
+  startup:
+    runs-on: macos-26
+    timeout-minutes: 45
+    env:
+      CI: "1"
+      EXPO_OFFLINE: "1"
+      EXPO_NO_TELEMETRY: "1"
+      EXPO_PUBLIC_API_URL: ""
+      EXPO_PUBLIC_INVITATION_URL: ""
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.3.0"
+          cache: npm
+      - run: npm ci
+      - run: ./node_modules/.bin/expo prebuild --platform ios --no-install
+      - run: pod install
+        working-directory: ios
+      - name: Launch the release app in iOS Simulator
+        run: bash scripts/ios-startup-smoke.sh
+      - name: Keep synthetic-device startup diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: balotta-ios-startup-${{ github.run_number }}-${{ github.run_attempt }}
+          path: artifacts/ios-startup/
+          if-no-files-found: warn
+          retention-days: 7

@@ -1,5 +1,15 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Crash reale all'avvio dopo installazione TestFlight (8 novembre 2026)
+
+- Utente conferma email ricevuta, TestFlight aperto, app installata e chiusura immediata all'avvio; screenshot mostra Facciamo Balotta si e bloccato. Non e un blocco di accesso. Build distribuita0.1.0(1201), nessuna correzione ancora dichiarata.
+- TestFlight Crash Feedback controllato: No Crash Feedback. Suggerito Condividi sul telefono per inviare il rapporto Apple; nessun rapporto diagnostico effettivo ancora disponibile.
+- Scaricato artifact13598174121 e verificato digest ZIP; IPA SHA256 b9aafb90bd1cc0fbfc7984a6cd96508387121b9d80dba316477eac1dfca2e8d1. Bundle main.jsbundle2304549byte presente. Info.plist versione/bundle corretti, minimum16.4; framework Mach-O collegati tutti presenti, target minOS compatibili. Questo non prova che le dipendenze si inizializzino correttamente.
+- Preparati workflow ios-startup.yml e scripts/ios-startup-smoke.sh: nessun segreto/firma/upload, compilazione Release per simulatore iPhone disponibile piu vecchio, avvio25secondi con console/registro processi/log/screenshot/crash-reports. YAML/bash validati localmente; prova macOS non ancora avviata. Eventuale iOS del simulatore diverso dal telefono va dichiarato.
+- Prossimo passo: avviare diagnosi sul codice invariato, leggere eccezione native/JS e report Apple; correggere solo dopo riscontro. Testi/export/firma e Ready to Test NON provano avvio reale. Non chiamare la1201 funzionante e non inviare altri inviti.
+
+Questo checkpoint prevale sui precedenti esiti di distribuzione: installazione riuscita, avvio fallito sul telefono.
+
 ## Invito personale TestFlight inviato e verificato (8 novembre 2026)
 
 - Utente ha confermato esplicitamente l'invio dell'invito personale. Selezionato esclusivamente il proprietario Apple Gian Franceschini (Account Holder/Admin) nel gruppo interno Balotta demo.

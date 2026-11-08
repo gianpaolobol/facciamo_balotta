@@ -16,9 +16,9 @@
     "appStoreConnectId": "6832101489",
     "bundleIdentifier": "it.facciamobalotta.app",
     "provisioningConfigured": true,
-    "status": "READY_TO_TEST",
+    "status": "READY_TO_TEST_BUT_DEVICE_LAUNCH_CRASH_REPORTED",
     "buildNumber": "1201",
-    "deviceTested": false,
+    "deviceTested": true,
     "testFlightUploaded": true,
     "submissionKeyConfigured": true,
     "existingKeyReuseExplicitlyAuthorized": true,
@@ -76,7 +76,10 @@
       "testerStatus": "Invited",
       "recipient": "account-owner",
       "invitationExplicitlyConfirmed": true
-    }
+    },
+    "deviceTestResult": "CRASH_ON_LAUNCH",
+    "invitationReceivedAndInstallationConfirmed": true,
+    "startupCrashCauseVerified": false
   },
   "oauthLive": false,
   "repository": {
