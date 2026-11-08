@@ -31,7 +31,7 @@
     },
     "nativeGithubAlternative": {
       "workflow": ".github/workflows/ios-native.yml",
-      "status": "IN_PROGRESS",
+      "status": "XCODE_ARCHIVE_IN_PROGRESS",
       "usesExpoCloudApi": false,
       "offlinePrebuildPassed": true,
       "githubSigningSecretsPresent": true,
@@ -48,11 +48,13 @@
       "profileId": "L2R5BNK34M",
       "profileUuid": "a521e473-151f-453b-ae35-738e30a8c7f0",
       "signingIdentityMatched": true,
-      "runId": 42432157443,
-      "runUrl": "https://github.com/gianpaolobol/facciamo_balotta/actions/runs/42432157443",
-      "sourceCommit": "c18c0a3ef335489320a89f9186c7ead28bc94339",
+      "runId": 42432579018,
+      "runUrl": "https://github.com/gianpaolobol/facciamo_balotta/actions/runs/42432579018",
+      "sourceCommit": "a8f04359410d6295dc49128dda8421dacc4c265f",
       "credentialsCheck": "success",
-      "buildNumber": "1101"
+      "buildNumber": "1201",
+      "macKeychainImportPassed": true,
+      "previousFailedRun": 42432157443
     }
   },
   "oauthLive": false,

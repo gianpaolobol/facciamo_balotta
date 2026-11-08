@@ -1,5 +1,11 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Secondo run iOS: importazione superata, Xcode in corso (8 novembre 2026)
+
+- Run42432579018 sul commit a8f04359410d6295dc49128dda8421dacc4c265f, build prevista1201. Credentials128584492591 success; job Mac128584515753 in corso, fase Archive/sign/upload. Generazione iOS e CocoaPods success; log Xcode di compilazione dell'archivio osservato, quindi import e controllo identita del certificato superati.
+- Quattro segreti GitHub verificati presenti. CI controlli/export sul commit corretto run42432502499 success. IPA, upload e processing non ancora verificati.
+- Continuare da questo run senza avviare duplicati. La conversione P12 temporanea ha superato il punto di errore precedente.
+
 ## Correzione importazione P12 sul Mac GitHub (8 novembre 2026)
 
 - Primo run nativo42432157443 fallito prima di Xcode: security SecKeychainItemImport MAC verification failed durante import P12. npm ci/test/typecheck/prebuild e CocoaPods tutti success. Nessun IPA o invio Apple.
