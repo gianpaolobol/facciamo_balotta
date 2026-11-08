@@ -1,5 +1,13 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Correzione importazione P12 sul Mac GitHub (8 novembre 2026)
+
+- Primo run nativo42432157443 fallito prima di Xcode: security SecKeychainItemImport MAC verification failed durante import P12. npm ci/test/typecheck/prebuild e CocoaPods tutti success. Nessun IPA o invio Apple.
+- P12 originale/password verificati localmente: validi, formato OpenSSL3 PBES2/AES256 e MAC SHA256. Riferimento Apple DTS: https://developer.apple.com/forums/thread/723242 documenta incompatibilita dei formati moderni con Security.framework.
+- Script ora converte soltanto nel RUNNER_TEMP privato il P12 in contenitore compatibile SHA1/3DES; originale forte resta nel segreto GitHub. PEM intermedio eliminato subito, contenitore rimosso dopo import e trap elimina ogni residuo. Nessun nuovo certificato/chiave o cambio permessi.
+- bash -n e conversione crittografica locale superati, certificato SHA1 invariato, password errata rifiutata. Import effettivo macOS ancora da verificare nel nuovo workflow sul nuovo commit; non rilanciare il vecchio SHA.
+
+
 ## Firma Apple dedicata autorizzata e configurata (8 novembre 2026)
 
 - Utente ha confermato esplicitamente creazione di nuovo certificato Apple Distribution e chiave Balotta GitHub e conservazione nei segreti cifrati di questo repository.

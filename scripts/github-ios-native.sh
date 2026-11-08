@@ -77,7 +77,15 @@ installed_profile_modern="$profile_modern_path"
 security create-keychain -p "$keychain_password" "$keychain"
 security set-keychain-settings -lut 7200 "$keychain"
 security unlock-keychain -p "$keychain_password" "$keychain"
-security import "$secret_dir/distribution.p12" -k "$keychain" -P "$IOS_DISTRIBUTION_P12_PASSWORD" -T /usr/bin/codesign -T /usr/bin/security >/dev/null
+# Apple Security.framework cannot import every OpenSSL 3 PKCS#12 algorithm.
+# Keep the strong original in GitHub; convert only inside this private temporary directory.
+openssl pkcs12 -in "$secret_dir/distribution.p12" -passin env:IOS_DISTRIBUTION_P12_PASSWORD \
+  -nodes -out "$secret_dir/identity.pem"
+openssl pkcs12 -export -in "$secret_dir/identity.pem" -out "$secret_dir/apple-import.p12" \
+  -passout env:IOS_DISTRIBUTION_P12_PASSWORD -keypbe PBE-SHA1-3DES -certpbe PBE-SHA1-3DES -macalg sha1
+rm -f "$secret_dir/identity.pem"
+security import "$secret_dir/apple-import.p12" -k "$keychain" -P "$IOS_DISTRIBUTION_P12_PASSWORD" -T /usr/bin/codesign -T /usr/bin/security >/dev/null
+rm -f "$secret_dir/apple-import.p12"
 security set-key-partition-list -S apple-tool:,apple: -k "$keychain_password" "$keychain" >/dev/null
 security list-keychains -d user -s "$keychain" "$HOME/Library/Keychains/login.keychain-db"
 certificate_sha1=$(cat "$secret_dir/certificate-sha1")

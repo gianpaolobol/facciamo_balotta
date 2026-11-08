@@ -39,6 +39,10 @@ Creazione e custodia nei segreti GitHub autorizzate esplicitamente dall'utente l
 - Conservati solo IPA e checksum dopo verifica di archivio e IPA esportata. Il binario validato resta disponibile anche dopo un errore di upload Apple.
 - Upload riuscito non equivale a processing completato o disponibilita al gruppo TestFlight. Nessun tester/gruppo/invito creato automaticamente.
 
+## Compatibilita importazione P12
+
+Primo run42432157443: test/prebuild/CocoaPods riusciti, import P12 fallito con MAC verification failed prima dell'archivio. P12/password validi verificati localmente. Conversione soltanto temporanea sul runner nel formato supportato da Apple Security.framework, senza sostituire il P12 originale forte conservato nel segreto GitHub. PEM eliminato subito, contenitore dopo import; trap di cleanup resta attivo. [Riferimento Apple DTS](https://developer.apple.com/forums/thread/723242). Conversione locale verificata; import macOS da confermare nel successivo run.
+
 ## Prove effettive
 
 - Prebuild iOS offline riuscito in copia temporanea; non e compilazione Xcode.
