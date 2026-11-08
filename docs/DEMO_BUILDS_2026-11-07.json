@@ -36,8 +36,13 @@
       "offlinePrebuildPassed": true,
       "githubSigningSecretsPresent": false,
       "macQuotaVerified": false,
-      "registeredOnDefaultBranch": false,
-      "xcodeArchiveTested": false
+      "registeredOnDefaultBranch": true,
+      "xcodeArchiveTested": false,
+      "standardPublicRunner": true,
+      "mergedMainCommit": "9c2388b0fa3a399b0a650a7d8c8e00c95bc674b7",
+      "checksRunId": 42426621708,
+      "checksConclusion": "success",
+      "newSigningCredentials": "PREPARED_FOR_SPECIFIC_CONFIRMATION_NOT_CREATED"
     }
   },
   "oauthLive": false,

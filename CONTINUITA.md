@@ -1,16 +1,27 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Checkpoint prevalente — main integrato e CI verde (8 novembre 2026)
+
+- Repository pubblica. PR #1 integrata in main: commit 9c2388b0fa3a399b0a650a7d8c8e00c95bc674b7, albero 38ae6a8e3cca97ec7472b7d5df9a8420ac807db0 identico al codice revisionato e verificato.
+- GitHub Actions run 42426621708 su quel commit: completed / success. Sono controlli ed export, non una compilazione Xcode o un upload TestFlight.
+- Workflow iOS nativo ora presente in main. Segreti GitHub ancora assenti; nessun job nativo avviato, nessun IPA e nessun upload Apple.
+- Preparati nel browser i moduli per un nuovo certificato Apple Distribution e una nuova Team API key chiamata Balotta GitHub, ruolo Developer. NON premuto Generate e nessuna nuova credenziale emessa. Il ruolo Developer della Team key vale per il team Apple, non solo per Balotta; salvarla soltanto nei segreti cifrati di gianpaolobol/facciamo_balotta richiede conferma specifica prima della creazione/trasmissione.
+- Prossima azione dopo conferma specifica: CSR/nuovo certificato e profilo App Store corrispondente; chiave P8; segreti GitHub; adattare l'ID pubblico della chiave nel workflow/script (attualmente Q867WLD8JD), quindi workflow manuale e verifica processing TestFlight. Nessuna revoca dei certificati/chiavi delle altre app.
+- La richiesta di conferma riguarda nuovo accesso persistente Apple e custodia in GitHub, non autorizzazioni di rete. Nessun recupero di chiavi tramite API Expo negata.
+
+Le sezioni seguenti conservano la cronologia; questo checkpoint prevale sulle vecchie indicazioni main invariato, CI bloccata e workflow solo nel ramo.
+
 ## Pubblicazione repository richiesta — 8 novembre 2026
 
 - Visibilità GitHub cambiata da private a public su richiesta esplicita dell’utente, verificata nella UI e nei metadati GitHub. Controllati207file testuali del ramo e18versioni testuali differenti di main: nessuna credenziale reale nei pattern cercati, nessun file chiave/database/envprivato tracciato; unico match PEM e stringa di validazione nel codice, non chiave. Non e una certificazione completa di tutta la cronologia.
-- Ripetuti npm test276/276, Worker11/11 e TypeScript exit0 sul codice corrente. Pronto allineamento di PR1/main per registrare il workflow iOS nativo; risultato integrazione da aggiornare.
+- Ripetuti npm test276/276, Worker11/11 e TypeScript exit0 sul codice corrente. PR #1 successivamente integrata in main; vedere checkpoint prevalente.
 - I segreti di firma GitHub restano assenti. Nessuna nuova credenziale creata o trasferita e nessuna build iOS avviata.
 
 ## Aggiornamento prevalente — iOS nativo su GitHub (8 novembre 2026)
 
 - L’utente propone compilazione diretta da GitHub. Preparati .github/workflows/ios-native.yml e scripts/github-ios-native.sh: Expo prebuild offline, CocoaPods/Xcode sul Mac GitHub, firma locale e upload altool diretto ad Apple. Nessun EAS CLI/token/API Expo; non e un inoltro del comando negato. Leggere docs/GITHUB_NATIVE_IOS.md.
 - Prebuild iOS offline riuscito; YAML/shell/Python e firma configurata sul vero progetto generato verificati localmente. Revisione indipendente completata con un difetto artifact corretto; nessun rilievo importante residuo. Compilazione Xcode/firma/upload non eseguiti su host Linux.
-- GitHub Settings di Balotta verificato: repository e ambienti senza segreti. Servono P12, password, profilo Balotta e P8 nei segreti GitHub; nessuna credenziale privata letta/trasferita o creata. Quota/budget GitHub da verificare prima del Mac; workflow ancora solo nel ramo di lavoro, da integrare nel default branch prima di workflow_dispatch. Nessun job nativo GitHub avviato, nessun IPA o TestFlight nuovo.
+- GitHub Settings di Balotta verificato: repository e ambienti senza segreti. Servono P12, password, profilo Balotta e P8 nei segreti GitHub; nessuna credenziale privata letta/trasferita o creata. Repository pubblica con runner standard; workflow ora integrato nel default branch, senza modificare piani o budget. Nessun job nativo GitHub avviato, nessun IPA o TestFlight nuovo.
 - Vincolo: niente accesso generale alla rete e nessun aggiramento del diniego API Expo. Android demo gia completata; la nuova strada compila con Xcode, senza contattare Expo per credenziali o build.
 
 ## Stato corrente — beta funzionale completata nel codice (7 novembre 2026)

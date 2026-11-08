@@ -23,9 +23,13 @@ GitHub Settings di Balotta mostra **This repository has no secrets** e **This en
 
 Usare copie originali ottenute normalmente e autorizzate. Non recuperare secret attraverso l'API Expo gia negata. Nuove credenziali o trasferimenti a GitHub richiedono le autorizzazioni applicabili prima dell'azione. Non chiedere password/chiavi nel testo della chat e non inserirle in Git o artifact.
 
-Il workflow deve essere presente sul ramo predefinito per registrare workflow_dispatch. Questa preparazione resta nel ramo di lavoro: main invariato. Prima dell'avvio integrare il lavoro revisionato e scegliere il commit corretto, senza compilare il vecchio main.
+PR #1 integrata in main al commit 9c2388b0fa3a399b0a650a7d8c8e00c95bc674b7. Workflow presente nel ramo predefinito; CI controlli/export run42426621708 completata success/success. Nessun avvio nativo prima dei segreti di firma.
 
-Repository resa pubblica su richiesta dell’utente: i runner GitHub standard per repository pubbliche non consumano la quota inclusa. Non selezionare larger runner o risorse a pagamento. Non modificati piano, limiti, visibilita o pagamenti. Nessun job nativo GitHub avviato.
+Repository resa pubblica su richiesta dell’utente: i runner GitHub standard per repository pubbliche non consumano la quota inclusa. Non selezionare larger runner o risorse a pagamento. Visibilita cambiata su richiesta esplicita; non modificati piano, limiti o pagamenti. Nessun job nativo GitHub avviato.
+
+## Preparazione credenziali dedicate — in attesa di conferma
+
+Moduli Apple preparati, senza emissione: certificato Apple Distribution e Team API key Balotta GitHub con ruolo Developer. Una Team key autorizza il ruolo sul team Apple, non sulla sola app che le dà il nome. La chiave privata e il P12 devono essere conservati soltanto nei segreti cifrati di questo repository, mai in file Git/artifact/log. Serve conferma specifica per creare queste nuove credenziali e affidarle al workflow GitHub. Non revocare le credenziali delle altre app. Dopo l'emissione, aggiornare l'ID pubblico attualmente Q867WLD8JD nello script e creare un profilo App Store corrispondente al nuovo certificato.
 
 ## Firma e output
 
