@@ -89,7 +89,15 @@
       "simulatorRun": 42435537614,
       "nativeBuildRun": 42436000873,
       "candidateBuildNumber": "1301",
-      "status": "VERIFYING_NOT_DISTRIBUTED"
+      "status": "APPLE_PROCESSING_STARTUP_TEST_PENDING",
+      "nativeBuildResult": "success",
+      "appleBuildId": "ea8da87b-c70c-4e3e-9165-09c4a6971555",
+      "artifactId": 13598844630,
+      "ipaBytes": 42431246,
+      "ipaSha256": "b9801619e99838fae01c42fa42b4920e9011f80ce2091633621bca8756c40665",
+      "bundledImportsChecked": 486,
+      "missingBundledImports": 0,
+      "groupAssigned": false
     }
   },
   "oauthLive": false,
