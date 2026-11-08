@@ -1,3 +1,11 @@
+## Android AAB: compilazione nativa avviata (8 novembre 2026)
+
+- PR3 integrata: d0eb9f860b723d591e913a03a73a823af61e1ba4. CI ramo42438723874 e42438747587 SUCCESS;277test/typecheck/export e prove Worker/D1. Review indipendente: nessun blocco per bundle unsigned; nota versioncode sotto.
+- Workflow Android42438885222/job128603638538 sul merge d0eb9f8: npmci/test/typecheck/prebuild offline e configurazione unsigned PASS, Gradle bundleRelease in corso. Non avviare duplicati; leggere esito/log/artifact. Versioncode previsto2101.
+- Ruling review: il contatore run/attempt non garantisce ordine cronologico se si ritenta un run vecchio dopo uno nuovo. Accettabile per preparazione unsigned; per futuri upload avviare un nuovo run e confrontare versioncode con Play prima della firma. Una vecchia build con codice inferiore puo essere rifiutata dallo store.
+- Certificato pubblico APK demo2 letto dal blocco APKv2: SHA256 a7943bd186c5689dc15f58590ba8c3bf013cb4cfe7ffa210aad4d8dd6a3c1b40. Nessuna chiave privata recuperata. Una futura firma diversa non consente aggiornamento diretto di quell'APK: scelta da esplicitare al titolare prima di nuova firma persistente.
+- Google Play Crea app verificato: nome/pacchetto/italiano/App/Senza costi pronti; entrambe dichiarazioni norme/esportazione non selezionate, nessun record creato. Nessun nuovo segreto o accesso creato. iOS1301 invariata, apertura fisica da confermare.
+
 # Android: preparazione AAB nativa (8 novembre 2026)
 
 - Workflow manuale android-native.yml preparato per runner standard ubuntu-latest, Node24.3/JDK17, prebuild Android offline e Gradle bundleRelease. Nessuna chiamata Expo API, nessun segreto, nuovo certificato o upload store.
