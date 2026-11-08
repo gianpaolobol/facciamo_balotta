@@ -1,5 +1,23 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Correzione nativa in compilazione — ripresa operativa (8 novembre 2026)
+
+- PR #2: fix/ios-startup-20261108; codice candidato edbb666a44800633942041b0abd74cbd20ab1e19. Modifiche runtime: pin famiglia ExpoCore/JSI/macros compatibile e buildFromSource Expo; audit dei simboli prima dell'upload. Review indipendente senza rilievi importanti;277test/types/lock dry-run locali e fresh CI42435422867/42435631384 SUCCESS.
+- RED riprodotto: baseline simulatore42434693660 FAILURE; console e .ips sintetico confermano DYLD Symbol missing _OBJC_CLASS_$_RCTStatusBarAppearance. TestFlight1201 crasha sul telefono; non dichiararla funzionante.
+- Prova Release corretta: run42435537614/job128593959886 sul candidato edbb666, in corso. Prima di distribuire: vedere esito/processo vivo/screenshot UI e crash-report.
+- Build iOS firmata corretta avviata in parallelo: run42436000873 sullo stesso candidato, build prevista1301. Gruppo Balotta demo ha distribuzione automatica disattivata: aggiungere1301 soltanto dopo prova di avvio positiva e nuovo audit IPA superato.
+- Nessun nuovo segreto/permesso/servizio a pagamento. Chiavi nei segreti cifrati GitHub, nessun Expo cloud/API. I cambi checkpoint successivi al codice candidato modificano solo documentazione/metadati: mantenere corrispondenza del codice verificato.
+- Main conserva ancora il codice precedente fino a merge PR2; questo checkpoint e salvato anche nel ramo candidato. Non avviare build duplicate. Dopo test: integrare PR2, verificare processing1301, associare al gruppo gia autorizzato e aggiornare lo stato.
+
+Il resto conserva cronologia e dettagli di diagnosi.
+
+## Crash riprodotto nel simulatore: DYLD Symbol missing (8 novembre 2026)
+
+- Baseline run42434693660 su0c2597b: FAIL atteso. Simulatore iPhone16e/iOS26.2 termina all'avvio; console e file .ips confermano DYLD/code4/Symbol missing _OBJC_CLASS_$_RCTStatusBarAppearance, referenziato da ExpoModulesCore e atteso in React. Coincide con audit statico della IPA1201. Non e un problema di login o rubrica.
+- Artifact13599018809, balotta-ios-startup-1-1, scaricato localmente in /workspace/scratch/11ca1de5100d/balotta-startup-baseline. Contiene crash report sintetico, console, log nativo e screenshot. Non confonderlo con rapporto .ips del telefono utente, ancora non disponibile.
+- Correzione salvata nel ramo fix/ios-startup-20261108, commit edbb666a44800633942041b0abd74cbd20ab1e19, PR #2 bozza. Fresh npm ci/test/typecheck/export GitHub42435422867 SUCCESS. Revisione indipendente conclusa senza rilievi importanti, limiti del parser documentati: controllo mirato su import dei framework inclusi, non emulazione completa di dyld.
+- Prova candidata run42435537614 sullo stesso commit, in coda/in avvio dopo baseline. Leggere esito, screenshot e log prima di integrare/ricompilare per TestFlight. Nessun nuovo IPA o upload corretto ancora prodotto.
+
 ## Difetto di linkage nativo individuato e candidato in verifica (8 novembre 2026)
 
 - Audit dell'IPA1201:1605import obbligatori fra10immagini Mach-O; uno non risolto. ExpoModulesCore.framework richiede _OBJC_CLASS_$_RCTStatusBarAppearance da React.framework, ma React non lo esporta. Test binario della1201 fallisce su questo simbolo; non e solo ipotesi sul JS. Rapporto .ips del telefono ancora assente.

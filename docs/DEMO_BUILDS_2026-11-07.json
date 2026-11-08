@@ -79,7 +79,18 @@
     },
     "deviceTestResult": "CRASH_ON_LAUNCH",
     "invitationReceivedAndInstallationConfirmed": true,
-    "startupCrashCauseVerified": false
+    "startupCrashCauseVerified": false,
+    "candidateFix": {
+      "codeCommit": "edbb666a44800633942041b0abd74cbd20ab1e19",
+      "branch": "fix/ios-startup-20261108",
+      "pullRequest": 2,
+      "baselineRun": 42434693660,
+      "baselineResult": "DYLD_SYMBOL_MISSING_RCTStatusBarAppearance",
+      "simulatorRun": 42435537614,
+      "nativeBuildRun": 42436000873,
+      "candidateBuildNumber": "1301",
+      "status": "VERIFYING_NOT_DISTRIBUTED"
+    }
   },
   "oauthLive": false,
   "repository": {
