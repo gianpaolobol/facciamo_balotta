@@ -1,5 +1,16 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## iOS compilata, firmata e caricata ad Apple (8 novembre 2026)
+
+- Run nativo GitHub42432579018 COMPLETED/SUCCESS sul commit a8f04359410d6295dc49128dda8421dacc4c265f. Versione0.1.0, build1201; Xcode26.6/SDK iOS26.5.
+- Log verificati: ARCHIVE SUCCEEDED 01:14:04Z; EXPORT SUCCEEDED 01:14:17Z; UPLOAD SUCCEEDED with no errors 01:16:23Z. Controlli codesign di archivio e IPA, bundle e numero build superati nello script. P8 dedicata usata per altool diretto ad Apple, senza API Expo.
+- Artifact GitHub13598174121, balotta-ios-2-1, ZIP43630476byte; digest ZIP e8fc9abbc27bd6937817eea097d3bfd822fc0706c2facd4780831a40c6a1bbc6, scadenza2026-11-15T01:16:24Z. Include IPA firmata e SHA256SUMS; digest ZIP non e il digest della sola IPA.
+- TestFlight6832101489 controllato immediatamente dopo upload: ancora No Builds; elaborazione Apple e disponibilita ai tester non ancora confermate. Nessun gruppo/tester/invito creato. Prossimo passo: aggiornare TestFlight e verificare stato effettivo build1201.
+- Quattro segreti di firma verificati GitHub. Eliminate le copie temporanee locali della chiave RSA privata, P12, password, Base64 e P8 scaricata; restano nei segreti cifrati autorizzati. Certificato/profilo pubblici locali conservati per verifiche. Non cercare di riscaricare la P8: Apple la offre una sola volta.
+- La demo resta illustrativa con servizi live disabilitati. Questo risultato non e pubblicazione App Store ne collaudo su telefono. Android APK gia disponibile, Play Store ancora non pubblicato.
+
+Le sezioni successive sono storiche e superate dove indicano build/upload ancora in corso.
+
 ## Secondo run iOS: importazione superata, Xcode in corso (8 novembre 2026)
 
 - Run42432579018 sul commit a8f04359410d6295dc49128dda8421dacc4c265f, build prevista1201. Credentials128584492591 success; job Mac128584515753 in corso, fase Archive/sign/upload. Generazione iOS e CocoaPods success; log Xcode di compilazione dell'archivio osservato, quindi import e controllo identita del certificato superati.

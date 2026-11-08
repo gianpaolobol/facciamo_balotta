@@ -1,5 +1,11 @@
 # iOS direttamente da GitHub e Xcode
 
+## Esito verificato — 8 novembre 2026
+
+Run42432579018 sul commit a8f04359410d6295dc49128dda8421dacc4c265f: SUCCESS. Archivio Xcode, export IPA e controlli firma/versione riusciti; altool ha restituito UPLOAD SUCCEEDED with no errors alle01:16:23Z. Versione0.1.0/build1201, bundle it.facciamobalotta.app. Artifact13598174121 conserva IPA e checksum per7giorni. Elaborazione TestFlight e accesso dei tester restano da verificare; nessun invito inviato. Copie locali temporanee delle credenziali eliminate, custodia nei segreti cifrati GitHub confermata.
+
+Le note di preparazione e prove precedenti sotto sono cronologiche; questo esito prevale.
+
 Direzione richiesta l'8 novembre 2026: compilazione nativa su GitHub, invio diretto ad Apple. Non delegare a un runner il comando EAS negato. Questo percorso usa Xcode e non chiama le API Expo: Expo CLI genera soltanto il progetto iOS, in modalita offline.
 
 ## Preparato
