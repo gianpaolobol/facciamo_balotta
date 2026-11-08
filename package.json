@@ -61,6 +61,18 @@
     "sharp": "0.35.5"
   },
   "overrides": {
-    "react-native": "$react-native"
+    "react-native": "$react-native",
+    "expo-modules-core": "58.0.11",
+    "expo-modules-jsi": "58.0.7",
+    "expo-modules-macros": "0.14.0"
+  },
+  "expo": {
+    "autolinking": {
+      "ios": {
+        "buildFromSource": [
+          ".*"
+        ]
+      }
+    }
   }
 }
