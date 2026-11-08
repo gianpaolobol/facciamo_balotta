@@ -1,9 +1,18 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Invito personale TestFlight inviato e verificato (8 novembre 2026)
+
+- Utente ha confermato esplicitamente l'invio dell'invito personale. Selezionato esclusivamente il proprietario Apple Gian Franceschini (Account Holder/Admin) nel gruppo interno Balotta demo.
+- UI finale:1Tester/1Build; conferma1testerhasbeenadded; stato tester Invited. Build0.1.0(1201) gia Ready to Test. Nessun altro destinatario aggiunto, nessuna distribuzione automatica attivata.
+- Screenshot locale verificato: /workspace/scratch/balotta-testflight-invited-1794101114922.jpg. Email effettivamente ricevuta, accettazione e installazione su iPhone non ancora verificate.
+- Non reinviare automaticamente l'invito e non aggiungere altri tester senza istruzione. L'indirizzo del destinatario resta nella UI Apple e nella conversazione, senza ripeterlo in documentazione pubblica.
+
+Il checkpoint successivo relativo a0tester e invito ancora da autorizzare e storico e superato.
+
 ## TestFlight pronto per i test — conferma Apple (8 novembre 2026)
 
 - UI App Store Connect verificata: Facciamo Balotta0.1.0(1201) Ready to Test, scade fra90giorni. Processing completato; build Apple88914f8f-6002-40f9-94d3-92bd6f56ddcc.
-- Creato gruppo interno Balotta demo6d7bcbb1-273c-48ee-9120-47da2d79fc66, distribuzione automatica disattivata; associata build1201. UI finale0Testers/1Build/Ready to Test. Nessuna email/invito inviato. Per installazione personale occorre aggiungere il tester al gruppo; chiedere istruzione esplicita per invio invito, candidato proprietario aranciam@gmail.com verificato nell'account Apple.
+- Creato gruppo interno Balotta demo6d7bcbb1-273c-48ee-9120-47da2d79fc66, distribuzione automatica disattivata; associata build1201. UI finale0Testers/1Build/Ready to Test. Nessuna email/invito inviato. Per installazione personale occorre aggiungere il tester al gruppo; chiedere istruzione esplicita per invio invito, proprietario verificato nell'account Apple.
 - Pagina verificata: https://appstoreconnect.apple.com/teams/8f57d241-76f9-4226-a912-f2ef24ac1a92/apps/6832101489/testflight/groups/6d7bcbb1-273c-48ee-9120-47da2d79fc66/builds
 - Screenshot locale di conferma: /workspace/scratch/balotta-testflight-ready-1794100901238.jpg. Workflow nativo42432579018 SUCCESS, nessun Expo cloud/API. Segreti cifrati GitHub configurati, copie private temporanee locali eliminate.
 - Demo illustrativa: backend/AI/OAuth live restano disabilitati. Play Store non pubblicato, nessun collaudo fisico iPhone/iPad ancora eseguito. Non confondere Ready to Test con pubblicazione App Store o test sul telefono.

@@ -70,9 +70,12 @@
       "id": "6d7bcbb1-273c-48ee-9120-47da2d79fc66",
       "name": "Balotta demo",
       "builds": 1,
-      "testers": 0,
+      "testers": 1,
       "automaticDistribution": false,
-      "invitationsSent": false
+      "invitationsSent": true,
+      "testerStatus": "Invited",
+      "recipient": "account-owner",
+      "invitationExplicitlyConfirmed": true
     }
   },
   "oauthLive": false,
