@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "d0eb9f860b723d591e913a03a73a823af61e1ba4",
+  "sourceCommit": "165a147d4f79e5c0dfeaf853814d56dde3303e74",
   "demoOnly": true,
   "android": {
     "status": "INTERNAL_TESTING_ACTIVE_OWNER_INVITED",
@@ -69,14 +69,26 @@
     "eligibleTesters": 1,
     "playReviewStatus": "UNREVIEWED_TEMPORARY_NAME",
     "playReleaseDetailsUrl": "https://play.google.com/console/u/0/developers/6105511819354024440/app/4974588436559729015/tracks/4701130742288008384/releases/1/details",
-    "internalTestLink": "https://play.google.com/apps/internaltest/4701130742288008384"
+    "internalTestLink": "https://play.google.com/apps/internaltest/4701130742288008384",
+    "buttonContourFix": {
+      "versionCode": "2201",
+      "status": "SIGNED_UPLOADED_PLAY_PROCESSING",
+      "sourceCommit": "165a147d4f79e5c0dfeaf853814d56dde3303e74",
+      "nativeRunId": 42498562902,
+      "signingRunId": 42499735976,
+      "unsignedArtifactId": 13624673138,
+      "signedArtifactId": 13625166534,
+      "bytes": 84740553,
+      "sha256": "81d00f94218c92eedc7e2a529109d64a92d1ec38cac18c08cdfbac28c8b3203b",
+      "logoReplaced": false
+    }
   },
   "ios": {
     "appStoreConnectId": "6832101489",
     "bundleIdentifier": "it.facciamobalotta.app",
     "provisioningConfigured": true,
-    "status": "TESTING_1301_STARTUP_VERIFIED_IN_SIMULATOR",
-    "buildNumber": "1301",
+    "status": "TESTING_1401_BUTTON_CONTOURS_FIXED",
+    "buildNumber": "1401",
     "deviceTested": false,
     "testFlightUploaded": true,
     "submissionKeyConfigured": true,
@@ -106,19 +118,19 @@
       "profileId": "L2R5BNK34M",
       "profileUuid": "a521e473-151f-453b-ae35-738e30a8c7f0",
       "signingIdentityMatched": true,
-      "runId": 42436000873,
-      "runUrl": "https://github.com/gianpaolobol/facciamo_balotta/actions/runs/42436000873",
-      "sourceCommit": "edbb666a44800633942041b0abd74cbd20ab1e19",
+      "runId": 42498534958,
+      "runUrl": "https://github.com/gianpaolobol/facciamo_balotta/actions/runs/42498534958",
+      "sourceCommit": "165a147d4f79e5c0dfeaf853814d56dde3303e74",
       "credentialsCheck": "success",
-      "buildNumber": "1301",
+      "buildNumber": "1401",
       "macKeychainImportPassed": true,
       "previousFailedRun": 42432157443,
       "signedIpaVerified": true,
       "appleUploadSucceeded": true,
       "completedAt": "2026-11-08T01:16:23Z",
-      "artifactId": 13598844630,
-      "artifactZipBytes": 42288445,
-      "artifactZipSha256": "cfec79024921afa8f28267b9fa9df36c1f6b35be36e3849f80a7b81f856eb7b7",
+      "artifactId": 13625310398,
+      "artifactZipBytes": 42288244,
+      "artifactZipSha256": "0fd4ba347993b92aab047e955e9b6962710e1b3d0242280e5f20d705ae2c5f07",
       "privateTemporaryCopiesRemoved": true,
       "bundledImportsChecked": 486,
       "missingBundledImports": 0
@@ -126,21 +138,22 @@
     "version": "0.1.0",
     "testFlightProcessingVerified": true,
     "previousExpoBlocker": "api.expo.dev:443 access blocked by policy",
-    "appleBuildId": "ea8da87b-c70c-4e3e-9165-09c4a6971555",
+    "appleBuildId": "d05fdf1e-0029-440d-ada9-4cf954014931",
     "testFlightGroup": {
       "id": "6d7bcbb1-273c-48ee-9120-47da2d79fc66",
       "name": "Balotta demo",
-      "builds": 1,
+      "builds": 2,
       "testers": 1,
       "automaticDistribution": false,
       "invitationsSent": true,
       "testerStatus": "Existing tester; update to1301 available",
       "recipient": "account-owner",
       "invitationExplicitlyConfirmed": true,
-      "activeBuild": "1301",
-      "removedOldBuildAssociation": "1201"
+      "activeBuild": "1401",
+      "removedOldBuildAssociation": "1201",
+      "previousBuild": "1301"
     },
-    "deviceTestResult": "AWAITING_USER_1301_UPDATE",
+    "deviceTestResult": "AWAITING_USER_1401_UPDATE",
     "invitationReceivedAndInstallationConfirmed": true,
     "startupCrashCauseVerified": true,
     "candidateFix": {
@@ -172,8 +185,20 @@
       "phoneCrashReported": true,
       "simulatorCause": "DYLD Symbol missing RCTStatusBarAppearance"
     },
-    "sourceCommit": "edbb666a44800633942041b0abd74cbd20ab1e19",
-    "mainMergeCommit": "08e2878ddd9db32c11cba57baae53bbd092c5e3e"
+    "sourceCommit": "165a147d4f79e5c0dfeaf853814d56dde3303e74",
+    "mainMergeCommit": "08e2878ddd9db32c11cba57baae53bbd092c5e3e",
+    "buttonContourFix": {
+      "sourceCommit": "165a147d4f79e5c0dfeaf853814d56dde3303e74",
+      "pullRequest": 5,
+      "nativeRunId": 42498534958,
+      "artifactId": 13625310398,
+      "buildNumber": "1401",
+      "status": "TESTING",
+      "webVisualQaRun": 42499627337,
+      "webScreenshots": 14,
+      "nativeVisualVerification": false,
+      "logoReplaced": false
+    }
   },
   "oauthLive": false,
   "repository": {
