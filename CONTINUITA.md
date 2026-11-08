@@ -1,5 +1,34 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Correzione nativa in compilazione — ripresa operativa (8 novembre 2026)
+
+- PR #2: fix/ios-startup-20261108; codice candidato edbb666a44800633942041b0abd74cbd20ab1e19. Modifiche runtime: pin famiglia ExpoCore/JSI/macros compatibile e buildFromSource Expo; audit dei simboli prima dell'upload. Review indipendente senza rilievi importanti;277test/types/lock dry-run locali e fresh CI42435422867/42435631384 SUCCESS.
+- RED riprodotto: baseline simulatore42434693660 FAILURE; console e .ips sintetico confermano DYLD Symbol missing _OBJC_CLASS_$_RCTStatusBarAppearance. TestFlight1201 crasha sul telefono; non dichiararla funzionante.
+- Prova Release corretta: run42435537614/job128593959886 sul candidato edbb666, in corso. Prima di distribuire: vedere esito/processo vivo/screenshot UI e crash-report.
+- Build iOS firmata corretta avviata in parallelo: run42436000873 sullo stesso candidato, build prevista1301. Gruppo Balotta demo ha distribuzione automatica disattivata: aggiungere1301 soltanto dopo prova di avvio positiva e nuovo audit IPA superato.
+- Nessun nuovo segreto/permesso/servizio a pagamento. Chiavi nei segreti cifrati GitHub, nessun Expo cloud/API. I cambi checkpoint successivi al codice candidato modificano solo documentazione/metadati: mantenere corrispondenza del codice verificato.
+- Main conserva ancora il codice precedente fino a merge PR2; questo checkpoint e salvato anche nel ramo candidato. Non avviare build duplicate. Dopo test: integrare PR2, verificare processing1301, associare al gruppo gia autorizzato e aggiornare lo stato.
+
+Il resto conserva cronologia e dettagli di diagnosi.
+
+## Crash riprodotto nel simulatore: DYLD Symbol missing (8 novembre 2026)
+
+- Baseline run42434693660 su0c2597b: FAIL atteso. Simulatore iPhone16e/iOS26.2 termina all'avvio; console e file .ips confermano DYLD/code4/Symbol missing _OBJC_CLASS_$_RCTStatusBarAppearance, referenziato da ExpoModulesCore e atteso in React. Coincide con audit statico della IPA1201. Non e un problema di login o rubrica.
+- Artifact13599018809, balotta-ios-startup-1-1, scaricato localmente in /workspace/scratch/11ca1de5100d/balotta-startup-baseline. Contiene crash report sintetico, console, log nativo e screenshot. Non confonderlo con rapporto .ips del telefono utente, ancora non disponibile.
+- Correzione salvata nel ramo fix/ios-startup-20261108, commit edbb666a44800633942041b0abd74cbd20ab1e19, PR #2 bozza. Fresh npm ci/test/typecheck/export GitHub42435422867 SUCCESS. Revisione indipendente conclusa senza rilievi importanti, limiti del parser documentati: controllo mirato su import dei framework inclusi, non emulazione completa di dyld.
+- Prova candidata run42435537614 sullo stesso commit, in coda/in avvio dopo baseline. Leggere esito, screenshot e log prima di integrare/ricompilare per TestFlight. Nessun nuovo IPA o upload corretto ancora prodotto.
+
+## Difetto di linkage nativo individuato e candidato in verifica (8 novembre 2026)
+
+- Audit dell'IPA1201:1605import obbligatori fra10immagini Mach-O; uno non risolto. ExpoModulesCore.framework richiede _OBJC_CLASS_$_RCTStatusBarAppearance da React.framework, ma React non lo esporta. Test binario della1201 fallisce su questo simbolo; non e solo ipotesi sul JS. Rapporto .ips del telefono ancora assente.
+- Core58.0.30 risolto dal lock contiene anche sorgente ExpoRootViewController che usa RCTStatusBarAppearance; il ReactNative0.88.0-rc.3 installato non contiene tale classe. Fungo Italia con le stesse versioni Expo/RN usa Core58.0.11, JSI58.0.7, macros0.14.0 e compila Expo dai sorgenti. Commit Fungo f2484da38a344b390b24e0148f7824a20c7b8818 descrive la correzione di un crash dyld.
+- Candidato locale: overrides della famiglia Core/JSI/macros alle versioni compatibili e buildFromSource per tutti i moduli Expo. Tre voci lock copiate esattamente dal lock Fungo con integrity npm; nessuna chiamata Expo API. npm ci --dry-run --offline riuscito,277/277test e TypeScript riusciti localmente. node_modules locale resta della baseline: la nuova compilazione nativa/fresh npm ci devono ancora essere verificati su GitHub.
+- Nuovo controllo binario scripts/verify-ios-linkage.py rifiuta il simbolo mancante della1201; collegato prima di artifact-ready/upload in github-ios-native.sh. Test autolinking aggiunto: RED sulla baseline, GREEN dopo configurazione. Revisione indipendente del candidato in corso.
+- Diagnosi baseline gia avviata: workflow ios-startup.yml run42434693660, job128590929389, commit0c2597bef6652b563e7479988f8b3576631ab40a; fase compilazione/avvio Release su simulatore in corso. Non duplicare e non dichiarare superato finche log/processo/screenshot non verificati.
+- Prossimo passo: salvare candidato in ramo fix/ios-startup-20261108, verificarlo sul simulatore dopo baseline, correggere rilievi; poi build firmata nuova e upload. Non dichiarare il crash sul telefono risolto senza nuovo esito.
+
+Questo checkpoint prevale sulle fasi precedenti della diagnosi.
+
 ## Crash reale all'avvio dopo installazione TestFlight (8 novembre 2026)
 
 - Utente conferma email ricevuta, TestFlight aperto, app installata e chiusura immediata all'avvio; screenshot mostra Facciamo Balotta si e bloccato. Non e un blocco di accesso. Build distribuita0.1.0(1201), nessuna correzione ancora dichiarata.

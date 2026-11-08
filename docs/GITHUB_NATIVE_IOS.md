@@ -1,5 +1,9 @@
 # iOS direttamente da GitHub e Xcode
 
+## Segnalazione crash1201 e candidato1301 (8 novembre 2026)
+
+La1201 e caricata e installabile, ma l'utente ha confermato crash immediato. Riprodotto sul simulatore: DYLD Symbol missing RCTStatusBarAppearance, import ExpoModulesCore non presente nel React incluso. PR2 corregge famiglia Core/JSI/macros e compilazione source Expo; audit statico blocca IPA con import mancanti prima dell'upload. Test Release candidato42435537614 e build firmata42436000873 in corso. Non distribuire1301 al gruppo prima della prova di avvio positiva. I precedenti Ready to Test descrivono lo stato Apple e non provano il funzionamento dell'app sul telefono.
+
 ## Esito verificato — 8 novembre 2026
 
 Run42432579018 sul commit a8f04359410d6295dc49128dda8421dacc4c265f: SUCCESS. Archivio Xcode, export IPA e controlli firma/versione riusciti; altool ha restituito UPLOAD SUCCEEDED with no errors alle01:16:23Z. Versione0.1.0/build1201, bundle it.facciamobalotta.app. Artifact13598174121 conserva IPA e checksum per7giorni. Elaborazione TestFlight completata e verificata nella UI: Ready to Test. Gruppo interno Balotta demo con build1201 confermato;1tester/1build, distribuzione automatica disattivata. Invito al solo proprietario inviato dopo conferma esplicita, stato Apple Invited; installazione sul telefono non collaudata. Copie locali temporanee delle credenziali eliminate, custodia nei segreti cifrati GitHub confermata.
