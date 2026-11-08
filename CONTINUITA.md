@@ -1,3 +1,11 @@
+## Android2101 firmata e validata, upload Play in corso (8 novembre 2026)
+
+- PR4 integrata:5b82b74d13342bfa1720f7b0d4aa3ffddfa0dc3a. CI42443600766/42443603258 SUCCESS. Firma42443822131/job128618452273 SUCCESS: provenienza, bundletool ufficiale, package/versione/assenza WRITE_CONTACTS/debuggable, certificato e jarsigner strict PASS.
+- Artifact firmata13602563414, balotta-android-play-1-1:ZIP84250988byte SHA2564f1b0d9e011975572f98df96d11f182fdc67cba99a99bb7d8b2bc8b272546a69. AAB84740548byte SHA256189cc3c52f517de75d5e5dc095e6a068d1fa5bce690015dc53c9beb7eb838d40,0.1.0/2101. Scaricata, ZIP integro; ogni payload pre-firma identico e certificato PKCS7 letto localmente corrisponde alla chiave dedicata attesa. Nessuna prova di avvio Android fisico.
+- Due nuovi segreti Android verificati in UI e usati con successo dal runner. Eliminate copie private locali balotta-upload.p12/store-password.txt/keystore-base64.txt: conservati soltanto certificato e metadati pubblici; credenziali cifrate GitHub restano disponibili per firme future.
+- Play app4974588436559729015, canale interno4701130742288008384, bozza release1. Nome0.1.0(2101) Demo Balotta e note italiane esplicitano dati di esempio/accessi e multiutente reali non attivi. File firmato selezionato tramite filechooser e upload in corso: verificare processing/errori e solo dopo anteprima/rollout. Nessuna release Android ancora dichiarata disponibile.
+- Test chiuso di produzione ancora0tester, requisito mostrato12tester/14giorni consecutivi. Nessun invito ad altre persone inviato.
+
 ## Android: AAB compilata, scheda Play creata e firma autorizzata (8 novembre 2026)
 
 - Utente conferma espressamente entrambe le richieste: dichiarazioni Google Play (norme sviluppatori ed esportazione USA) e creazione di chiave Android dedicata conservata nei segreti cifrati GitHub, con reinstallazione del vecchio APK se necessario. Non chiedere di nuovo per questi stessi atti.
