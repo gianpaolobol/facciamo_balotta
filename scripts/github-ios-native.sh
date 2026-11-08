@@ -131,6 +131,7 @@ exported_app="$secret_dir/exported/Payload/FacciamoBalotta.app"
 codesign --verify --deep --strict "$exported_app"
 test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$exported_app/Info.plist")" = it.facciamobalotta.app
 test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$exported_app/Info.plist")" = "$build_number"
+python3 scripts/verify-ios-linkage.py "$exported_app"
 printf 'signed_artifact_ready=true\n' >> "${GITHUB_OUTPUT:?}"
 if [ "${UPLOAD_TESTFLIGHT:-false}" = true ]; then
   : "${ASC_API_KEY_P8:?}"
