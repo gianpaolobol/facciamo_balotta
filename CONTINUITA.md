@@ -1,3 +1,13 @@
+## Android2101 pubblicata nel canale interno; accesso tester da confermare (8 novembre 2026)
+
+- Play app4974588436559729015/canale4701130742288008384/release1: upload elaborato, AAB2101(0.1.0)/minAPI24/target36/4ABI riconosciuta. Nome e note demo salvati. Anteprima senza errori bloccanti; unico avviso: nessun tester specificato.
+- Salva e pubblica confermato; UI finale mostra0.1.0(2101) Demo Balotta, Disponibile per i tester interni, Non esaminata; canale Non attivo per assenza tester. Nome temporaneo it.facciamobalotta.app(unreviewed) fino a configurazione/revisione. NON e pubblicazione pubblica in produzione e al momento nessun account ha accesso al test Android.
+- Creata lista account Balotta — titolare con un solo account del titolare, selezione non salvata. Auto-review ha RIFIUTATO il salvataggio dell'accesso al tester per mancanza di autorizzazione esplicita a quel destinatario/scopo. Non ripetuto, non aggirato e nessun elenco di altre app selezionato. Serve conferma puntuale dell'indirizzo Google del titolare per test interno Balotta; indirizzo non pubblicato in Git. Tab67 conserva selezione in attesa. Dopo conferma: verificare lista/indirizzo in UI e salvare, quindi verificare accesso e link; non ricompilare o creare un'altra chiave.
+- Dichiarazioni Google e chiave upload dedicata gia confermate, eseguite e verificate; non richiederle di nuovo. Segreti Android cifrati in GitHub e firme native completate; copie private locali eliminate. Fonte app d0eb9f8, build42438885222, firma42443822131; SHA256AAB189cc3c52f517de75d5e5dc095e6a068d1fa5bce690015dc53c9beb7eb838d40.
+- Prova screenshot finale /workspace/scratch/balotta-play-internal-2101-1794110237614.jpg. Tab68 mostra release pubblicata; vecchia pagina upload tab10 era non responsiva, stato ricevuto e riconosciuto tramite raccolta della stessa console, senza duplicare upload.
+- Produzione richiede completare configurazione/contenuti e test chiuso12tester/14giorni consecutivi, attualmente0. La demo conserva dati di esempio/servizi live spenti. Nessuna prova fisica Android o conferma apertura fisica iOS1301 in questo blocco.
+- iOS1301 gia Testing su TestFlight; ora la build Android interna e pubblicata ma l'abilitazione del titolare resta il solo salvataggio bloccato in questa fase.
+
 ## Android2101 firmata e validata, upload Play in corso (8 novembre 2026)
 
 - PR4 integrata:5b82b74d13342bfa1720f7b0d4aa3ffddfa0dc3a. CI42443600766/42443603258 SUCCESS. Firma42443822131/job128618452273 SUCCESS: provenienza, bundletool ufficiale, package/versione/assenza WRITE_CONTACTS/debuggable, certificato e jarsigner strict PASS.

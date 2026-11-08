@@ -1,3 +1,14 @@
+# Stato prevalente — 8 novembre 2026
+
+- iOS0.1.0(1301): TestFlight gruppo Balotta demo, correzione crash validata con avvio Release sul simulatore. Conferma apertura dopo aggiornamento sul telefono del titolare ancora attesa.
+- Android0.1.0(2101): compilazione nativa GitHub42438885222 e firma dedicata42443822131 SUCCESS; AAB accettata da Google Play e pubblicata nel canale interno4701130742288008384, release1. Nessuna prova di avvio su Android fisico. Non e una release pubblica in produzione.
+- Canale interno non attivo per assenza di tester abilitati. Lista dedicata del titolare creata, ma auto-review ha rifiutato il salvataggio dell'accesso per mancanza di conferma esplicita del destinatario/scopo. Richiedere conferma precisa per l'account Google del titolare; non sostituire altri elenchi o aggirare il rifiuto. Le due dichiarazioni Google e la chiave upload dedicata sono gia confermate/eseguite: non chiederle di nuovo.
+- Nome Play temporaneo it.facciamobalotta.app(unreviewed) fino a completamento configurazione/revisione. Produzione richiede anche test chiuso12tester/14giorni consecutivi;0attuali. Servizi live/OAuth/AI reali ancora spenti nella demo, come dichiarato nelle note.
+- Chiave Android RSA3072/PKCS12 solo nei segreti cifrati GitHub ANDROID_UPLOAD_KEYSTORE_BASE64 / ANDROID_UPLOAD_KEYSTORE_PASSWORD; alias pubblico balotta-upload e certificato SHA256576f7e6a6ac06285def2267948fa26b8f5f19d317d6599e5b87fc715e6a3d8af. Copie private temporanee eliminate dopo firma verificata. Nessuna credenziale privata in Git. La nuova firma non aggiorna direttamente il precedente APKdemo2 con diverso certificato.
+- Build native usano runner standard della repository pubblica, prebuild offline e Xcode/Gradle; nessuna chiamata Expo cloud/API. Dinieghi precedenti Expo/Cloudflare invariati: non ripeterli o aggirarli. Metadata correnti: docs/DEMO_BUILDS_2026-11-07.json e CONTINUITA.md.
+
+Le note seguenti restano cronologia; gli stati precedenti di assenza IPA/AAB/app record sono superati.
+
 # Distribuzione — stato concreto
 
 Richiesta corrente: rendere Facciamo Balotta disponibile su TestFlight e Google Play. APK Android demo0.1.0(2) prodotto con successo; IPA/AAB e pubblicazione store ancora da verificare. Non considerare i bundle Expo come binari firmati.
