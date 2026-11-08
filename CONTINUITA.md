@@ -1,5 +1,15 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## IPA1301 corretta validata, ricevuta da Apple (8 novembre 2026)
+
+- Native run42436000873 SUCCESS, sorgente applicativo edbb666a44800633942041b0abd74cbd20ab1e19. Artifact13598844630, balotta-ios-3-1: ZIP42288445byte, SHA256 cfec79024921afa8f28267b9fa9df36c1f6b35be36e3849f80a7b81f856eb7b7.
+- IPA scaricata e verificata: it.facciamobalotta.app0.1.0(1301),42431246byte, SHA256 b9801619e99838fae01c42fa42b4920e9011f80ce2091633621bca8756c40665. Audit nuovo binario:5immagini/486importfraframework/0simbolimancanti; nella1201 erano10/1605/1. Firma e controlli versione superati nel workflow prima dell'upload.
+- TestFlight mostra1301 Processing, Apple buildID ea8da87b-c70c-4e3e-9165-09c4a6971555. Non ancora associata al gruppo. Vecchia1201 ancora nel gruppo, con crash noto.
+- Test candidato simulatore42435537614 ancora in corso; compila arm64 e x86_64 e richiede piu tempo. Restano obbligatori esito positivo e controllo screenshot prima di distribuire1301. Baseline fallita con DYLD missing symbol e documentata.
+- Dopo prova: integrare PR2, attendere Ready to Test1301, aggiungerla al gruppo Balotta demo gia autorizzato e rimuovere soltanto l'associazione della1201 dal gruppo (senza revoche di chiavi o scadenza irreversibile della build). Verifica finale sul telefono utente ancora necessaria.
+
+Le note cronologiche successive di build1301 ancora in compilazione sono superate.
+
 ## Correzione nativa in compilazione — ripresa operativa (8 novembre 2026)
 
 - PR #2: fix/ios-startup-20261108; codice candidato edbb666a44800633942041b0abd74cbd20ab1e19. Modifiche runtime: pin famiglia ExpoCore/JSI/macros compatibile e buildFromSource Expo; audit dei simboli prima dell'upload. Review indipendente senza rilievi importanti;277test/types/lock dry-run locali e fresh CI42435422867/42435631384 SUCCESS.
