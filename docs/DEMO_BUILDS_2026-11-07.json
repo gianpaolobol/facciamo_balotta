@@ -16,7 +16,7 @@
     "appStoreConnectId": "6832101489",
     "bundleIdentifier": "it.facciamobalotta.app",
     "provisioningConfigured": true,
-    "status": "BLOCKED_BY_NETWORK_POLICY_BEFORE_JOB_ID",
+    "status": "NATIVE_GITHUB_BUILD_IN_PROGRESS",
     "buildNumber": "3",
     "deviceTested": false,
     "testFlightUploaded": false,
@@ -31,10 +31,10 @@
     },
     "nativeGithubAlternative": {
       "workflow": ".github/workflows/ios-native.yml",
-      "status": "PREPARED_NOT_RUN",
+      "status": "IN_PROGRESS",
       "usesExpoCloudApi": false,
       "offlinePrebuildPassed": true,
-      "githubSigningSecretsPresent": false,
+      "githubSigningSecretsPresent": true,
       "macQuotaVerified": false,
       "registeredOnDefaultBranch": true,
       "xcodeArchiveTested": false,
@@ -47,7 +47,12 @@
       "certificateId": "R2YAMH7B2W",
       "profileId": "L2R5BNK34M",
       "profileUuid": "a521e473-151f-453b-ae35-738e30a8c7f0",
-      "signingIdentityMatched": true
+      "signingIdentityMatched": true,
+      "runId": 42432157443,
+      "runUrl": "https://github.com/gianpaolobol/facciamo_balotta/actions/runs/42432157443",
+      "sourceCommit": "c18c0a3ef335489320a89f9186c7ead28bc94339",
+      "credentialsCheck": "success",
+      "buildNumber": "1101"
     }
   },
   "oauthLive": false,
