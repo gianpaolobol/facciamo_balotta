@@ -1,5 +1,16 @@
 # Facciamo Balotta — punto unico di ripresa
 
+## Correzione crash distribuita: TestFlight1301 Testing (8 novembre 2026)
+
+- PR #2 integrata in main:08e2878ddd9db32c11cba57baae53bbd092c5e3e. Albero merge a2b17ae0256f630a7437a7fc8fc04c46ab93ea8b identico al candidato revisionato; modifiche dopo il codice testato edbb666 sono solo documentali.
+- Baseline RED: simulatore42434693660 riproduce DYLD Symbol missing RCTStatusBarAppearance. Candidato GREEN: run42435537614 SUCCESS, avvio Release stabile25secondi, processo presente, nessun crash report; screenshot verificato mostra home Balotta con font e illustrazione caricati. Prova su iPhone16e simulato/iOS26.2, non sul telefono fisico dell'utente.
+- IPA1301 run42436000873 SUCCESS, scaricata e verificata:486importfraframework e0simbolimancanti, contro1mancante nella1201. Fonte edbb666a44800633942041b0abd74cbd20ab1e19, SHA256 b9801619e99838fae01c42fa42b4920e9011f80ce2091633621bca8756c40665. Artifact13598844630 conserva IPA/checksum; artifact13600635070 conserva diagnostica sintetica/screenshot candidato.
+- Apple processing concluso, build ea8da87b-c70c-4e3e-9165-09c4a6971555 associata a Balotta demo. UI finale1Tester/1Build,0.1.0(1301) Testing. Rimossa soltanto associazione1201 dal gruppo, nessuna scadenza irreversibile o revoca. Gruppo sempre con distribuzione automatica disattivata; destinatario precedente gia autorizzato, nessun nuovo tester/invito.
+- Screenshot finale /workspace/scratch/balotta-testflight-1301-testing-1794104084678.jpg. Aggiornamento1301 disponibile al tester esistente tramite TestFlight. Conferma di apertura sul telefono dopo aggiornamento ancora attesa: non dichiararla eseguita da noi.
+-277test/TypeScript/lock consistency e fresh CI passati; review indipendente senza rilievi importanti. Nessuna modifica a grafica, funzioni demo, servizi live o altre app. Pin Core58.0.11/JSI58.0.7/macros0.14.0 e buildFromSource legati alla matrice Expo58.0.2/RN0.88.0-rc.3; rivederli con futuri aggiornamenti SDK.
+
+Questo esito prevale su tutte le note cronologiche successive di test/processing/merge ancora pendenti. Prossimo riscontro: utente aggiorna a1301 e apre l'app sul proprio iPhone.
+
 ## IPA1301 corretta validata, ricevuta da Apple (8 novembre 2026)
 
 - Native run42436000873 SUCCESS, sorgente applicativo edbb666a44800633942041b0abd74cbd20ab1e19. Artifact13598844630, balotta-ios-3-1: ZIP42288445byte, SHA256 cfec79024921afa8f28267b9fa9df36c1f6b35be36e3849f80a7b81f856eb7b7.

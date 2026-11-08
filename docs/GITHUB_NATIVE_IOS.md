@@ -1,5 +1,13 @@
 # iOS direttamente da GitHub e Xcode
 
+## Correzione verificata e distribuita — build1301
+
+PR2 integrata in main08e2878ddd9db32c11cba57baae53bbd092c5e3e. Baseline riproduce crash DYLD, candidato passa avvio Release su simulatore iOS26.2 con schermata iniziale visibile, processo stabile25secondi e nessun crash report. Fonte applicativa edbb666a44800633942041b0abd74cbd20ab1e19; run startup42435537614 SUCCESS e native store42436000873 SUCCESS. IPA1301 audit486import/0mancanti, firma e versione verificate. Apple processing completato:1301 Testing nel gruppo Balotta demo,1tester/1build;1201 rimossa soltanto dal gruppo. Aggiornamento sul telefono del tester e successiva apertura ancora da confermare.
+
+La matrice Expo58.0.2/RN0.88.0-rc.3 usa Core58.0.11/JSI58.0.7/macros0.14.0, tutti i moduli Expo compilati da sorgente. Il controllo dei simboli dei framework inclusi precede artifact-ready e upload; non e un validatore completo di dyld o di ogni percorso UI. Con futuri SDK occorre rivedere questi pin e ripetere avvio nativo.
+
+Le sezioni seguenti sono cronologiche e il presente esito prevale.
+
 ## Segnalazione crash1201 e candidato1301 (8 novembre 2026)
 
 La1201 e caricata e installabile, ma l'utente ha confermato crash immediato. Riprodotto sul simulatore: DYLD Symbol missing RCTStatusBarAppearance, import ExpoModulesCore non presente nel React incluso. PR2 corregge famiglia Core/JSI/macros e compilazione source Expo; audit statico blocca IPA con import mancanti prima dell'upload. Test Release candidato42435537614 e build firmata42436000873 in corso. Non distribuire1301 al gruppo prima della prova di avvio positiva. I precedenti Ready to Test descrivono lo stato Apple e non provano il funzionamento dell'app sul telefono.
