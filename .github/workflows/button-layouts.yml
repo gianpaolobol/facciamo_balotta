@@ -1,0 +1,37 @@
+name: Balotta button layout visual QA
+on:
+  push:
+    branches: [fix/button-contours-20261108]
+    paths: [scripts/check-button-layouts-web.mjs, .github/workflows/button-layouts.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CI: '1'
+      EXPO_OFFLINE: '1'
+      EXPO_NO_TELEMETRY: '1'
+      EXPO_PUBLIC_API_URL: ''
+      EXPO_PUBLIC_INVITATION_URL: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.3.0'
+          cache: npm
+      - run: npm ci
+      - run: ./node_modules/.bin/expo export --platform web --output-dir dist-button-qa
+      - name: Install isolated visual-test driver
+        run: npm install --prefix "$RUNNER_TEMP/balotta-qa-tools" --no-package-lock --no-save playwright@1.62.1
+      - name: Check mobile demo button layouts
+        run: PLAYWRIGHT_MODULE_PATH="$RUNNER_TEMP/balotta-qa-tools/node_modules/playwright/index.mjs" BROWSER_EXECUTABLE_PATH="$(command -v google-chrome)" node scripts/check-button-layouts-web.mjs
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: balotta-button-layouts-${{ github.run_number }}-${{ github.run_attempt }}
+          path: artifacts/button-layouts/
+          if-no-files-found: warn
+          retention-days: 7
