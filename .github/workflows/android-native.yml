@@ -1,0 +1,86 @@
+name: Balotta Android - unsigned release bundle
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: balotta-android-native
+  cancel-in-progress: false
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      CI: "1"
+      EXPO_OFFLINE: "1"
+      EXPO_NO_TELEMETRY: "1"
+      EXPO_PUBLIC_API_URL: ""
+      EXPO_PUBLIC_INVITATION_URL: ""
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.3.0"
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      - run: ./node_modules/.bin/expo prebuild --platform android --no-install
+      - name: Configure unsigned release and unique version
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          attempt = int(os.environ['GITHUB_RUN_ATTEMPT'])
+          assert 0 < attempt < 100
+          code = 2000 + 100 * int(os.environ['GITHUB_RUN_NUMBER']) + attempt
+          assert 2 < code <= 2100000000
+          gradle = Path('android/app/build.gradle')
+          with gradle.open('a') as out:
+              out.write(f'\nandroid.defaultConfig.versionCode = {code}\n')
+              out.write('android.buildTypes.release.signingConfig = null\n')
+          Path('artifacts/android').mkdir(parents=True, exist_ok=True)
+          Path('artifacts/android/source.txt').write_text(
+              f"source={os.environ['GITHUB_SHA']}\npackage=it.facciamobalotta.app\n"
+              f"version=0.1.0\nversionCode={code}\nsigned=false\n")
+          PY
+      - name: Compile native Release AAB without credentials
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          set -o pipefail
+          ./gradlew :app:bundleRelease --no-daemon --no-parallel --max-workers=2 \
+            '-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g' \
+            2>&1 | tee ../artifacts/android/build.log
+      - name: Verify unsigned bundle contents
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, json, shutil, zipfile
+          source = Path('android/app/build/outputs/bundle/release/app-release.aab')
+          with zipfile.ZipFile(source) as bundle:
+              assert bundle.testzip() is None, 'Corrupt AAB'
+              names = bundle.namelist()
+              required = ['BundleConfig.pb', 'base/manifest/AndroidManifest.xml',
+                          'base/assets/index.android.bundle', 'base/dex/classes.dex']
+              assert all(n in names for n in required), 'Missing native/JS payload'
+              assert any(n.startswith('base/lib/arm64-v8a/') and n.endswith('.so') for n in names), 'Missing arm64 libraries'
+              assert not any(n.upper().startswith('META-INF/') and n.upper().endswith(('.RSA', '.DSA', '.EC', '.SF')) for n in names), 'Unexpected signing; do not publish a debug-signed bundle'
+          target = Path('artifacts/android/balotta-android-unsigned.aab')
+          shutil.copyfile(source, target)
+          checksum = hashlib.sha256(target.read_bytes()).hexdigest()
+          target.with_suffix('.aab.sha256').write_text(f'{checksum}  {target.name}\n')
+          print(json.dumps({'unsigned_aab_bytes': target.stat().st_size, 'sha256': checksum}))
+          PY
+      - name: Keep unsigned AAB and build diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: balotta-android-unsigned-${{ github.run_number }}-${{ github.run_attempt }}
+          path: artifacts/android/
+          if-no-files-found: warn
+          retention-days: 7

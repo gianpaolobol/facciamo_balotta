@@ -1,3 +1,10 @@
+# Android: preparazione AAB nativa (8 novembre 2026)
+
+- Workflow manuale android-native.yml preparato per runner standard ubuntu-latest, Node24.3/JDK17, prebuild Android offline e Gradle bundleRelease. Nessuna chiamata Expo API, nessun segreto, nuovo certificato o upload store.
+- Output intenzionalmente unsigned: eliminata firma debug predefinita del template; controllo payload nativo/JS/arm64 e assenza firme JAR prima di conservare AAB, SHA256 e commit sorgente. Non installabile e non caricabile su Play finche non firmato.
+-277test e TypeScript locali PASS; YAML/Python incorporato validi. Compilazione nativa ancora da avviare/verificare. Scheda Play pronta ma non creata: due dichiarazioni del titolare (norme sviluppatori ed esportazione USA) ancora non accettate. Chiave APK precedente detenuta da Expo non recuperata; non aggirare il diniego API. Concordare firma upload dedicata prima di salvare nuove credenziali.
+- iOS1301 gia Testing su TestFlight; apertura sul telefono dopo aggiornamento ancora non confermata.
+
 # Facciamo Balotta — punto unico di ripresa
 
 ## Correzione crash distribuita: TestFlight1301 Testing (8 novembre 2026)
