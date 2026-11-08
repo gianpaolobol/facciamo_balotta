@@ -7,7 +7,7 @@ Direzione richiesta l'8 novembre 2026: compilazione nativa su GitHub, invio dire
 - .github/workflows/ios-native.yml: solo workflow_dispatch, senza trigger push/PR. Controllo credenziali Ubuntu prima del runner macOS.
 - scripts/github-ios-native.sh: firma/profilo temporanei, controllo identita, archivio/IPA Xcode, upload altool diretto ad Apple.
 - Team BX9MDXAHKG; bundle it.facciamobalotta.app; scheda Apple6832101489.
-- Chiave di invio prevista: quella gia autorizzata, ID pubblico Q867WLD8JD, issuer8f57d241-76f9-4226-a912-f2ef24ac1a92. Nessun download da Expo.
+- Chiave di invio dedicata Balotta GitHub, ruolo Developer, ID pubblico SHK6U3T299, issuer8f57d241-76f9-4226-a912-f2ef24ac1a92. Nessun download da Expo.
 - API/link inviti vuoti: demo illustrativa. Nessun accesso social o servizio reale dichiarato attivo.
 
 ## Prerequisiti ancora mancanti
@@ -29,7 +29,7 @@ Repository resa pubblica su richiesta dell’utente: i runner GitHub standard pe
 
 ## Preparazione credenziali dedicate — in attesa di conferma
 
-Moduli Apple preparati, senza emissione: certificato Apple Distribution e Team API key Balotta GitHub con ruolo Developer. Una Team key autorizza il ruolo sul team Apple, non sulla sola app che le dà il nome. La chiave privata e il P12 devono essere conservati soltanto nei segreti cifrati di questo repository, mai in file Git/artifact/log. Serve conferma specifica per creare queste nuove credenziali e affidarle al workflow GitHub. Non revocare le credenziali delle altre app. Dopo l'emissione, aggiornare l'ID pubblico attualmente Q867WLD8JD nello script e creare un profilo App Store corrispondente al nuovo certificato.
+Creazione e custodia nei segreti GitHub autorizzate esplicitamente dall'utente l'8 novembre 2026. Creata Team API key Balotta GitHub (SHK6U3T299), ruolo Developer; creata Apple Distribution R2YAMH7B2W, SHA1 9572CC36BA5BBB5A1969E17A35E8B2614BD5B6E1, con chiave privata locale corrispondente. Il ruolo Developer della Team key vale per il team Apple. P8, P12 e password risultano nei segreti cifrati di questo repository; nessun valore in Git/log/artifact. Profilo dedicato Balotta GitHub App Store creato (L2R5BNK34M / a521e473-151f-453b-ae35-738e30a8c7f0), decodificato e verificato contro nuovo certificato e capability. Nessuna credenziale delle altre app revocata o modificata. Script aggiornato all'ID pubblico della nuova chiave.
 
 ## Firma e output
 

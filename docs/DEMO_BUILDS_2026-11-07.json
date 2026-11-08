@@ -42,7 +42,12 @@
       "mergedMainCommit": "9c2388b0fa3a399b0a650a7d8c8e00c95bc674b7",
       "checksRunId": 42426621708,
       "checksConclusion": "success",
-      "newSigningCredentials": "PREPARED_FOR_SPECIFIC_CONFIRMATION_NOT_CREATED"
+      "newSigningCredentials": "CREATED_USER_AUTHORIZED",
+      "keyId": "SHK6U3T299",
+      "certificateId": "R2YAMH7B2W",
+      "profileId": "L2R5BNK34M",
+      "profileUuid": "a521e473-151f-453b-ae35-738e30a8c7f0",
+      "signingIdentityMatched": true
     }
   },
   "oauthLive": false,

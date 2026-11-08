@@ -1,6 +1,16 @@
 # Facciamo Balotta — punto unico di ripresa
 
-## Checkpoint prevalente — main integrato e CI verde (8 novembre 2026)
+## Firma Apple dedicata autorizzata e configurata (8 novembre 2026)
+
+- Utente ha confermato esplicitamente creazione di nuovo certificato Apple Distribution e chiave Balotta GitHub e conservazione nei segreti cifrati di questo repository.
+- Creata Team API key Balotta GitHub, ID pubblico SHK6U3T299, ruolo Developer. Creata Distribution R2YAMH7B2W, seriale77932D3F53E8F562CC66B7D28A7995DD, SHA1 9572CC36BA5BBB5A1969E17A35E8B2614BD5B6E1; verificata corrispondenza con nuova chiave privata, fuori da Git.
+- Creato profilo Balotta GitHub App Store, portalID L2R5BNK34M, UUID a521e473-151f-453b-ae35-738e30a8c7f0, scadenza 2027-11-08T00:38:00Z. Decodificato e verificato team/bundle, production push, Apple sign-in Default, get-task-allow=false e unico certificato nuovo corrispondente.
+- P8, P12 e password verificati nell'elenco segreti GitHub; profilo appena salvato, da verificare elenco completo. Nessun segreto nel repository, nei log o negli artifact. Nessuna revoca/modifica delle credenziali delle altre app.
+- Script aggiornato all'ID pubblico SHK6U3T299, bash -n superato. Prossimo passo: avviare workflow manuale ios-native.yml su main e verificare IPA, upload e processing Apple separatamente. Nessuna build Xcode avviata al momento di questo checkpoint.
+
+Il checkpoint precedente e le indicazioni di credenziali non create sono storici e superati.
+
+## Checkpoint precedente — main integrato e CI verde (8 novembre 2026)
 
 - Repository pubblica. PR #1 integrata in main: commit 9c2388b0fa3a399b0a650a7d8c8e00c95bc674b7, albero 38ae6a8e3cca97ec7472b7d5df9a8420ac807db0 identico al codice revisionato e verificato.
 - GitHub Actions run 42426621708 su quel commit: completed / success. Sono controlli ed export, non una compilazione Xcode o un upload TestFlight.

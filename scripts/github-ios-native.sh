@@ -127,10 +127,10 @@ printf 'signed_artifact_ready=true\n' >> "${GITHUB_OUTPUT:?}"
 if [ "${UPLOAD_TESTFLIGHT:-false}" = true ]; then
   : "${ASC_API_KEY_P8:?}"
   mkdir "$secret_dir/private_keys"
-  printf '%s\n' "$ASC_API_KEY_P8" > "$secret_dir/private_keys/AuthKey_Q867WLD8JD.p8"
-  openssl pkey -in "$secret_dir/private_keys/AuthKey_Q867WLD8JD.p8" -check -noout >/dev/null
+  printf '%s\n' "$ASC_API_KEY_P8" > "$secret_dir/private_keys/AuthKey_SHK6U3T299.p8"
+  openssl pkey -in "$secret_dir/private_keys/AuthKey_SHK6U3T299.p8" -check -noout >/dev/null
   (cd "$secret_dir" && xcrun altool --upload-app --type ios --file "$ipa" \
-    --apiKey Q867WLD8JD --apiIssuer 8f57d241-76f9-4226-a912-f2ef24ac1a92)
+    --apiKey SHK6U3T299 --apiIssuer 8f57d241-76f9-4226-a912-f2ef24ac1a92)
 fi
 {
   echo "### Facciamo Balotta - native iOS"
