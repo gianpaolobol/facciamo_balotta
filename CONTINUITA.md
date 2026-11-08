@@ -1,3 +1,11 @@
+## Test interno Android attivo per il titolare (8 novembre 2026)
+
+- L'utente ha confermato esplicitamente indirizzo e scopo: abilitazione del proprio account Google come tester interno Balotta. Il precedente rifiuto auto-review e superato soltanto per questa specifica autorizzazione; non chiedere nuovamente.
+- Verificata in UI la lista Balotta — titolare: un solo indirizzo, coincidente con quello confermato. Selezionata soltanto questa lista e Salva completato. UI finale: canale Attivo, ultima release0.1.0(2101), lista selezionata1utente, Salva disabilitato. Altre liste non selezionate.
+- Link verificato direttamente: https://play.google.com/apps/internaltest/4701130742288008384 . Pagina autenticata del titolare mostra invito per it.facciamobalotta.app(unreviewed) e pulsante Accept invite. Non premuto: accettazione invito/condivisione informazioni e installazione restano da completare dall'utente. Nessuna prova su Android fisico.
+- Screenshot conferma: /workspace/scratch/balotta-android-tester-attivo-1794153082216.jpg. Nessuna email inviata, nuova build o nuova chiave. iOS1301 resta disponibile su TestFlight; apertura sul telefono dopo aggiornamento ancora non confermata.
+- Test interno disponibile; produzione ancora separata e subordinata a configurazione dello store/test chiuso12tester14giorni. Servizi live/OAuth reali ancora spenti nella demo.
+
 ## Android2101 pubblicata nel canale interno; accesso tester da confermare (8 novembre 2026)
 
 - Play app4974588436559729015/canale4701130742288008384/release1: upload elaborato, AAB2101(0.1.0)/minAPI24/target36/4ABI riconosciuta. Nome e note demo salvati. Anteprima senza errori bloccanti; unico avviso: nessun tester specificato.

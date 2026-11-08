@@ -2,7 +2,7 @@
   "sourceCommit": "d0eb9f860b723d591e913a03a73a823af61e1ba4",
   "demoOnly": true,
   "android": {
-    "status": "PUBLISHED_INTERNAL_TRACK_NO_ELIGIBLE_TESTERS",
+    "status": "INTERNAL_TESTING_ACTIVE_OWNER_INVITED",
     "version": "0.1.0",
     "versionCode": "2101",
     "package": "it.facciamobalotta.app",
@@ -52,18 +52,24 @@
     "playUploadVerified": true,
     "playProcessingVerified": true,
     "internalTesterAccess": {
-      "status": "BLOCKED_AWAITING_RECIPIENT_SCOPE_CONFIRMATION",
-      "automaticApprovalRejected": true,
-      "requestedRecipient": "account-owner",
+      "status": "ENABLED",
+      "recipient": "account-owner",
       "listName": "Balotta — titolare",
-      "saved": false
+      "saved": true,
+      "specificRecipientAndScopeConfirmed": true,
+      "previousAutomaticApprovalRejected": true,
+      "currentAutomaticApprovalRejected": false,
+      "invitationPageVerified": true,
+      "invitationAccepted": false,
+      "installationVerified": false
     },
     "playInternalReleasePublished": true,
     "playInternalReleaseStatus": "AVAILABLE_FOR_INTERNAL_TESTERS",
-    "internalTrackActive": false,
-    "eligibleTesters": 0,
+    "internalTrackActive": true,
+    "eligibleTesters": 1,
     "playReviewStatus": "UNREVIEWED_TEMPORARY_NAME",
-    "playReleaseDetailsUrl": "https://play.google.com/console/u/0/developers/6105511819354024440/app/4974588436559729015/tracks/4701130742288008384/releases/1/details"
+    "playReleaseDetailsUrl": "https://play.google.com/console/u/0/developers/6105511819354024440/app/4974588436559729015/tracks/4701130742288008384/releases/1/details",
+    "internalTestLink": "https://play.google.com/apps/internaltest/4701130742288008384"
   },
   "ios": {
     "appStoreConnectId": "6832101489",
