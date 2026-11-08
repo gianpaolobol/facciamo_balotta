@@ -1,3 +1,13 @@
+## Aggiornamento finale tasti e loghi — 8 novembre 2026
+
+- iOS 0.1.0 (1401) disponibile nel gruppo TestFlight Balotta demo; 1301 mantenuta come precedente.
+- Android 0.1.0 (2201) — Tasti ripuliti pubblicata: canale Test interni ATTIVO, UI conferma Disponibile per i tester interni; release2 sostituisce2101. Lista titolare e accessi invariati. Produzione non pubblicata.
+- Codice app compilato da165a147d4f79e5c0dfeaf853814d56dde3303e74. 277 test e QA web14schermate superati; verifica visiva su telefoni fisici ancora attesa.
+- Quattro proposte logo A/B/C/D generate e mostrate: quasi assonometrica, prospettica espressiva, intermedia semplificata, volo d'uccello. Scelta utente pendente; logo applicato invariato. Prompt in docs/LOGO_PROPOSTE_2026-11-08.md.
+- Prove UI locali: /workspace/scratch/balotta-play-2201-published.jpg e /workspace/scratch/balotta-testflight-tasti-1401-1794155418477.jpg. Non sono prove di avvio su device.
+
+### Stato precedente e dettagli storici
+
 # Stato prevalente — 8 novembre 2026
 
 - iOS0.1.0(1301): TestFlight gruppo Balotta demo, correzione crash validata con avvio Release sul simulatore. Conferma apertura dopo aggiornamento sul telefono del titolare ancora attesa.
