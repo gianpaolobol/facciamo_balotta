@@ -1,3 +1,9 @@
+## Pulizia contorni pulsanti e proposte logo (8 novembre 2026)
+
+- Screenshot utente IMG_0562..IMG_0567 mostrano un secondo contorno schiacciato sui tasti e in alcuni casi fuori dal loro rettangolo, su home/login/Scopri/inviti/profilo. Componente comune src/ui.tsx Button monta InkFrame SVG assoluto al100% oltre al bordo nativo: la sovrapposizione e la fonte dei segni aggiuntivi; il layout percentuale SVG nativo non coincide con il pulsante nelle schermate ricevute.
+- Correzione minima: rimuovere InkFrame dal rendering di Button e relativo import, mantenendo bordo nativo asimmetrico, ombra, testo, icone, touch e stato disabilitato. Nessuna nuova grafica logo installata. Conferma richiesta utente: prima pulire tasti, poi mostrare piu proposte del dado con persone/situazioni sulle facce e punti di vista quasi assonometrico/prospettico/intermedio/dall'alto.
+- Baseline visiva sono le schermate native dell'utente. CI completa/typecheck/export e prova aggiornata ancora da eseguire. Non affermare che TestFlight1301/Android2101 gia contengano questa modifica. Install offline locale non completata per pacchetti npm non presenti in cache, nessuna chiamata a Expo API. Usare CI su GitHub per verifica completa senza ampliare rete.
+
 ## Test interno Android attivo per il titolare (8 novembre 2026)
 
 - L'utente ha confermato esplicitamente indirizzo e scopo: abilitazione del proprio account Google come tester interno Balotta. Il precedente rifiuto auto-review e superato soltanto per questa specifica autorizzazione; non chiedere nuovamente.

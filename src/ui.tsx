@@ -1,9 +1,9 @@
 import React from 'react';
-import {InkIcon,InkFrame,type InkName} from './InkIcon';
+import {InkIcon,type InkName} from './InkIcon';
 import { Pressable, Text, View, StyleSheet, type ViewStyle } from 'react-native';
 export const C={paper:'#FFF5DC',ink:'#252923',muted:'#666452',red:'#D44935',lime:'#D9E885',line:'#292C25',white:'#FFFCF3',violet:'#DBCBF0'};
 export function Button({label,onPress,secondary=false,disabled=false,style,icon}:{label:string;onPress:()=>void;secondary?:boolean;disabled?:boolean;style?:ViewStyle;icon?:InkName}) {
- return <Pressable accessibilityRole="button" accessibilityState={{disabled}} disabled={disabled} onPress={onPress} style={({pressed})=>[s.button,secondary?s.secondary:null,disabled?{opacity:.55}:null,pressed?{transform:[{translateY:2}],boxShadow:'0px 1px 0px #252923'}:null,style]}><InkFrame/>{icon?<InkIcon name={icon} color={secondary?C.ink:C.paper} size={25}/>:null}<Text style={[s.buttonText,secondary?{color:C.ink}:null]}>{label}</Text></Pressable>;
+ return <Pressable accessibilityRole="button" accessibilityState={{disabled}} disabled={disabled} onPress={onPress} style={({pressed})=>[s.button,secondary?s.secondary:null,disabled?{opacity:.55}:null,pressed?{transform:[{translateY:2}],boxShadow:'0px 1px 0px #252923'}:null,style]}>{icon?<InkIcon name={icon} color={secondary?C.ink:C.paper} size={25}/>:null}<Text style={[s.buttonText,secondary?{color:C.ink}:null]}>{label}</Text></Pressable>;
 }
 export function Chip({label,active=false,onPress}:{label:string;active?:boolean;onPress?:()=>void}) {
  return <Pressable accessibilityRole="button" accessibilityState={{selected:active}} onPress={onPress} style={[s.chip,active?{backgroundColor:C.ink,borderColor:C.ink}:null]}><Text style={{fontSize:13,fontWeight:'600',color:active?C.white:C.ink}}>{label}</Text></Pressable>;
