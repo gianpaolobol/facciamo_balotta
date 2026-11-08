@@ -1,3 +1,13 @@
+## Android: AAB compilata, scheda Play creata e firma autorizzata (8 novembre 2026)
+
+- Utente conferma espressamente entrambe le richieste: dichiarazioni Google Play (norme sviluppatori ed esportazione USA) e creazione di chiave Android dedicata conservata nei segreti cifrati GitHub, con reinstallazione del vecchio APK se necessario. Non chiedere di nuovo per questi stessi atti.
+- Dichiarazioni selezionate e Crea app inviato: dashboard Facciamo Balotta verificata, Play appID4974588436559729015, package it.facciamobalotta.app. Canale interno4701130742288008384. Non ancora caricata/rilasciata una AAB. Produzione richiede test chiuso12tester/14giorni come mostrato dalla console;0tester attuali.
+- Native build42438885222/job128603638538 SUCCESS, Gradle362task/12m43s. Artifact13600868759 ZIP84172309byte SHA25637f45df11629141dee14b69f5ab9012ae9f42b70ee99a8e7124ab42ffc092e59. AAB unsigned84662463byte SHA2568f13a028b133dbb4e3244bb3f137372558a3aa8473119ce20d189facab28d481, fonte d0eb9f860b723d591e913a03a73a823af61e1ba4, versione0.1.0/2101. Scaricata e verificata:845voci, ZIPintegro, manifest/JS/DEX e4ABI, nessuna firma. Nessuna prova Android fisica.
+- Creata chiave upload RSA3072/PKCS12 dedicata: alias balotta-upload, CN Balotta GitHub Android, certificato pubblico SHA256576f7e6a6ac06285def2267948fa26b8f5f19d317d6599e5b87fc715e6a3d8af, scadenza2054-03-26. Salvati e verificati in UI i soli nuovi segreti ANDROID_UPLOAD_KEYSTORE_BASE64 / ANDROID_UPLOAD_KEYSTORE_PASSWORD; segreti iOS invariati. Nessun valore privato in Git.
+- android-sign.yml preparato: origine run/artifact/commit/hash verificata prima della firma, bundletool ufficiale1.18.3 con SHA256pin, controlli manifest/versione/release, firma e verifica rigorosa con certificato atteso, cleanup temporaneo, artifact solo dopo successo. Nessun upload store automatico. Review indipendente: corretto percorso download-artifact con merge-multiple:true; nessun altro rilievo importante. Sintassi YAML/Python PASS, firma effettiva ancora da eseguire.
+- Copie private locali temporanee in /workspace/scratch/balotta-android-signing: eliminare dopo prova firma da segreti GitHub e conservare solo certificato/metadati pubblici. Non stampare password/base64, non sovrascrivere la chiave esistente.
+- iOS1301 resta Testing su TestFlight, riscontro apertura sul telefono ancora atteso.
+
 ## Android AAB: compilazione nativa avviata (8 novembre 2026)
 
 - PR3 integrata: d0eb9f860b723d591e913a03a73a823af61e1ba4. CI ramo42438723874 e42438747587 SUCCESS;277test/typecheck/export e prove Worker/D1. Review indipendente: nessun blocco per bundle unsigned; nota versioncode sotto.

@@ -1,0 +1,157 @@
+name: Balotta Android - sign verified AAB
+on:
+  workflow_dispatch:
+    inputs:
+      source_run:
+        description: Successful unsigned Android run
+        required: true
+        default: '42438885222'
+      artifact_id:
+        description: Unsigned AAB artifact ID from that run
+        required: true
+        default: '13600868759'
+      source_commit:
+        description: Expected app source commit
+        required: true
+        default: d0eb9f860b723d591e913a03a73a823af61e1ba4
+      unsigned_sha256:
+        description: Independently verified unsigned AAB SHA256
+        required: true
+        default: 8f13a028b133dbb4e3244bb3f137372558a3aa8473119ce20d189facab28d481
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: balotta-android-sign
+  cancel-in-progress: false
+jobs:
+  sign:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SOURCE_RUN: ${{ inputs.source_run }}
+      SOURCE_COMMIT: ${{ inputs.source_commit }}
+      ARTIFACT_ID: ${{ inputs.artifact_id }}
+      UNSIGNED_SHA256: ${{ inputs.unsigned_sha256 }}
+      UPLOAD_CERT_SHA256: 576f7e6a6ac06285def2267948fa26b8f5f19d317d6599e5b87fc715e6a3d8af
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Check provenance before retrieving the binary
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, subprocess
+          run = os.environ['SOURCE_RUN']; artifact = os.environ['ARTIFACT_ID']
+          assert re.fullmatch(r'[0-9]+', run) and re.fullmatch(r'[0-9]+', artifact)
+          assert re.fullmatch(r'[a-f0-9]{40}', os.environ['SOURCE_COMMIT'])
+          assert re.fullmatch(r'[a-f0-9]{64}', os.environ['UNSIGNED_SHA256'])
+          repo = os.environ['GITHUB_REPOSITORY']
+          def api(path):
+              return json.loads(subprocess.check_output(['gh', 'api', f'repos/{repo}/{path}']))
+          r = api(f'actions/runs/{run}')
+          assert r['conclusion'] == 'success' and r['event'] == 'workflow_dispatch'
+          assert r['path'] == '.github/workflows/android-native.yml'
+          assert r['head_sha'] == os.environ['SOURCE_COMMIT']
+          assert r['head_repository']['full_name'] == repo
+          a = api(f'actions/artifacts/{artifact}')
+          assert not a['expired'] and a['workflow_run']['id'] == int(run)
+          assert a['workflow_run']['head_sha'] == os.environ['SOURCE_COMMIT']
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ inputs.artifact_id }}
+          run-id: ${{ inputs.source_run }}
+          github-token: ${{ github.token }}
+          path: unsigned
+          merge-multiple: true
+      - name: Check the expected unsigned bundle
+        run: |
+          python3 - <<'PY'
+          import hashlib, os, zipfile
+          from pathlib import Path
+          p = Path('unsigned/balotta-android-unsigned.aab')
+          assert hashlib.sha256(p.read_bytes()).hexdigest() == os.environ['UNSIGNED_SHA256']
+          meta = dict(line.split('=', 1) for line in Path('unsigned/source.txt').read_text().splitlines())
+          assert meta['source'] == os.environ['SOURCE_COMMIT']
+          assert meta['package'] == 'it.facciamobalotta.app' and meta['signed'] == 'false'
+          with zipfile.ZipFile(p) as z:
+              assert z.testzip() is None
+              names = z.namelist()
+              assert all(n in names for n in ['BundleConfig.pb', 'base/manifest/AndroidManifest.xml', 'base/assets/index.android.bundle', 'base/dex/classes.dex'])
+              assert any(n.startswith('base/lib/arm64-v8a/') and n.endswith('.so') for n in names)
+              assert not any(n.upper().startswith('META-INF/') and n.upper().endswith(('.RSA', '.DSA', '.EC', '.SF')) for n in names)
+          PY
+      - name: Validate with official Google bundletool
+        run: |
+          mkdir -p artifacts/android-play
+          curl -fsSL --output "$RUNNER_TEMP/balotta-bundletool.jar" \
+            https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar
+          printf '%s  %s\n' a099cfa1543f55593bc2ed16a70a7c67fe54b1747bb7301f37fdfd6d91028e29 "$RUNNER_TEMP/balotta-bundletool.jar" | sha256sum --check --status
+          java -jar "$RUNNER_TEMP/balotta-bundletool.jar" validate --bundle=unsigned/balotta-android-unsigned.aab > artifacts/android-play/bundle-validation.txt
+          java -jar "$RUNNER_TEMP/balotta-bundletool.jar" dump manifest --bundle=unsigned/balotta-android-unsigned.aab > artifacts/android-play/AndroidManifest.xml
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          root = ET.parse('artifacts/android-play/AndroidManifest.xml').getroot()
+          ns = '{http://schemas.android.com/apk/res/android}'
+          meta = dict(line.split('=', 1) for line in Path('unsigned/source.txt').read_text().splitlines())
+          assert root.get('package') == 'it.facciamobalotta.app'
+          assert root.get(ns+'versionCode') == meta['versionCode']
+          assert root.get(ns+'versionName') == meta['version']
+          assert 2 < int(meta['versionCode']) <= 2100000000
+          assert root.find('application').get(ns+'debuggable', 'false') == 'false'
+          assert not any(p.get(ns+'name') == 'android.permission.WRITE_CONTACTS' for p in root.findall('uses-permission'))
+          PY
+      - name: Sign with the dedicated encrypted upload key
+        env:
+          BALOTTA_KEYSTORE_BASE64: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_BASE64 }}
+          BALOTTA_STORE_PASSWORD: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_PASSWORD }}
+        run: |
+          set -euo pipefail
+          umask 077
+          BALOTTA_SIGNING_DIR=$(mktemp -d "$RUNNER_TEMP/balotta-android-sign.XXXXXX")
+          export BALOTTA_SIGNING_DIR
+          trap 'rm -rf -- "$BALOTTA_SIGNING_DIR"' EXIT
+          python3 - <<'PY'
+          import base64, os
+          from pathlib import Path
+          assert os.environ['BALOTTA_STORE_PASSWORD']
+          Path(os.environ['BALOTTA_SIGNING_DIR'], 'upload.p12').write_bytes(base64.b64decode(os.environ['BALOTTA_KEYSTORE_BASE64'], validate=True))
+          PY
+          keytool -exportcert -keystore "$BALOTTA_SIGNING_DIR/upload.p12" -storetype PKCS12 \
+            -storepass:env BALOTTA_STORE_PASSWORD -alias balotta-upload > "$BALOTTA_SIGNING_DIR/cert.der"
+          printf '%s  %s\n' "$UPLOAD_CERT_SHA256" "$BALOTTA_SIGNING_DIR/cert.der" | sha256sum --check --status
+          jarsigner -keystore "$BALOTTA_SIGNING_DIR/upload.p12" -storetype PKCS12 \
+            -storepass:env BALOTTA_STORE_PASSWORD -keypass:env BALOTTA_STORE_PASSWORD \
+            -sigalg SHA256withRSA -digestalg SHA-256 \
+            -signedjar artifacts/android-play/balotta-android-play.aab \
+            unsigned/balotta-android-unsigned.aab balotta-upload
+          jarsigner -verify -strict -keystore "$BALOTTA_SIGNING_DIR/upload.p12" \
+            -storepass:env BALOTTA_STORE_PASSWORD artifacts/android-play/balotta-android-play.aab \
+            > artifacts/android-play/signature-verification.txt
+          keytool -printcert -jarfile artifacts/android-play/balotta-android-play.aab -rfc \
+            | openssl x509 -outform DER > "$BALOTTA_SIGNING_DIR/signed-cert.der"
+          printf '%s  %s\n' "$UPLOAD_CERT_SHA256" "$BALOTTA_SIGNING_DIR/signed-cert.der" | sha256sum --check --status
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          p = Path('artifacts/android-play/balotta-android-play.aab')
+          digest = hashlib.sha256(p.read_bytes()).hexdigest()
+          p.with_suffix('.aab.sha256').write_text(f'{digest}  {p.name}\n')
+          meta = dict(line.split('=', 1) for line in Path('unsigned/source.txt').read_text().splitlines())
+          meta.update(signed=True, source_run=os.environ['SOURCE_RUN'], unsigned_sha256=os.environ['UNSIGNED_SHA256'], signed_sha256=digest, certificate_sha256=os.environ['UPLOAD_CERT_SHA256'])
+          Path('artifacts/android-play/source.json').write_text(json.dumps(meta, indent=2)+'\n')
+          print(json.dumps({'signed_aab_bytes': p.stat().st_size, 'sha256': digest}))
+          PY
+      - name: Keep only verified signed bundle and public evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: balotta-android-play-${{ github.run_number }}-${{ github.run_attempt }}
+          path: artifacts/android-play/
+          if-no-files-found: error
+          retention-days: 7
