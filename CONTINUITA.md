@@ -1,3 +1,9 @@
+## Testata Facciamo Balotta! — 12 novembre 2026
+
+- La testata della home e dei pannelli mostra il nome completo «Facciamo Balotta!». Lettering dedicato basato sul disegno di Balotta Inchiostro: fascia rossa, contorni più pesanti e ombra sfalsata, con ingombro responsivo. L'icona C2 resta l'icona delle build.
+- Verificati 279 test Node, TypeScript ed export web/iOS/Android. Aggiunta verifica visiva web della testata a 320, 375, 430 e 1024 px. Il Chromium del terminale non è avviabile in questo ambiente; eseguire il controllo sul runner GitHub.
+- I numeri 1501 e 2301 documentati di seguito appartengono alle build precedenti alla testata aggiornata.
+
 ## Distribuzione interna C2 — 12 novembre 2026
 
 - Codice app integrato con PR #7; commit delle build native `f2989eb7f55d5da089b75e3961f54edf2de0d0dc`. CI della PR riuscita. Nessun rilascio in produzione.

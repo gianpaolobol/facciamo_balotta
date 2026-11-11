@@ -18,6 +18,21 @@ await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;const errors=[]
 try{
  browser=await chromium.launch({executablePath:process.env.BROWSER_EXECUTABLE_PATH||undefined,headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
  const origin=`http://127.0.0.1:${server.address().port}`;
+ for(const width of [320,375,430,1024]){
+  const page=await browser.newPage({viewport:{width,height:932}});
+  await page.goto(origin);
+  const home=page.getByRole('button',{name:'Facciamo Balotta, torna all’inizio'});
+  const access=page.getByRole('button',{name:'Accedi ↗',exact:true});
+  const wordmark=home.locator('svg');
+  await wordmark.waitFor();
+  const mark=await wordmark.boundingBox(),action=await access.boundingBox();
+  assert.ok(mark&&action&&mark.width>=180&&mark.height>=65, `Wordmark is legible at ${width}px`);
+  assert.ok(mark.x>=0&&mark.x+mark.width+8<=action.x&&action.x+action.width<=width,
+   `Wordmark and account action fit side by side at ${width}px`);
+  assert.ok(await wordmark.locator('path').count()>=4, `Wordmark artwork renders at ${width}px`);
+  await page.screenshot({path:resolve(out,`${width}-wordmark.png`)});
+  await page.close();
+ }
  for(const width of [375,430]){
   const context=await browser.newContext({viewport:{width,height:932},deviceScaleFactor:2});const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   async function capture(name,button){
