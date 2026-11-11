@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       upload_testflight:
-        description: Upload the signed demo directly to Apple
+        description: Upload the signed build directly to Apple
         type: boolean
         default: true
 permissions:
@@ -42,8 +42,8 @@ jobs:
       CI: "1"
       EXPO_OFFLINE: "1"
       EXPO_NO_TELEMETRY: "1"
-      EXPO_PUBLIC_API_URL: ""
-      EXPO_PUBLIC_INVITATION_URL: ""
+      EXPO_PUBLIC_API_URL: ${{ vars.BALOTTA_API_URL }}
+      EXPO_PUBLIC_INVITATION_URL: ${{ vars.BALOTTA_INVITATION_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

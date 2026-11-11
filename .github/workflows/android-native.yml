@@ -14,8 +14,8 @@ jobs:
       CI: "1"
       EXPO_OFFLINE: "1"
       EXPO_NO_TELEMETRY: "1"
-      EXPO_PUBLIC_API_URL: ""
-      EXPO_PUBLIC_INVITATION_URL: ""
+      EXPO_PUBLIC_API_URL: ${{ vars.BALOTTA_API_URL }}
+      EXPO_PUBLIC_INVITATION_URL: ${{ vars.BALOTTA_INVITATION_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
