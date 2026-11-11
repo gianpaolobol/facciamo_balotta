@@ -1,3 +1,11 @@
+## C2 approvata e preparazione delle nuove build — 12 novembre 2026
+
+- C2 approvata l'8 novembre: tavolata, amici in spiaggia e bici in discesa dai colli. Sorgente autorizzato: «Amici tra tavola, mare e colline.png». Il master di lavorazione in assets/brand/c2-approved.jpg alimenta il PNG iOS e il livello adattivo Android. Intestazione dell'app: BALOTTA!.
+- I percorsi con dati fittizi restano nell'anteprima web. Le build native aprono l'accesso, mostrano i provider effettivamente disponibili e leggono l'URL pubblico dell'API dalle variabili di build.
+- Verifiche locali: 279 test Node, 11 test Worker/D1, TypeScript ed export web/iOS/Android superati. Le build firmate e il collaudo sui telefoni sono passaggi distinti.
+- Controllo GitHub: nessuna variabile di repository o ambiente impostata nella pagina Actions. D1 remoto, origin HTTPS, OAuth reale e accesso ai provider restano da configurare. Senza URL API le build permettono di verificare icona e interfaccia iniziale, e mostrano che l'accesso non è disponibile.
+- Per la beta operativa, configurare il backend come da docs/WORKERS_SETUP.md e impostare BALOTTA_API_URL con l'origin HTTPS in GitHub Actions. BALOTTA_INVITATION_URL è opzionale e contiene il link pubblico ufficiale. Configurare i segreti dei provider solo sul backend e ripetere la build dopo aver verificato gli accessi reali.
+
 ## Aggiornamento finale tasti e loghi — 8 novembre 2026
 
 - iOS 0.1.0 (1401) disponibile nel gruppo TestFlight Balotta demo; 1301 mantenuta come precedente.

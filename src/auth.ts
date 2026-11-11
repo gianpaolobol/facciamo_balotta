@@ -14,7 +14,7 @@ export type User={id:string;name:string;email:string};
 export type Profile={name:string;adult:boolean;city:string;interests:string[]};
 export const backendConfigured=Boolean(API);
 export async function api(path:string,method='GET',body?:unknown) {
- if(!API) throw new Error('Gli accessi reali non sono ancora collegati. Puoi esplorare la demo illustrativa.');
+ if(!API) throw new Error('Gli accessi non sono disponibili in questo momento.');
  const token=Platform.OS==='web'?null:await SecureStore.getItemAsync(TOKEN_KEY);
  const response=await fetch(API+path,{method,credentials:'include',headers:{...(body?{'content-type':'application/json'}:{}),...(token?{authorization:'Bearer '+token}:{})},...(body?{body:JSON.stringify(body)}:{})});
  const data=await response.json().catch(()=>({error:'Il servizio non è disponibile.'}));
@@ -34,7 +34,7 @@ export async function getSession():Promise<User|null> {
 }
 export async function signIn(provider:Provider) {
  const providers=await getProviders();
- if(!providers[provider]) throw new Error('Accesso '+({google:'Google',facebook:'Facebook',apple:'Apple'}[provider])+' in preparazione. Per ora puoi esplorare la demo con dati fittizi.');
+ if(!providers[provider]) throw new Error('Accesso '+({google:'Google',facebook:'Facebook',apple:'Apple'}[provider])+' non disponibile in questo momento.');
  if(provider==='apple'){
   const Apple=await import('expo-apple-authentication');
   if(Platform.OS!=='ios'||!await Apple.isAvailableAsync())throw new Error('Accesso Apple non disponibile su questo dispositivo.');
