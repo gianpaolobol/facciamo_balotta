@@ -1,3 +1,10 @@
+## Distribuzione interna C2 — 12 novembre 2026
+
+- Codice app integrato con PR #7; commit delle build native `f2989eb7f55d5da089b75e3961f54edf2de0d0dc`. CI della PR riuscita. Nessun rilascio in produzione.
+- iOS **0.1.0 (1501)**: build firmata, IPA verificata e ricevuta da Apple nel run [43120260022](https://github.com/gianpaolobol/facciamo_balotta/actions/runs/43120260022). Elaborazione completata e build aggiunta al gruppo interno esistente «Balotta demo». Verificati gruppo, build 1501 e salvataggio delle istruzioni di prova in App Store Connect.
+- Android **0.1.0 (2301)**: AAB compilato nel run [43120262046](https://github.com/gianpaolobol/facciamo_balotta/actions/runs/43120262046) e firmato nel run [43122081686](https://github.com/gianpaolobol/facciamo_balotta/actions/runs/43122081686). Verificati checksum, firma, package, versione e presenza dell'icona C2 nel binario. La release 3 «Nuova icona Balotta» risulta disponibile per i tester interni nel canale Google Play attivo.
+- Collaudo delle due nuove build su dispositivi fisici da confermare. Le build servono a verificare icona, avvio e schermata iniziale. Il backend remoto non è attivo: dopo l'autorizzazione esplicita del titolare, Cloudflare ha restituito «Unable to sign in» nel flusso con Google. D1 remoto, OAuth e variabile BALOTTA_API_URL ancora da configurare.
+
 ## C2 approvata e preparazione delle nuove build — 12 novembre 2026
 
 - C2 approvata l'8 novembre: tavolata, amici in spiaggia e bici in discesa dai colli. Sorgente autorizzato: «Amici tra tavola, mare e colline.png». Il master di lavorazione in assets/brand/c2-approved.jpg alimenta il PNG iOS e il livello adattivo Android. Intestazione dell'app: BALOTTA!.
