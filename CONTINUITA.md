@@ -2,6 +2,7 @@
 
 - Individuata la causa del 503: Cloudflare Workers rifiuta `redirect: 'error'` nella richiesta delle chiavi Apple. Correzione con `manual` e rifiuto delle risposte non 2xx, applicata anche alle richieste Apple per la revoca.
 - Il test mirato fallisce sul codice precedente e passa con la correzione. Verificati 281 test Node e 11 test Worker/D1. Worker pubblicato via Wrangler alle 16:13 italiane circa, versione `a6a28ca5-42d8-48ee-8288-7914f9f0c6d6` al 100%, con binding e variabili verificati. In remoto Apple attivo, avvio HTTP 200 e chiave di prova non valida rifiutata HTTP 401 durante lo scambio.
+- Il primo tentativo reale dopo il deploy ha raggiunto la verifica dell’invito. Aggiunto alla lista beta l’indirizzo Apple fornito dal tester e verificata la versione `ca986b4a-254e-4b6b-9a0a-4f10c04e0caf` attiva al 100%. Resta da confermare l’accesso con la build già installata.
 - Su TestFlight 1801 l’utente ha riportato `RequestUnknownException` dopo la conferma Apple, prima di inviare il token. Firmatura e profilo della 1801 includono l’abilitazione e Apple Developer conferma l’App ID primario. Rimane il collaudo reale su iPhone e, se persiste l’errore nativo, la raccolta della diagnostica iOS.
 
 ## Beta Apple e TestFlight 1801 — 12 novembre 2026
