@@ -2,6 +2,10 @@ name: Balotta iOS - Xcode and Apple
 on:
   workflow_dispatch:
     inputs:
+      enable_demo:
+        description: Include the fictional-data demo for internal testers
+        type: boolean
+        default: false
       upload_testflight:
         description: Upload the signed build directly to Apple
         type: boolean
@@ -42,6 +46,7 @@ jobs:
       CI: "1"
       EXPO_OFFLINE: "1"
       EXPO_NO_TELEMETRY: "1"
+      EXPO_PUBLIC_BALOTTA_NATIVE_DEMO: ${{ inputs.enable_demo }}
       EXPO_PUBLIC_API_URL: ${{ vars.BALOTTA_API_URL }}
       EXPO_PUBLIC_INVITATION_URL: ${{ vars.BALOTTA_INVITATION_URL }}
     steps:
