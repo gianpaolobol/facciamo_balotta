@@ -1,3 +1,9 @@
+## Beta Apple e TestFlight 1801 — 12 novembre 2026
+
+- Sign in with Apple attivato sul Worker per un solo account autorizzato. Team ID, Key ID e chiave privata risultano binding Cloudflare Secret. Google e Facebook ancora disattivati. HTTPS /api/config dichiara Apple attivo e /auth/apple/native/start restituisce 200 con challenge.
+- iOS 0.1.0 (1801) compilata, firmata e caricata su Apple nel run 43143789149. App Store Connect ha restituito la build in stato VALID e l'appartenenza al gruppo interno esistente «Balotta demo», verificata nel run 43145931800. Build ID 6acd8847-93a4-4249-b031-458321e07df1.
+- Restano da provare su iPhone accesso Apple reale, riapertura con sessione e cancellazione con revoca. Una versione precedente del Worker conteneva la chiave Apple come Text; il deploy attivo usa Secret. Rotazione della chiave da pianificare.
+
 ## Backend Cloudflare pubblicato — 12 novembre 2026
 
 - Wrangler autenticato con OAuth Device Grant, autorizzazione Workers e D1 completata sullo stesso account. Database `facciamo-balotta` creato nella giurisdizione UE. Tutte le 11 migrazioni remote applicate e lista migrazioni pendenti vuota.
