@@ -48,8 +48,8 @@ jobs:
           }
           assert.equal(build?.attributes.processingState,'VALID','Apple processing did not finish');
           assert.equal(build.attributes.expired,false);
-          const path='/v1/builds/'+build.id+'/relationships/betaGroups';
-          const assigned=async()=>(await call(path)).data.some(row=>row.id===group);
+          const path='/v1/betaGroups/'+group+'/builds?limit=200';
+          const assigned=async()=>(await call(path)).data.some(row=>row.id===build.id);
           if(!await assigned())await call('/v1/betaGroups/'+group+'/relationships/builds',{data:[{type:'builds',id:build.id}]});
           for(let i=0;i<5&&!await assigned();i++)await delay(2000);
           assert.ok(await assigned(),'Apple did not confirm the group relationship');
