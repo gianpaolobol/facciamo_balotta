@@ -1,3 +1,8 @@
+## Errore Apple dopo la conferma — 12 novembre 2026
+
+- Individuata la causa del 503: Cloudflare Workers rifiuta `redirect: 'error'` nella richiesta delle chiavi Apple. Correzione con `manual` e rifiuto delle risposte non 2xx, applicata anche alle richieste Apple per la revoca.
+- Il test mirato fallisce sul codice precedente e passa con la correzione. Restano deploy del Worker tramite Wrangler e verifica dell’accesso reale su iPhone con TestFlight 1801.
+
 ## Beta Apple e TestFlight 1801 — 12 novembre 2026
 
 - Sign in with Apple attivato sul Worker per un solo account autorizzato. Team ID, Key ID e chiave privata risultano binding Cloudflare Secret. Google e Facebook ancora disattivati. HTTPS /api/config dichiara Apple attivo e /auth/apple/native/start restituisce 200 con challenge.

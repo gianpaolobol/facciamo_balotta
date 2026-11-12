@@ -17,7 +17,7 @@ async function readTokenResponse(response){
 export async function revokeAppleAuthorization({config,code,subject,nonce,providerFetch=fetch}){
  if(!appleRevocationReady(config)||typeof code!=='string'||!code||code.length>2048)throw unavailable();
  try{
-  const secret=await clientSecret(config),post=(path,fields)=>providerFetch('https://appleid.apple.com/auth/'+path,{method:'POST',redirect:'error',headers:{'content-type':'application/x-www-form-urlencoded'},body:new URLSearchParams({client_id:config.appleBundleId,client_secret:secret,...fields}),signal:AbortSignal.timeout(10000)});
+  const secret=await clientSecret(config),post=(path,fields)=>providerFetch('https://appleid.apple.com/auth/'+path,{method:'POST',redirect:'manual',headers:{'content-type':'application/x-www-form-urlencoded'},body:new URLSearchParams({client_id:config.appleBundleId,client_secret:secret,...fields}),signal:AbortSignal.timeout(10000)});
   const data=await readTokenResponse(await post('token',{grant_type:'authorization_code',code}));
   const identity=await verifyAppleToken(data.id_token,{audience:config.appleBundleId,nonce,providerFetch});
   if(identity.subject!==subject||typeof data.refresh_token!=='string'||!data.refresh_token||data.refresh_token.length>4096)throw unavailable();

@@ -24,7 +24,7 @@ async function verifyAppleClaims(token,{audience,providerFetch=fetch,now=Math.fl
   if((requireExpiry||claims.exp!==undefined)&&(!Number.isSafeInteger(claims.exp)||claims.exp<=now||claims.exp<=claims.iat))throw Error();
  }catch{throw denied();}
  let keys;
- try{keys=await readKeys(await providerFetch(KEYS_URL,{signal:AbortSignal.timeout(10000),redirect:'error'}));}catch{throw unavailable();}
+ try{keys=await readKeys(await providerFetch(KEYS_URL,{signal:AbortSignal.timeout(10000),redirect:'manual'}));}catch{throw unavailable();}
  const jwk=keys.find(key=>key?.kid===header.kid&&key.kty==='RSA'&&key.alg==='RS256'&&key.use==='sig');
  if(!jwk)throw denied();
  try{
