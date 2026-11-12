@@ -1,84 +1,57 @@
-name: Balotta iOS - Xcode and Apple
-on:
-  workflow_dispatch:
-    inputs:
-      enable_demo:
-        description: Include the fictional-data demo for internal testers
-        type: boolean
-        default: false
-      upload_testflight:
-        description: Upload the signed build directly to Apple
-        type: boolean
-        default: true
-permissions:
-  contents: read
-concurrency:
-  group: balotta-ios-native
-  cancel-in-progress: false
+name: Balotta iOS - assign build 1801 to internal testers
+on: workflow_dispatch
+permissions: {}
+concurrency: balotta-testflight-group
 jobs:
-  credentials:
+  assign:
+    if: github.ref == 'refs/heads/ops/testflight-balotta-1801'
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 16
     steps:
-      - name: Check required signing secrets without printing their values
-        shell: bash
+      - name: Assign only Balotta build 1801 to the existing internal group
         env:
-          IOS_DISTRIBUTION_P12_BASE64: ${{ secrets.IOS_DISTRIBUTION_P12_BASE64 }}
-          IOS_DISTRIBUTION_P12_PASSWORD: ${{ secrets.IOS_DISTRIBUTION_P12_PASSWORD }}
-          IOS_APP_STORE_PROFILE_BASE64: ${{ secrets.IOS_APP_STORE_PROFILE_BASE64 }}
           ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
-          UPLOAD_TESTFLIGHT: ${{ inputs.upload_testflight }}
         run: |
-          set -euo pipefail
-          missing=0
-          for name in IOS_DISTRIBUTION_P12_BASE64 IOS_DISTRIBUTION_P12_PASSWORD IOS_APP_STORE_PROFILE_BASE64; do
-            if [ -z "${!name:-}" ]; then echo "::error::Missing GitHub secret: $name"; missing=1; fi
-          done
-          if [ "$UPLOAD_TESTFLIGHT" = true ] && [ -z "$ASC_API_KEY_P8" ]; then
-            echo "::error::Missing GitHub secret: ASC_API_KEY_P8"; missing=1
-          fi
-          test "$missing" = 0
-  build:
-    needs: credentials
-    runs-on: macos-26
-    timeout-minutes: 50
-    env:
-      CI: "1"
-      EXPO_OFFLINE: "1"
-      EXPO_NO_TELEMETRY: "1"
-      EXPO_PUBLIC_BALOTTA_NATIVE_DEMO: ${{ inputs.enable_demo }}
-      EXPO_PUBLIC_API_URL: ${{ vars.BALOTTA_API_URL }}
-      EXPO_PUBLIC_INVITATION_URL: ${{ vars.BALOTTA_INVITATION_URL }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "24.3.0"
-          cache: npm
-      - run: npm ci
-      - run: npm test
-      - run: npm run typecheck
-      - name: Generate native iOS project locally
-        run: ./node_modules/.bin/expo prebuild --platform ios --no-install
-      - name: Install CocoaPods dependencies
-        working-directory: ios
-        run: pod install
-      - name: Archive, sign and optionally upload directly to Apple
-        id: archive
-        env:
-          IOS_DISTRIBUTION_P12_BASE64: ${{ secrets.IOS_DISTRIBUTION_P12_BASE64 }}
-          IOS_DISTRIBUTION_P12_PASSWORD: ${{ secrets.IOS_DISTRIBUTION_P12_PASSWORD }}
-          IOS_APP_STORE_PROFILE_BASE64: ${{ secrets.IOS_APP_STORE_PROFILE_BASE64 }}
-          ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
-          UPLOAD_TESTFLIGHT: ${{ inputs.upload_testflight }}
-        run: bash scripts/github-ios-native.sh
-      - name: Keep only signed app and checksum
-        if: ${{ !cancelled() && steps.archive.outputs.signed_artifact_ready == 'true' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: balotta-ios-${{ github.run_number }}-${{ github.run_attempt }}
-          path: |
-            artifacts/ios/*.ipa
-            artifacts/ios/SHA256SUMS.txt
-          if-no-files-found: error
-          retention-days: 7
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import { sign } from 'node:crypto';
+          import { setTimeout as delay } from 'node:timers/promises';
+          const host='https://api.appstoreconnect.apple.com';
+          const app='6832101489';
+          const group='6d7bcbb1-273c-48ee-9120-47da2d79fc66';
+          const version='1801';
+          const enc=(data)=>Buffer.from(JSON.stringify(data)).toString('base64url');
+          function token(){
+            const now=Math.floor(Date.now()/1000);
+            const input=enc({alg:'ES256',kid:'SHK6U3T299',typ:'JWT'})+'.'+enc({iss:'8f57d241-76f9-4226-a912-f2ef24ac1a92',iat:now,exp:now+300,aud:'appstoreconnect-v1'});
+            return input+'.'+sign('sha256',Buffer.from(input),{key:process.env.ASC_API_KEY_P8,dsaEncoding:'ieee-p1363'}).toString('base64url');
+          }
+          async function call(path,body){
+            const response=await fetch(host+path,{method:body?'POST':'GET',headers:{authorization:'Bearer '+token(),...(body?{'content-type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(20000)});
+            if(!response.ok){const e=await response.json().catch(()=>({}));throw Error('Apple HTTP '+response.status+' '+(e.errors?.[0]?.code??''));}
+            if(response.status!==204)return response.json();
+          }
+          const groupInfo=(await call('/v1/betaGroups/'+group+'?include=app')).data;
+          assert.equal(groupInfo.attributes.name,'Balotta demo');
+          assert.equal(groupInfo.attributes.isInternalGroup,true);
+          assert.equal(groupInfo.relationships.app.data.id,app);
+          const query=new URLSearchParams({'filter[app]':app,'filter[version]':version});
+          let build;
+          for(let i=0;i<38;i++){
+            const matches=(await call('/v1/builds?'+query)).data;
+            assert.ok(matches.length<=1,'More than one build matches');
+            build=matches[0];
+            if(build?.attributes.processingState==='VALID')break;
+            if(['FAILED','INVALID'].includes(build?.attributes.processingState))throw Error('Apple build state '+build.attributes.processingState);
+            if(i%4===0)console.log('Waiting for build '+version+' ('+(build?.attributes.processingState??'not listed')+')');
+            await delay(20000);
+          }
+          assert.equal(build?.attributes.processingState,'VALID','Apple processing did not finish');
+          assert.equal(build.attributes.expired,false);
+          const path='/v1/builds/'+build.id+'/relationships/betaGroups';
+          const assigned=async()=>(await call(path)).data.some(row=>row.id===group);
+          if(!await assigned())await call('/v1/betaGroups/'+group+'/relationships/builds',{data:[{type:'builds',id:build.id}]});
+          for(let i=0;i<5&&!await assigned();i++)await delay(2000);
+          assert.ok(await assigned(),'Apple did not confirm the group relationship');
+          console.log('Verified build '+version+' ('+build.id+') in the existing Balotta demo internal group.');
+          JS

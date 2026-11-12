@@ -1,10 +1,3 @@
-## Backend Cloudflare pubblicato — 12 novembre 2026
-
-- Wrangler autenticato con OAuth Device Grant, autorizzazione Workers e D1 completata sullo stesso account. Database `facciamo-balotta` creato nella giurisdizione UE. Tutte le 11 migrazioni remote applicate e lista migrazioni pendenti vuota.
-- Worker `facciamo-balotta-api` pubblicato su [workers.dev](https://facciamo-balotta-api.gianpaolo-franceschini.workers.dev/api/config), versione `77ca0799-6845-4973-85f6-799018b92d95`. Verificata risposta HTTPS 200 della configurazione pubblica. La route di sessione richiede autenticazione.
-- Google, Facebook e Apple ancora disattivati in attesa dei client/secret, callback e allowlist reali. Nessuna impostazione di fatturazione modificata. Il binding Workers AI è escluso da questo deploy.
-- Il file di esempio del repository conserva i segnaposto per le prove locali. Per i deploy remoti usare il database D1 esistente e impostare `PUBLIC_ORIGIN` all'URL HTTPS del Worker. Registrare l'URL del backend nelle build native dopo aver configurato i provider.
-
 ## Demo interna e accessi reali — 12 novembre 2026
 
 - Le build 1601/2401 portavano il tester alla schermata di accesso senza percorso dimostrativo. La demo con dati fittizi è ora selezionabile esplicitamente nei due workflow nativi con enable_demo. La build ordinaria tiene questa opzione disattivata. Il pulsante «Prova la demo» apre direttamente Scopri, A due, Le mie balotte e Profilo senza account.
