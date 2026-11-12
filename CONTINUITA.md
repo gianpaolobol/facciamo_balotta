@@ -1,3 +1,9 @@
+## Demo interna e accessi reali — 12 novembre 2026
+
+- Le build 1601/2401 portavano il tester alla schermata di accesso senza percorso dimostrativo. La demo con dati fittizi è ora selezionabile esplicitamente nei due workflow nativi con enable_demo. La build ordinaria tiene questa opzione disattivata. Il pulsante «Prova la demo» apre direttamente Scopri, A due, Le mie balotte e Profilo senza account.
+- I pulsanti nativi Google e Facebook sono visibili quando il backend dichiara il provider attivo. Apple rimane nativo iOS. I tre adattatori OAuth e le sessioni sono già nel repository. Servono un Worker HTTPS con D1, configurazione dei tre provider e verifica dei login reali su dispositivi. L'ultimo accesso Cloudflare con Google è stato respinto e BALOTTA_API_URL non è stata configurata. TestFlight/Play concedono accesso alla build, non alla beta OAuth.
+- I flussi interni si possono provare con una nuova build che abilita la demo. Per collaudare l'accesso reale, verificare prima /api/config sull'origin distribuito, registrare Google e Meta per quel callback e provare Apple, Google e Facebook con un account autorizzato. Il risultato richiesto è la sessione persistente dopo riapertura dell'app e il profilo reale.
+
 ## Testata Facciamo Balotta! — 12 novembre 2026
 
 - La testata della home e dei pannelli mostra il nome completo «Facciamo Balotta!». Lettering dedicato basato sul disegno di Balotta Inchiostro: fascia rossa, contorni più pesanti e ombra sfalsata, con ingombro responsivo. L'icona C2 resta l'icona delle build.

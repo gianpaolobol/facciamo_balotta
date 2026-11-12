@@ -10,6 +10,16 @@ test('the native entry route cannot open fictional preview data', async () => {
  assert.equal(demoScene('match','web'),'match');
 });
 
+test('the native demo is available only when the test build explicitly enables it', async () => {
+ const {canOpenDemo}=await import('../src/demo-routing.mjs');
+ for(const platform of ['ios','android']){
+  assert.equal(canOpenDemo(platform,false,false),false);
+  assert.equal(canOpenDemo(platform,false,true),true);
+  assert.equal(canOpenDemo(platform,true,true),false);
+ }
+ assert.equal(canOpenDemo('web',false,false),true);
+});
+
 test('the C2 master generates the committed opaque icon and adaptive foreground', async () => {
  const {buildNativeIcons}=await import('../scripts/generate-native-icons.mjs');
  const asset=name=>readFileSync(new URL('../assets/brand/'+name,import.meta.url));
