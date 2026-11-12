@@ -11,9 +11,6 @@ export function Chip({label,active=false,onPress}:{label:string;active?:boolean;
 export function Avatar({name,size=32,color=C.violet}:{name:string;size?:number;color?:string}) {
  return <View style={{width:size,height:size,borderRadius:size/2,backgroundColor:color,borderWidth:2,borderColor:C.white,alignItems:'center',justifyContent:'center'}}><Text style={{fontSize:size*.35,color:C.ink,fontWeight:'700'}}>{name.slice(0,1).toUpperCase()}</Text></View>;
 }
-export function Brand({small=false}:{small?:boolean}) {
- return <Text style={{fontFamily:'BalottaInchiostro',fontSize:small?34:40,lineHeight:small?38:45,letterSpacing:.2,color:C.ink}}>BALOTTA<Text style={{color:C.red}}>!</Text></Text>;
-}
 export const s=StyleSheet.create({
  button:{flexDirection:'row',gap:8,backgroundColor:C.red,paddingHorizontal:23,paddingVertical:15,borderTopLeftRadius:10,borderTopRightRadius:15,borderBottomLeftRadius:14,borderBottomRightRadius:8,borderWidth:1,borderColor:C.ink,boxShadow:'3px 4px 0px #252923',alignItems:'center',justifyContent:'center'},buttonText:{color:C.white,fontSize:15,fontFamily:'ComicNeue_700Bold'},secondary:{backgroundColor:C.paper},
  chip:{borderWidth:1.5,borderColor:C.line,borderRadius:100,paddingHorizontal:16,paddingVertical:10,backgroundColor:'transparent'},
