@@ -2,7 +2,10 @@
 
 - La testata della home e dei pannelli mostra il nome completo «Facciamo Balotta!». Lettering dedicato basato sul disegno di Balotta Inchiostro: fascia rossa, contorni più pesanti e ombra sfalsata, con ingombro responsivo. L'icona C2 resta l'icona delle build.
 - Verificati 279 test Node, TypeScript ed export web/iOS/Android. [Verifica visiva su GitHub](https://github.com/gianpaolobol/facciamo_balotta/actions/runs/43123998656) superata a 320, 375, 430 e 1024 px. La testata e il tasto Accedi rientrano nella stessa riga e non si sovrappongono.
-- PR #8 integrata. Commit applicativo `418ca027d5b187470b9dadbfc59cdde9b85599b1`. Avviati i run nativi iOS 43124220110 e Android 43124219649 per il rilascio interno; disponibilità sugli store da verificare. I numeri 1501 e 2301 appartengono alle build precedenti.
+- PR #8 integrata. Commit applicativo `418ca027d5b187470b9dadbfc59cdde9b85599b1`.
+- iOS **0.1.0 (1601)** compilata, firmata e inviata nel run 43124220110. Elaborazione completata e gruppo interno «Balotta demo» verificato in App Store Connect.
+- Android **0.1.0 (2401)** compilata nel run 43124219649 e firmata nel run 43126192316. Verificati i checksum, la firma e la versione; Google Play mostra «Disponibile per i tester interni».
+- Collaudo sui telefoni fisici da confermare.
 
 ## Distribuzione interna C2 — 12 novembre 2026
 
