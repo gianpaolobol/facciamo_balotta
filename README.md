@@ -1,5 +1,8 @@
 # Stato della beta funzionale — 7 novembre 2026
 
+> **Copyright © 2026 Gian Paolo Franceschini — All rights reserved for original proprietary contributions.** See [LICENSE.md](LICENSE.md). Third-party licenses and GitHub's permitted platform uses remain applicable.
+
+
 Profilo illustrato, accessi, preferenze/matching, appuntamenti, gruppi, chat, blocchi/segnalazioni, moderazione e notifiche in-app sono collegati nel codice. Tutti i servizi reali restano disabilitati prima del collaudo: non è una pubblicazione sugli store. Stato completo e prerequisiti: [docs/APP_STATUS_2026-11-07.md](docs/APP_STATUS_2026-11-07.md).
 
 # Facciamo Balotta
